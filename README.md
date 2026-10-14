@@ -22,6 +22,39 @@ make dev-reload
 Access : [http://51.178.80.14:8080](http://51.178.80.14:8080)
 Admin : [http://51.178.80.14:8080/wp-admin](http://51.178.80.14:8080/wp-admin) — `admin / capsi2024`
 
+## Brand Guidelines
+
+### Identity
+High-end botanical brand — passionate and authentic. A blend of ancient herbalism and clean contemporary design.
+> "The conservatory and artisan house of rare and collectible peppers."
+
+### Colors
+
+| Role | Name | Hex | Usage |
+|------|------|-----|-------|
+| Primary | Rouge Capsi | `#C82A2B` | CTA, accents, logo pepper |
+| Secondary | Vert Botaniq | `#2D4A3E` | Text, headings, line art |
+| Accent 1 | Terre de Semis | `#B85C38` | Warm accents, terracotta |
+| Accent 2 | Safran Brûlé | `#E39B35` | Highlights, badges |
+| Background | Papier Botanique | `#F4EFE6` | Page background, cream paper feel |
+
+### Typography
+
+| Role | Font | Weight | Notes |
+|------|------|--------|-------|
+| Headings & identity | Cormorant Garamond | 400 / 600 | Elegant fine serif, botanical illustration feel |
+| Body & labels | Inter | 300 / 400 / 500 | Clean sans-serif, high readability |
+
+### Illustration style
+- **Line art**: Fine engraved botanical drawings — precise, natural, no fill or minimal fill
+- **Scoville badges**: Minimal circular seal numbered 1–10+, no kitsch flame icons
+- **Materials feel**: Kraft paper, amber glass, terracotta pots, textured labels
+
+### CSS tokens
+All values are available as CSS custom properties in `theme/assets/css/main.css` under the `:root` block (`--rouge-capsi`, `--vert-botaniq`, `--font-serif`, etc.).
+
+---
+
 ## Stack
 
 - Docker + Docker Compose
