@@ -1,6 +1,9 @@
 # WordPress core (géré par Docker, pas versionné)
 wordpress/
 
+# Composer
+theme/vendor/
+
 # Données Docker
 .env
 

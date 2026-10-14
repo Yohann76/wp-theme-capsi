@@ -16,6 +16,14 @@ WordPress configure !
 URL     : http://51.178.80.14:8080
 Admin   : http://51.178.80.14:8080/wp-admin
 Login   : admin / capsi2024 # use this id and password in http://51.178.80.14:8080/wp-admin
+
+Start from 0:
+
+make dev-kill
+docker volume rm wp-theme-capsi_wp_data wp-theme-capsi_db_data
+make dev-build      # pull images + composer install
+make dev-run
+make dev-configure
 ```
 
 Local access : [http://51.178.80.14:8080](http://51.178.80.14:8080)

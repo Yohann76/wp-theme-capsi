@@ -1,0 +1,14 @@
+{
+    "name": "atelier-capsi/wp-theme-capsi",
+    "require": {
+        "timber/timber": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Capsi\\": "src/"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true
+    }
+}

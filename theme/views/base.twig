@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html {{ site.language_attributes }}>
+<head>
+    <meta charset="{{ site.charset }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {{ fn('wp_head') }}
+</head>
+<body class="{{ fn('implode', ' ', fn('get_body_class')) }}">
+
+<header id="site-header">
+    <div class="container">
+        <a href="{{ site.url }}" class="site-name">{{ site.name }}</a>
+
+        {% if menu %}
+            <nav id="site-nav">
+                {% for item in menu.items %}
+                    <a href="{{ item.url }}"{% if item.current %} class="active"{% endif %}>
+                        {{ item.title }}
+                    </a>
+                {% endfor %}
+            </nav>
+        {% endif %}
+    </div>
+</header>
+
+{% block content %}{% endblock %}
+
+<footer id="site-footer">
+    <div class="container">
+        <p>&copy; {{ "now"|date("Y") }} {{ site.name }}</p>
+    </div>
+</footer>
+
+{{ fn('wp_footer') }}
+</body>
+</html>

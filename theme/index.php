@@ -1,12 +1,8 @@
-<?php get_header(); ?>
+<?php
 
-<main id="main">
-  <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-    <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-      <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-      <div><?php the_excerpt(); ?></div>
-    </article>
-  <?php endwhile; endif; ?>
-</main>
+use Timber\Timber;
 
-<?php get_footer(); ?>
+$context          = Timber::context();
+$context['posts'] = Timber::get_posts();
+
+Timber::render( 'index.twig', $context );

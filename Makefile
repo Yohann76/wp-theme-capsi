@@ -1,4 +1,4 @@
-.PHONY: dev-build dev-run dev-kill dev-configure
+.PHONY: dev-build dev-install dev-run dev-kill dev-configure
 
 WP_URL    = http://51.178.80.14:8080
 WP_TITLE  = L'Atelier Capsi
@@ -9,6 +9,10 @@ WP        = docker compose run --rm wpcli
 
 dev-build:
 	docker compose pull
+	$(MAKE) dev-install
+
+dev-install:
+	docker run --rm -v $(PWD)/theme:/app composer:2 install --working-dir=/app --no-interaction --optimize-autoloader
 
 dev-run:
 	docker compose up -d
