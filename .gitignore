@@ -1,0 +1,9 @@
+# WordPress core (géré par Docker, pas versionné)
+wordpress/
+
+# Données Docker
+.env
+
+# OS
+.DS_Store
+Thumbs.db
