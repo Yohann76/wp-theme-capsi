@@ -23,7 +23,12 @@ function capsi_setup(): void {
 add_action( 'after_setup_theme', 'capsi_setup' );
 
 function capsi_enqueue_assets(): void {
-    wp_enqueue_style( 'capsi-style', get_stylesheet_uri(), [], '1.0.0' );
+    wp_enqueue_style(
+        'capsi-main',
+        get_stylesheet_directory_uri() . '/assets/css/main.css',
+        [],
+        '1.0.0'
+    );
 }
 add_action( 'wp_enqueue_scripts', 'capsi_enqueue_assets' );
 
