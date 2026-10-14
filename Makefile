@@ -85,8 +85,72 @@ dev-configure:
 	$(WP) option update permalink_structure "/%postname%/"
 	$(WP) rewrite flush
 
+	@echo ">>> WooCommerce — installation..."
+	$(WP) plugin install woocommerce --activate
+
+	@echo ">>> WooCommerce — paramètres boutique..."
+	$(WP) option update woocommerce_store_address "1 rue de l'Atelier"
+	$(WP) option update woocommerce_store_city "Paris"
+	$(WP) option update woocommerce_default_country "FR"
+	$(WP) option update woocommerce_currency "EUR"
+	$(WP) option update woocommerce_currency_pos "right_space"
+	$(WP) option update woocommerce_price_thousand_sep " "
+	$(WP) option update woocommerce_price_decimal_sep ","
+	$(WP) option update woocommerce_price_num_decimals "2"
+	$(WP) option update woocommerce_calc_taxes "yes"
+	$(WP) option update woocommerce_tax_display_shop "incl"
+	$(WP) option update woocommerce_tax_display_cart "incl"
+	$(WP) option update woocommerce_enable_reviews "yes"
+	$(WP) option update woocommerce_catalog_columns "3"
+	$(WP) option update woocommerce_catalog_rows "4"
+
+	@echo ">>> WooCommerce — pages boutique..."
+	$(WP) wc tool run install_pages --user=$(WP_ADMIN)
+
+	@echo ">>> WooCommerce — catégories produits..."
+	$(WP) wc product_cat create --name="Créations" --description="Nos créations artisanales" --user=$(WP_ADMIN)
+	$(WP) wc product_cat create --name="Ateliers" --description="Stages et ateliers créatifs" --user=$(WP_ADMIN)
+	$(WP) wc product_cat create --name="Accessoires" --description="Accessoires et fournitures" --user=$(WP_ADMIN)
+
+	@echo ">>> WooCommerce — produits démo..."
+	$(WP) wc product create \
+		--name="Création artisanale — Modèle A" \
+		--type=simple \
+		--regular_price="45.00" \
+		--status=publish \
+		--description="Belle création artisanale réalisée à la main avec des matériaux soigneusement sélectionnés." \
+		--short_description="Création artisanale faite main." \
+		--categories='[{"id":'$$($(WP) wc product_cat list --format=json --user=$(WP_ADMIN) | python3 -c "import sys,json;cats=json.load(sys.stdin);print([c['id'] for c in cats if c['name']=='Créations'][0])")'"}]' \
+		--manage_stock=true \
+		--stock_quantity=10 \
+		--user=$(WP_ADMIN)
+	$(WP) wc product create \
+		--name="Atelier créatif — Initiation" \
+		--type=simple \
+		--regular_price="65.00" \
+		--status=publish \
+		--description="Atelier d'initiation aux techniques créatives. Durée : 3h. Matériel fourni. Groupe de 6 personnes maximum." \
+		--short_description="Atelier initiation 3h, matériel inclus." \
+		--categories='[{"id":'$$($(WP) wc product_cat list --format=json --user=$(WP_ADMIN) | python3 -c "import sys,json;cats=json.load(sys.stdin);print([c['id'] for c in cats if c['name']=='Ateliers'][0])")'"}]' \
+		--manage_stock=true \
+		--stock_quantity=6 \
+		--user=$(WP_ADMIN)
+	$(WP) wc product create \
+		--name="Kit de démarrage créatif" \
+		--type=simple \
+		--regular_price="29.00" \
+		--sale_price="24.00" \
+		--status=publish \
+		--description="Kit complet pour débuter : outils essentiels, matériaux de qualité et guide pas-à-pas." \
+		--short_description="Kit complet pour débuter, guide inclus." \
+		--categories='[{"id":'$$($(WP) wc product_cat list --format=json --user=$(WP_ADMIN) | python3 -c "import sys,json;cats=json.load(sys.stdin);print([c['id'] for c in cats if c['name']=='Accessoires'][0])")'"}]' \
+		--manage_stock=true \
+		--stock_quantity=20 \
+		--user=$(WP_ADMIN)
+
 	@echo ""
-	@echo "✓ WordPress configuré en français !"
-	@echo "  URL     : $(WP_URL)"
-	@echo "  Admin   : $(WP_URL)/wp-admin"
-	@echo "  Login   : $(WP_ADMIN) / $(WP_PASS)"
+	@echo "✓ WordPress + WooCommerce configurés !"
+	@echo "  URL       : $(WP_URL)"
+	@echo "  Boutique  : $(WP_URL)/boutique"
+	@echo "  Admin     : $(WP_URL)/wp-admin"
+	@echo "  Login     : $(WP_ADMIN) / $(WP_PASS)"
