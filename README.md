@@ -15,7 +15,7 @@ make dev-kill && make dev-run && make dev-configure
 WordPress configure !
 URL     : http://51.178.80.14:8080
 Admin   : http://51.178.80.14:8080/wp-admin
-Login   : admin / capsi2024
+Login   : admin / capsi2024 # use this id and password in http://51.178.80.14:8080/wp-admin
 ```
 
 Local access : [http://51.178.80.14:8080](http://51.178.80.14:8080)
