@@ -9,10 +9,14 @@
 
 <header id="site-header">
     <div class="container">
-        <a href="{{ site.url }}" class="site-name">{{ site.name }}</a>
+        <a href="{{ site.url }}" class="site-logo" aria-label="{{ site.name }}">
+            <img src="{{ theme.link }}/assets/images/logo-horizontal.svg"
+                 alt="{{ site.name }}"
+                 width="320" height="60">
+        </a>
 
         {% if menu %}
-            <nav id="site-nav">
+            <nav id="site-nav" aria-label="Navigation principale">
                 {% for item in menu.items %}
                     <a href="{{ item.url }}"{% if item.current %} class="active"{% endif %}>
                         {{ item.title }}

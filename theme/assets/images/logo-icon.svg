@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="L'Atelier Capsi">
+  <defs>
+    <linearGradient id="chiliBodyI" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#DE4040"/>
+      <stop offset="28%"  stop-color="#C82A2B"/>
+      <stop offset="68%"  stop-color="#9E1A1A"/>
+      <stop offset="100%" stop-color="#6E0E0E"/>
+    </linearGradient>
+    <radialGradient id="chiliSheenI" cx="30%" cy="20%" r="48%" fx="30%" fy="20%">
+      <stop offset="0%"   stop-color="#FF8080" stop-opacity="0.50"/>
+      <stop offset="100%" stop-color="#C82A2B" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="chiliTipI" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="65%"  stop-color="#000000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.35"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(50,52) scale(0.27) translate(-188,-170)">
+    <path fill="#2D4A3E" d="M188,88 C186,79 185,72 187,65 C189,70 190,79 188,88 Z"/>
+    <path fill="#2D4A3E" fill-opacity="0.85" d="M184,88 C181,79 180,71 183,64 C184,70 185,79 184,88 Z"/>
+    <path fill="#2D4A3E" fill-opacity="0.85" d="M192,88 C195,79 196,71 193,64 C192,70 191,79 192,88 Z"/>
+    <path fill="#2D4A3E" fill-opacity="0.55" d="M180,87 C175,79 175,71 179,65 C181,71 181,80 180,87 Z"/>
+    <path fill="#2D4A3E" fill-opacity="0.55" d="M196,87 C201,79 201,71 197,65 C195,71 195,80 196,87 Z"/>
+    <ellipse cx="188" cy="91" rx="9" ry="3.5" fill="#2D4A3E"/>
+    <path fill="url(#chiliBodyI)"
+          d="M183,94 C174,102 170,118 170,136 C170,156 173,177 177,196 C180,211 184,227 187,246 C190,228 194,212 197,197 C201,178 203,157 202,137 C201,119 198,103 183,94 Z"/>
+    <path fill="url(#chiliSheenI)"
+          d="M183,94 C174,102 170,118 170,136 C170,156 173,177 177,196 C180,211 184,227 187,246 C190,228 194,212 197,197 C201,178 203,157 202,137 C201,119 198,103 183,94 Z"/>
+    <path fill="url(#chiliTipI)"
+          d="M183,94 C174,102 170,118 170,136 C170,156 173,177 177,196 C180,211 184,227 187,246 C190,228 194,212 197,197 C201,178 203,157 202,137 C201,119 198,103 183,94 Z"/>
+    <ellipse cx="177" cy="114" rx="4.5" ry="8" fill="rgba(255,210,210,0.32)"
+             transform="rotate(-15,177,114)"/>
+  </g>
+</svg>
