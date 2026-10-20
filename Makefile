@@ -59,38 +59,53 @@ dev-configure:
 
 	@echo ">>> Pages..."
 	$(WP) post create --post_type=page --post_status=publish --post_title="Accueil"
-	$(WP) post create --post_type=page --post_status=publish --post_title="À propos"
-	$(WP) post create --post_type=page --post_status=publish --post_title="Services"
-	$(WP) post create --post_type=page --post_status=publish --post_title="Contact"
+	$(WP) post create --post_type=page --post_status=publish --post_title="Variétés de piments"
 	$(WP) post create --post_type=page --post_status=publish --post_title="Blog"
+	$(WP) post create --post_type=page --post_status=publish --post_title="À propos"
+	$(WP) post create --post_type=page --post_status=publish --post_title="Contact"
 
 	@echo ">>> Configuration page d'accueil et blog..."
 	$(WP) option update show_on_front page
 	$(WP) option update page_on_front $$($(WP) post list --post_type=page --post_status=publish --title="Accueil" --field=ID --format=ids)
 	$(WP) option update page_for_posts $$($(WP) post list --post_type=page --post_status=publish --title="Blog" --field=ID --format=ids)
 
-	@echo ">>> Catégories..."
-	$(WP) term create category "Actualités" --description="Les dernières actualités de L'Atelier Capsi"
-	$(WP) term create category "Conseils" --description="Conseils et bonnes pratiques"
-	$(WP) term create category "Projets" --description="Nos réalisations et projets clients"
+	@echo ">>> Menu de navigation..."
+	$(WP) menu create "Menu principal"
+	$(WP) menu item add-post "Menu principal" $$($(WP) post list --post_type=page --post_status=publish --title="Accueil" --field=ID --format=ids) --title="Accueil"
+	$(WP) menu item add-post "Menu principal" $$($(WP) post list --post_type=page --post_status=publish --title="Variétés de piments" --field=ID --format=ids) --title="Variétés"
+	$(WP) menu item add-post "Menu principal" $$($(WP) post list --post_type=page --post_status=publish --title="Blog" --field=ID --format=ids) --title="Blog"
+	$(WP) menu item add-post "Menu principal" $$($(WP) post list --post_type=page --post_status=publish --title="À propos" --field=ID --format=ids) --title="À propos"
+	$(WP) menu item add-post "Menu principal" $$($(WP) post list --post_type=page --post_status=publish --title="Contact" --field=ID --format=ids) --title="Contact"
+	$(WP) menu location assign "Menu principal" primary
+
+	@echo ">>> Catégories blog..."
+	$(WP) term create category "Actualités" --description="Les dernières nouvelles de L'Atelier Capsi"
+	$(WP) term create category "Culture & Conseils" --description="Guides de culture, conseils et techniques"
+	$(WP) term create category "Variétés" --description="Présentation des variétés rares et de collection"
+	$(WP) term create category "Recettes" --description="Recettes et utilisations culinaires"
 	$(WP) term delete category 1
 
 	@echo ">>> Articles de blog..."
 	$(WP) post create \
 		--post_type=post --post_status=publish \
-		--post_title="Bienvenue sur le blog de L'Atelier Capsi" \
-		--post_content="Découvrez notre univers, nos projets et notre vision. L'Atelier Capsi vous accompagne dans vos projets créatifs avec passion et expertise." \
+		--post_title="Bienvenue à L'Atelier Capsi" \
+		--post_content="L'Atelier Capsi est le conservatoire des piments rares et de collection. Découvrez notre univers botanique, nos variétés d'exception et notre passion pour le capsicum." \
 		--post_category=$$($(WP) term list category --name="Actualités" --field=term_id --format=ids)
 	$(WP) post create \
 		--post_type=post --post_status=publish \
-		--post_title="5 conseils pour bien démarrer votre projet" \
-		--post_content="Un bon projet commence toujours par une bonne préparation. Voici 5 conseils essentiels pour mettre toutes les chances de votre côté dès le départ." \
-		--post_category=$$($(WP) term list category --name="Conseils" --field=term_id --format=ids)
+		--post_title="Comment cultiver le Habanero en pot" \
+		--post_content="Le Habanero est l'une des variétés les plus populaires de notre collection. Voici nos conseils pour le cultiver avec succès en pot, de la germination à la récolte." \
+		--post_category=$$($(WP) term list category --name="Culture & Conseils" --field=term_id --format=ids)
 	$(WP) post create \
 		--post_type=post --post_status=publish \
-		--post_title="Notre première réalisation de l'année" \
-		--post_content="Nous sommes fiers de vous présenter notre dernière réalisation. Ce projet a été une belle aventure humaine et créative, du brief initial jusqu'à la livraison finale." \
-		--post_category=$$($(WP) term list category --name="Projets" --field=term_id --format=ids)
+		--post_title="Focus : le Carolina Reaper, roi des piments" \
+		--post_content="Avec ses 2,2 millions de Scoville, le Carolina Reaper détient le record mondial. Découvrez l'histoire de cette variété extraordinaire et comment elle est cultivée à l'Atelier." \
+		--post_category=$$($(WP) term list category --name="Variétés" --field=term_id --format=ids)
+	$(WP) post create \
+		--post_type=post --post_status=publish \
+		--post_title="Sauce piquante artisanale au Ghost Pepper" \
+		--post_content="Le Ghost Pepper, ou Bhut Jolokia, donne une sauce d'une profondeur aromatique incomparable. Voici notre recette maison pour une sauce artisanale intense et fruitée." \
+		--post_category=$$($(WP) term list category --name="Recettes" --field=term_id --format=ids)
 
 	@echo ">>> Permaliens..."
 	$(WP) option update permalink_structure "/%postname%/"
@@ -119,42 +134,65 @@ dev-configure:
 	$(WP) wc tool run install_pages --user=$(WP_ADMIN)
 
 	@echo ">>> WooCommerce — catégories produits..."
-	$(WP) wc product_cat create --name="Créations" --description="Nos créations artisanales" --user=$(WP_ADMIN)
-	$(WP) wc product_cat create --name="Ateliers" --description="Stages et ateliers créatifs" --user=$(WP_ADMIN)
-	$(WP) wc product_cat create --name="Accessoires" --description="Accessoires et fournitures" --user=$(WP_ADMIN)
+	$(WP) wc product_cat create --name="Graines" --description="Graines de piments rares et de collection" --user=$(WP_ADMIN)
+	$(WP) wc product_cat create --name="Plants" --description="Plants de piments prêts à planter" --user=$(WP_ADMIN)
+	$(WP) wc product_cat create --name="Sauces & Condiments" --description="Sauces artisanales et condiments au piment" --user=$(WP_ADMIN)
+	$(WP) wc product_cat create --name="Coffrets" --description="Coffrets cadeaux et collections" --user=$(WP_ADMIN)
 
 	@echo ">>> WooCommerce — produits démo..."
 	$(WP) wc product create \
-		--name="Création artisanale — Modèle A" \
+		--name="Graines Carolina Reaper — 20 graines" \
 		--type=simple \
-		--regular_price="45.00" \
+		--regular_price="6.90" \
 		--status=publish \
-		--description="Belle création artisanale réalisée à la main avec des matériaux soigneusement sélectionnés." \
-		--short_description="Création artisanale faite main." \
-		--categories='[{"id":'$$($(WP) wc product_cat list --format=json --user=$(WP_ADMIN) | python3 -c "import sys,json;cats=json.load(sys.stdin);print([c['id'] for c in cats if c['name']=='Créations'][0])")'"}]' \
+		--description="Le Carolina Reaper est le piment le plus fort du monde avec 2,2 millions de Scoville. Graines issues de notre sélection maison, taux de germination > 90%." \
+		--short_description="2,2M Scoville · Lot de 20 graines · Sélection maison" \
+		--categories='[{"id":'$$($(WP) wc product_cat list --format=json --user=$(WP_ADMIN) | python3 -c "import sys,json;cats=json.load(sys.stdin);print([c['id'] for c in cats if c['name']=='Graines'][0])")'"}]' \
 		--manage_stock=true \
-		--stock_quantity=10 \
+		--stock_quantity=50 \
 		--user=$(WP_ADMIN)
 	$(WP) wc product create \
-		--name="Atelier créatif — Initiation" \
+		--name="Graines Habanero Orange — 20 graines" \
 		--type=simple \
-		--regular_price="65.00" \
+		--regular_price="4.90" \
 		--status=publish \
-		--description="Atelier d'initiation aux techniques créatives. Durée : 3h. Matériel fourni. Groupe de 6 personnes maximum." \
-		--short_description="Atelier initiation 3h, matériel inclus." \
-		--categories='[{"id":'$$($(WP) wc product_cat list --format=json --user=$(WP_ADMIN) | python3 -c "import sys,json;cats=json.load(sys.stdin);print([c['id'] for c in cats if c['name']=='Ateliers'][0])")'"}]' \
+		--description="L'Habanero Orange est un classique fruité et intense. Notes tropicales, 350 000 Scoville. Parfait pour débutants et confirmés." \
+		--short_description="350K Scoville · Lot de 20 graines · Fruité & intense" \
+		--categories='[{"id":'$$($(WP) wc product_cat list --format=json --user=$(WP_ADMIN) | python3 -c "import sys,json;cats=json.load(sys.stdin);print([c['id'] for c in cats if c['name']=='Graines'][0])")'"}]' \
 		--manage_stock=true \
-		--stock_quantity=6 \
+		--stock_quantity=80 \
 		--user=$(WP_ADMIN)
 	$(WP) wc product create \
-		--name="Kit de démarrage créatif" \
+		--name="Plant Bhut Jolokia (Ghost Pepper)" \
 		--type=simple \
-		--regular_price="29.00" \
-		--sale_price="24.00" \
+		--regular_price="8.50" \
 		--status=publish \
-		--description="Kit complet pour débuter : outils essentiels, matériaux de qualité et guide pas-à-pas." \
-		--short_description="Kit complet pour débuter, guide inclus." \
-		--categories='[{"id":'$$($(WP) wc product_cat list --format=json --user=$(WP_ADMIN) | python3 -c "import sys,json;cats=json.load(sys.stdin);print([c['id'] for c in cats if c['name']=='Accessoires'][0])")'"}]' \
+		--description="Plant de Ghost Pepper élevé en serre, prêt à planter. Variété légendaire originaire d'Inde. 1 000 000 Scoville. Livraison en pot biodégradable." \
+		--short_description="1M Scoville · Plant prêt à planter · Pot biodégradable" \
+		--categories='[{"id":'$$($(WP) wc product_cat list --format=json --user=$(WP_ADMIN) | python3 -c "import sys,json;cats=json.load(sys.stdin);print([c['id'] for c in cats if c['name']=='Plants'][0])")'"}]' \
+		--manage_stock=true \
+		--stock_quantity=15 \
+		--user=$(WP_ADMIN)
+	$(WP) wc product create \
+		--name="Sauce artisanale Habanero & Mangue" \
+		--type=simple \
+		--regular_price="9.90" \
+		--status=publish \
+		--description="Sauce artisanale élaborée à partir de nos piments Habanero cultivés à l'Atelier, associés à la mangue pour une explosion fruitée et intense. Flacon verre ambré 100ml." \
+		--short_description="Flacon 100ml · Artisanal · Habanero & Mangue" \
+		--categories='[{"id":'$$($(WP) wc product_cat list --format=json --user=$(WP_ADMIN) | python3 -c "import sys,json;cats=json.load(sys.stdin);print([c['id'] for c in cats if c['name']=='Sauces & Condiments'][0])")'"}]' \
+		--manage_stock=true \
+		--stock_quantity=30 \
+		--user=$(WP_ADMIN)
+	$(WP) wc product create \
+		--name="Coffret Découverte — 5 variétés rares" \
+		--type=simple \
+		--regular_price="24.90" \
+		--sale_price="19.90" \
+		--status=publish \
+		--description="Coffret de 5 sachets de graines de variétés rares sélectionnées par L'Atelier Capsi : Carolina Reaper, Ghost Pepper, Habanero Chocolate, Piment Moruga Scorpion et Aji Amarillo. Idéal en cadeau." \
+		--short_description="5 variétés rares · Édition limitée · Idéal cadeau" \
+		--categories='[{"id":'$$($(WP) wc product_cat list --format=json --user=$(WP_ADMIN) | python3 -c "import sys,json;cats=json.load(sys.stdin);print([c['id'] for c in cats if c['name']=='Coffrets'][0])")'"}]' \
 		--manage_stock=true \
 		--stock_quantity=20 \
 		--user=$(WP_ADMIN)

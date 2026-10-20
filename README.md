@@ -51,7 +51,19 @@ High-end botanical brand — passionate and authentic. A blend of ancient herbal
 - **Materials feel**: Kraft paper, amber glass, terracotta pots, textured labels
 
 ### CSS tokens
-All values are available as CSS custom properties in `theme/assets/css/main.css` under the `:root` block (`--rouge-capsi`, `--vert-botaniq`, `--font-serif`, etc.).
+All values are available as CSS custom properties in `theme/assets/css/main.css`.
+
+Two themes available — **dark is default**:
+
+| Token | Dark | Light |
+|-------|------|-------|
+| `--color-bg` | `#0F0F0F` | `#F4EFE6` |
+| `--color-text` | `#EDE8DF` | `#1C2E26` |
+| `--color-primary` | `#E03535` | `#C82A2B` |
+| `--color-secondary` | `#4A8C6F` | `#2D4A3E` |
+| `--color-surface` | `#1E1E1E` | `#FFFFFF` |
+
+Switch theme by setting `data-theme="light"` on `<html>` in `views/base.twig`.
 
 ---
 
