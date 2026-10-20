@@ -1,0 +1,21 @@
+{% extends "base.twig" %}
+
+{% block content %}
+<main id="main" class="page-about">
+
+    <div class="page-hero page-hero--about">
+        <div class="container">
+            <span class="eyebrow">L'Atelier Capsi</span>
+            <h1 class="page-hero__title">{{ post.title }}</h1>
+            <p class="page-hero__desc">Conservatoire des piments rares et de collection depuis 2018.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="about-content">
+            {{ post.content }}
+        </div>
+    </div>
+
+</main>
+{% endblock %}

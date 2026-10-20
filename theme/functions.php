@@ -44,6 +44,37 @@ add_filter( 'woocommerce_price_thousand_sep', fn() => "\u{00A0}" );       // esp
 add_filter( 'woocommerce_price_decimal_sep',  fn() => ',' );
 add_filter( 'woocommerce_price_num_decimals', fn() => 2 );
 
+// Formulaire de contact
+add_action( 'admin_post_nopriv_capsi_contact', 'capsi_handle_contact' );
+add_action( 'admin_post_capsi_contact',        'capsi_handle_contact' );
+
+function capsi_handle_contact(): void {
+    if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( $_POST['_wpnonce'], 'capsi_contact' ) ) {
+        wp_safe_redirect( wp_get_referer() . '?contact=error' );
+        exit;
+    }
+
+    $name    = sanitize_text_field( $_POST['contact_name']    ?? '' );
+    $email   = sanitize_email(      $_POST['contact_email']   ?? '' );
+    $subject = sanitize_text_field( $_POST['contact_subject'] ?? '' );
+    $message = sanitize_textarea_field( $_POST['contact_message'] ?? '' );
+
+    if ( ! $name || ! is_email( $email ) || ! $message ) {
+        wp_safe_redirect( wp_get_referer() . '?contact=error' );
+        exit;
+    }
+
+    $to      = get_option( 'admin_email' );
+    $subject = sprintf( '[L\'Atelier Capsi] %s — %s', $subject ?: 'Contact', $name );
+    $body    = sprintf( "De : %s <%s>\n\n%s", $name, $email, $message );
+    $headers = [ 'Content-Type: text/plain; charset=UTF-8', "Reply-To: {$name} <{$email}>" ];
+
+    wp_mail( $to, $subject, $body, $headers );
+
+    wp_safe_redirect( wp_get_referer() . '?contact=success' );
+    exit;
+}
+
 add_filter( 'timber/context', function ( array $context ): array {
     $context['site']         = new Site();
     $context['menu']         = Timber::get_menu( 'primary' );
