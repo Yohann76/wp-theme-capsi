@@ -80,13 +80,12 @@
 
 
 /* ============================================================
-   THEME DARK — default
+   THEME TOKENS
    ============================================================ */
-:root,
-[data-theme="dark"] {
+:root {
 
-  --color-primary:    #E03535;           /* Rouge Capsi — légèrement amplifié sur sombre */
-  --color-secondary:  #4A8C6F;           /* Vert Botaniq éclairci pour lisibilité dark   */
+  --color-primary:    #E03535;
+  --color-secondary:  #4A8C6F;
   --color-accent:     var(--terre-semis);
   --color-highlight:  var(--safran-brule);
 
@@ -108,36 +107,6 @@
 
   /* Lueur rouge pour éléments actifs */
   --glow-primary: 0 0 20px rgba(224, 53, 53, 0.25);
-}
-
-
-/* ============================================================
-   THEME LIGHT — variante opt-in
-   ============================================================ */
-[data-theme="light"] {
-
-  --color-primary:    var(--rouge-capsi);
-  --color-secondary:  var(--vert-botaniq);
-  --color-accent:     var(--terre-semis);
-  --color-highlight:  var(--safran-brule);
-
-  --color-bg:         var(--papier-botanique);
-  --color-bg-alt:     #EDE7DA;
-  --color-surface:    #FFFFFF;
-  --color-surface-2:  #F9F5EE;
-
-  --color-text:       #1C2E26;
-  --color-text-muted: #5A7268;
-  --color-text-faint: #A89F94;
-
-  --color-border:     rgba(45, 74, 62, 0.14);
-  --color-border-strong: rgba(45, 74, 62, 0.30);
-
-  --shadow-sm:  0 1px 4px  rgba(45, 74, 62, 0.08);
-  --shadow-md:  0 4px 14px rgba(45, 74, 62, 0.12);
-  --shadow-lg:  0 10px 36px rgba(45, 74, 62, 0.16);
-
-  --glow-primary: none;
 }
 
 
@@ -266,10 +235,6 @@ a:hover {
   backdrop-filter: blur(12px);
 }
 
-[data-theme="light"] #site-header {
-  background-color: rgba(244, 239, 230, 0.88);
-}
-
 #site-header .container {
   height: 100%;
   display: flex;
@@ -281,11 +246,6 @@ a:hover {
 .site-logo img {
   height: 48px;
   width: auto;
-  filter: brightness(0) invert(1); /* blanc sur dark */
-}
-
-[data-theme="light"] .site-logo img {
-  filter: none;
 }
 
 #site-nav {
@@ -339,10 +299,6 @@ a:hover {
   background-color: #0A0A0A;
   border-top: 1px solid var(--color-border);
   padding-block: var(--space-16);
-}
-
-[data-theme="light"] .footer-main {
-  background-color: #1C2E26;
 }
 
 /* — Layout global : brand + 3 cols — */
@@ -475,10 +431,6 @@ a:hover {
   margin-top: var(--space-12);
   padding-top: var(--space-12);
   padding-bottom: var(--space-12);
-}
-
-[data-theme="light"] .footer-bottom {
-  background-color: #111E18;
 }
 
 .footer-bottom .container {

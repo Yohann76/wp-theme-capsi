@@ -55,7 +55,6 @@ function capsi_enqueue_assets(): void {
         }
         #site-footer .footer-brand__identity img {
             flex-shrink: 0;
-            filter: brightness(0) invert(1);
         }
         #site-footer .footer-brand__name {
             font-family: "Cormorant Garamond", serif !important;
