@@ -50,7 +50,7 @@ function capsi_enqueue_assets(): void {
             display: flex !important;
             flex-direction: row !important;
             align-items: center !important;
-            gap: 0.75rem;
+            gap: 0.2rem;
             text-decoration: none;
         }
         #site-footer .footer-brand__identity img {
