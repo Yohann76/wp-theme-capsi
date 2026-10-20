@@ -68,16 +68,9 @@
                     <div class="footer-col">
                         <span class="footer-col__title">Produits</span>
                         <ul>
-                            {% if footer_produits and footer_produits.items %}
-                                {% for item in footer_produits.items %}
-                                    <li><a href="{{ item.url }}">{{ item.title }}</a></li>
-                                {% endfor %}
-                            {% else %}
-                                <li><a href="{{ site.url }}/boutique/graines">Graines</a></li>
-                                <li><a href="{{ site.url }}/boutique/plants">Plants</a></li>
-                                <li><a href="{{ site.url }}/boutique/sauces-condiments">Sauces</a></li>
-                                <li><a href="{{ site.url }}/boutique/coffrets">Coffrets</a></li>
-                            {% endif %}
+                            {% for cat in footer_product_cats %}
+                                <li><a href="{{ cat.url }}">{{ cat.name }}</a></li>
+                            {% endfor %}
                         </ul>
                     </div>
 

@@ -140,10 +140,29 @@ add_filter( 'woocommerce_enqueue_styles', '__return_empty_array' );
 add_action( 'wp_enqueue_scripts', 'capsi_enqueue_assets' );
 
 add_filter( 'timber/context', function ( array $context ): array {
-    $context['site']           = new Site();
-    $context['menu']           = Timber::get_menu( 'primary' );
+    $context['site']            = new Site();
+    $context['menu']            = Timber::get_menu( 'primary' );
     $context['footer_produits'] = Timber::get_menu( 'footer-produits' );
     $context['footer_infos']    = Timber::get_menu( 'footer-infos' );
     $context['footer_legal']    = Timber::get_menu( 'footer-legal' );
+
+    $terms = get_terms( [
+        'taxonomy'   => 'product_cat',
+        'hide_empty' => true,
+        'parent'     => 0,
+        'orderby'    => 'menu_order',
+        'order'      => 'ASC',
+    ] );
+
+    $context['footer_product_cats'] = [];
+    if ( ! is_wp_error( $terms ) ) {
+        foreach ( $terms as $term ) {
+            $context['footer_product_cats'][] = [
+                'name' => $term->name,
+                'url'  => get_term_link( $term ),
+            ];
+        }
+    }
+
     return $context;
 } );
