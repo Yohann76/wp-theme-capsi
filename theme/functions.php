@@ -115,17 +115,8 @@ function capsi_enqueue_assets(): void {
             gap: 0.75rem;
         }
         #site-footer .footer-bottom {
-            margin-top: 3rem !important;
-            border-top: none !important;
-            position: relative;
-        }
-        #site-footer .footer-bottom::before {
-            content: "" !important;
-            display: block !important;
-            width: 80px !important;
-            height: 1px !important;
-            background-color: rgba(227, 155, 53, 0.5) !important;
-            margin: 0 auto 2rem !important;
+            margin-top: 0 !important;
+            border-top: 1px solid rgba(237, 232, 223, 0.08) !important;
         }
         @media (max-width: 900px) {
             #site-footer .footer-layout {
