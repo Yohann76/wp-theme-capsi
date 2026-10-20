@@ -26,12 +26,35 @@ function capsi_setup(): void {
 add_action( 'after_setup_theme', 'capsi_setup' );
 
 function capsi_enqueue_assets(): void {
-    wp_enqueue_style(
-        'capsi-main',
-        get_stylesheet_directory_uri() . '/assets/css/main.css',
-        [],
-        (string) filemtime( get_stylesheet_directory() . '/assets/css/main.css' )
-    );
+    $dir = get_stylesheet_directory();
+    $uri = get_stylesheet_directory_uri();
+
+    $sheets = [
+        'capsi-main' => 'main.css',
+    ];
+
+    if ( is_home() || is_archive() || is_singular( 'post' ) ) {
+        $sheets['capsi-blog'] = 'blog.css';
+    }
+
+    if ( function_exists( 'is_woocommerce' )
+        && ( is_woocommerce() || is_cart() || is_checkout() || is_account_page() )
+    ) {
+        $sheets['capsi-woocommerce'] = 'woocommerce.css';
+    }
+
+    if ( is_page() ) {
+        $sheets['capsi-pages'] = 'pages.css';
+    }
+
+    foreach ( $sheets as $handle => $file ) {
+        wp_enqueue_style(
+            $handle,
+            "{$uri}/assets/css/{$file}",
+            $handle === 'capsi-main' ? [] : [ 'capsi-main' ],
+            (string) filemtime( "{$dir}/assets/css/{$file}" )
+        );
+    }
 }
 
 add_filter( 'woocommerce_enqueue_styles', '__return_empty_array' );
