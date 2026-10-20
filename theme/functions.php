@@ -139,6 +139,13 @@ function capsi_enqueue_assets(): void {
 add_filter( 'woocommerce_enqueue_styles', '__return_empty_array' );
 add_action( 'wp_enqueue_scripts', 'capsi_enqueue_assets' );
 
+// WooCommerce — Localisation française
+add_filter( 'woocommerce_currency',           fn() => 'EUR' );
+add_filter( 'woocommerce_currency_pos',       fn() => 'right_space' );   // 10,00 €
+add_filter( 'woocommerce_price_thousand_sep', fn() => "\u{00A0}" );       // espace insécable
+add_filter( 'woocommerce_price_decimal_sep',  fn() => ',' );
+add_filter( 'woocommerce_price_num_decimals', fn() => 2 );
+
 add_filter( 'timber/context', function ( array $context ): array {
     $context['site']            = new Site();
     $context['menu']            = Timber::get_menu( 'primary' );

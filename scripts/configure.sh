@@ -123,13 +123,6 @@ $WP menu location assign "Menu principal" primary
 
 step "Creating footer menus..."
 
-$WP menu create "Footer Produits"
-$WP menu item add-custom "Footer Produits" "Graines"  "$WP_URL/boutique/graines"
-$WP menu item add-custom "Footer Produits" "Plants"   "$WP_URL/boutique/plants"
-$WP menu item add-custom "Footer Produits" "Sauces"   "$WP_URL/boutique/sauces-condiments"
-$WP menu item add-custom "Footer Produits" "Coffrets" "$WP_URL/boutique/coffrets"
-$WP menu location assign "Footer Produits" footer-produits
-
 $WP menu create "Footer Informations"
 $WP menu item add-post "Footer Informations" "$(page_id "À propos")"  --title="À propos"
 $WP menu item add-post "Footer Informations" "$(page_id "Contact")"   --title="Contact"
@@ -197,8 +190,10 @@ $WP rewrite flush
 
 step "Installing WooCommerce..."
 $WP plugin install woocommerce --activate
+$WP language plugin install woocommerce fr_FR
 
 step "Configuring WooCommerce settings..."
+$WP option update woocommerce_coming_soon "no"
 $WP option update woocommerce_store_address   "1 rue de l'Atelier"
 $WP option update woocommerce_store_city      "Paris"
 $WP option update woocommerce_default_country "FR"
