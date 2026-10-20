@@ -97,6 +97,11 @@ $WP post create --post_type=page --post_status=publish --post_title="Variétés 
 $WP post create --post_type=page --post_status=publish --post_title="Blog"
 $WP post create --post_type=page --post_status=publish --post_title="À propos"
 $WP post create --post_type=page --post_status=publish --post_title="Contact"
+$WP post create --post_type=page --post_status=publish --post_title="Livraison"
+$WP post create --post_type=page --post_status=publish --post_title="FAQ"
+$WP post create --post_type=page --post_status=publish --post_title="Mentions légales"
+$WP post create --post_type=page --post_status=publish --post_title="Conditions Générales de Vente"
+$WP post create --post_type=page --post_status=publish --post_title="Politique de confidentialité"
 
 step "Configuring front page & blog..."
 $WP option update show_on_front page
@@ -109,12 +114,34 @@ $WP option update page_for_posts "$(page_id "Blog")"
 
 step "Creating navigation menu..."
 $WP menu create "Menu principal"
-$WP menu item add-post "Menu principal" "$(page_id "Accueil")"          --title="Accueil"
+$WP menu item add-post "Menu principal" "$(page_id "Accueil")"             --title="Accueil"
 $WP menu item add-post "Menu principal" "$(page_id "Variétés de piments")" --title="Variétés"
-$WP menu item add-post "Menu principal" "$(page_id "Blog")"             --title="Blog"
-$WP menu item add-post "Menu principal" "$(page_id "À propos")"         --title="À propos"
-$WP menu item add-post "Menu principal" "$(page_id "Contact")"          --title="Contact"
+$WP menu item add-post "Menu principal" "$(page_id "Blog")"                --title="Blog"
+$WP menu item add-post "Menu principal" "$(page_id "À propos")"            --title="À propos"
+$WP menu item add-post "Menu principal" "$(page_id "Contact")"             --title="Contact"
 $WP menu location assign "Menu principal" primary
+
+step "Creating footer menus..."
+
+$WP menu create "Footer Produits"
+$WP menu item add-custom "Footer Produits" "Graines"  "$WP_URL/boutique/graines"
+$WP menu item add-custom "Footer Produits" "Plants"   "$WP_URL/boutique/plants"
+$WP menu item add-custom "Footer Produits" "Sauces"   "$WP_URL/boutique/sauces-condiments"
+$WP menu item add-custom "Footer Produits" "Coffrets" "$WP_URL/boutique/coffrets"
+$WP menu location assign "Footer Produits" footer-produits
+
+$WP menu create "Footer Informations"
+$WP menu item add-post "Footer Informations" "$(page_id "À propos")"  --title="À propos"
+$WP menu item add-post "Footer Informations" "$(page_id "Contact")"   --title="Contact"
+$WP menu item add-post "Footer Informations" "$(page_id "Livraison")" --title="Livraison"
+$WP menu item add-post "Footer Informations" "$(page_id "FAQ")"       --title="FAQ"
+$WP menu location assign "Footer Informations" footer-infos
+
+$WP menu create "Footer Légal"
+$WP menu item add-post "Footer Légal" "$(page_id "Mentions légales")"                --title="Mentions légales"
+$WP menu item add-post "Footer Légal" "$(page_id "Conditions Générales de Vente")"   --title="CGV"
+$WP menu item add-post "Footer Légal" "$(page_id "Politique de confidentialité")"    --title="Confidentialité"
+$WP menu location assign "Footer Légal" footer-legal
 
 # ============================================================
 # Blog categories
