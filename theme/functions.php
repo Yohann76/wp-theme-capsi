@@ -30,14 +30,14 @@ function capsi_enqueue_assets(): void {
         'capsi-main',
         get_stylesheet_directory_uri() . '/assets/css/main.css',
         [],
-        '1.0.0'
+        (string) filemtime( get_stylesheet_directory() . '/assets/css/main.css' )
     );
 
     wp_add_inline_style( 'capsi-main', '
         #site-footer .footer-layout {
             display: grid !important;
-            grid-template-columns: 240px 1fr !important;
-            gap: 4rem;
+            grid-template-columns: 220px 1fr !important;
+            gap: 0 !important;
             align-items: start;
             width: 100%;
         }
@@ -57,13 +57,25 @@ function capsi_enqueue_assets(): void {
             flex-shrink: 0;
         }
         #site-footer .footer-brand__name {
+            display: flex !important;
+            flex-direction: column !important;
             font-family: "Cormorant Garamond", serif !important;
-            font-size: 1.25rem !important;
             font-weight: 600 !important;
             color: #EDE8DF !important;
             margin: 0 !important;
             max-width: none !important;
-            line-height: 1.2 !important;
+            line-height: 1.15 !important;
+        }
+        #site-footer .footer-brand__name span:first-child {
+            font-size: 0.85rem !important;
+            letter-spacing: 0.18em !important;
+            text-transform: uppercase !important;
+            opacity: 0.75 !important;
+        }
+        #site-footer .footer-brand__name span:last-child {
+            font-size: 1.35rem !important;
+            letter-spacing: 0.22em !important;
+            text-transform: uppercase !important;
         }
         #site-footer .footer-social {
             display: flex !important;

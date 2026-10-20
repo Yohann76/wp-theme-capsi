@@ -10,9 +10,12 @@
 <header id="site-header">
     <div class="container">
         <a href="{{ site.url }}" class="site-logo" aria-label="{{ site.name }}">
-            <img src="{{ theme.link }}/assets/images/logo-horizontal.svg"
-                 alt="{{ site.name }}"
-                 width="320" height="60">
+            <img src="{{ theme.link }}/assets/images/logo-icon.svg"
+                 alt="" width="40" height="40">
+            <span class="site-logo__name">
+                <span>L'Atelier</span>
+                <span>Capsi</span>
+            </span>
         </a>
 
         {% if menu %}
@@ -40,9 +43,11 @@
                     <a href="{{ site.url }}" class="footer-brand__identity">
                         <img src="{{ theme.link }}/assets/images/logo-icon.svg"
                              alt="{{ site.name }}" width="44" height="44">
-                        <p class="footer-brand__name">L'Atelier Capsi</p>
+                        <span class="footer-brand__name">
+                            <span>L'Atelier</span>
+                            <span>Capsi</span>
+                        </span>
                     </a>
-                    <p class="footer-brand__tagline">Botanical Artisan Peppers</p>
                     <div class="footer-social">
                         <a href="https://facebook.com" class="footer-social__link" aria-label="Facebook" target="_blank" rel="noopener">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>

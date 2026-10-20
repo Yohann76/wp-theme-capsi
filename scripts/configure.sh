@@ -220,7 +220,7 @@ $WP wc tool run install_pages --user="$WP_ADMIN"
 step "Creating product categories..."
 $WP wc product_cat create --name="Graines"             --description="Graines de piments rares et de collection" --user="$WP_ADMIN"
 $WP wc product_cat create --name="Plants"              --description="Plants de piments prêts à planter"         --user="$WP_ADMIN"
-$WP wc product_cat create --name="Sauces & Condiments" --description="Sauces artisanales et condiments"          --user="$WP_ADMIN"
+$WP wc product_cat create --name="Sauces et Condiments" --description="Sauces artisanales et condiments"          --user="$WP_ADMIN"
 $WP wc product_cat create --name="Coffrets"            --description="Coffrets cadeaux et collections"           --user="$WP_ADMIN"
 
 step "Creating demo products..."
@@ -253,7 +253,7 @@ $WP wc product create \
   --type=simple --regular_price="9.90" --status=publish \
   --description="Sauce artisanale élaborée à partir de nos piments Habanero cultivés à l'Atelier, associés à la mangue. Flacon verre ambré 100ml." \
   --short_description="Flacon 100ml · Artisanal · Habanero & Mangue" \
-  --categories='[{"id":'"$(wc_cat_id "Sauces & Condiments")"'}]' \
+  --categories='[{"id":'"$(wc_cat_id "Sauces et Condiments")"'}]' \
   --manage_stock=true --stock_quantity=30 --user="$WP_ADMIN"
 
 $WP wc product create \
