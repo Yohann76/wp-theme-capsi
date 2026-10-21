@@ -29,6 +29,12 @@
   overflow: hidden;
 }
 
+/* Le bloc prix-slider doit laisser passer les thumbs (18px) */
+.shop-filter--price,
+.shop-filter:has(.shop-price-slider) {
+  overflow: visible;
+}
+
 .shop-filter__title {
   font-family: var(--font-sans);
   font-size: var(--text-xs);
@@ -118,6 +124,198 @@
   margin-top: 1px;
   opacity: 0.6;
 }
+
+/* ============================================================
+   WOOCOMMERCE — Sidebar : filtres actifs
+   ============================================================ */
+.shop-active-filters {
+  background: rgba(227, 155, 53, 0.07);
+  border: 1px solid rgba(227, 155, 53, 0.25);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.shop-active-filters__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.shop-active-filters__label {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  color: var(--safran-brule);
+  font-weight: 500;
+}
+
+.shop-active-filters__reset {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-xs);
+  color: var(--color-text-faint);
+  text-decoration: none;
+  transition: color var(--ease-fast);
+}
+
+.shop-active-filters__reset:hover {
+  color: var(--rouge-capsi);
+}
+
+.shop-active-filters__list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.shop-active-filters__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  background: rgba(227, 155, 53, 0.12);
+  border: 1px solid rgba(227, 155, 53, 0.30);
+  border-radius: 20px;
+  font-size: var(--text-xs);
+  color: var(--safran-brule);
+}
+
+.shop-active-filters__tag a {
+  display: flex;
+  align-items: center;
+  color: var(--safran-brule);
+  opacity: 0.6;
+  transition: opacity var(--ease-fast);
+  text-decoration: none;
+}
+
+.shop-active-filters__tag a:hover {
+  opacity: 1;
+}
+
+
+/* ============================================================
+   WOOCOMMERCE — Sidebar : double-range slider prix
+   ============================================================ */
+.shop-price-slider {
+  padding: var(--space-5);
+  /* Les thumbs du slider débordent verticalement, overflow:hidden les couperait */
+  overflow: visible;
+}
+
+.shop-price-slider__values {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--space-5);
+}
+
+.shop-price-slider__val {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--color-text);
+  letter-spacing: var(--tracking-tight);
+  transition: color var(--ease-fast);
+}
+
+.shop-price-slider__val-sep {
+  font-size: var(--text-xs);
+  color: var(--color-text-faint);
+}
+
+/* Track */
+.shop-price-slider__track-wrap {
+  position: relative;
+  height: 4px;
+  margin: 12px 0 28px;
+  /* Laisser les thumbs (18px) dépasser du conteneur de 4px sans être clippés */
+  overflow: visible;
+}
+
+.shop-price-slider__track-bg {
+  position: absolute;
+  inset: 0;
+  background: var(--color-surface-2);
+  border-radius: 2px;
+  border: 1px solid var(--color-border-strong);
+}
+
+.shop-price-slider__track-fill {
+  position: absolute;
+  top: 0;
+  left: 0;       /* valeur par défaut — JS écrase via style.left */
+  width: 0;      /* valeur par défaut — JS écrase via style.width */
+  height: 100%;
+  background: linear-gradient(90deg, var(--safran-brule), var(--rouge-capsi));
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+/* Range inputs — superposés sur la track */
+.shop-price-slider__range {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  -webkit-appearance: none;
+  appearance: none;
+  pointer-events: none;
+  outline: none;
+  transform: translateY(-50%);
+}
+
+.shop-price-slider__range--min { z-index: 2; }
+.shop-price-slider__range--max { z-index: 3; }
+
+/* Thumb Webkit */
+.shop-price-slider__range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--color-text);
+  border: 2.5px solid var(--color-bg);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
+  pointer-events: all;
+  cursor: grab;
+  transition: background-color var(--ease-fast), transform 120ms ease;
+}
+
+.shop-price-slider__range::-webkit-slider-thumb:hover,
+.shop-price-slider__range::-webkit-slider-thumb:active {
+  background: var(--safran-brule);
+  transform: scale(1.2);
+  cursor: grabbing;
+}
+
+/* Thumb Firefox */
+.shop-price-slider__range::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--color-text);
+  border: 2.5px solid var(--color-bg);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
+  pointer-events: all;
+  cursor: grab;
+  transition: background-color var(--ease-fast);
+}
+
+.shop-price-slider__range::-moz-range-thumb:hover {
+  background: var(--safran-brule);
+}
+
 
 /* Main content area */
 .shop-main {

@@ -10,6 +10,29 @@
 
       <aside class="shop-sidebar">
 
+        {# Filtres actifs #}
+        {% if has_active_filters %}
+        <div class="shop-active-filters">
+          <div class="shop-active-filters__head">
+            <span class="shop-active-filters__label">Filtres actifs</span>
+            <a href="{{ filter_reset_url }}" class="shop-active-filters__reset" title="Effacer les filtres">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              Effacer
+            </a>
+          </div>
+          <ul class="shop-active-filters__list">
+            {% for f in active_filters %}
+            <li class="shop-active-filters__tag">
+              {{ f.label }}
+              <a href="{{ filter_reset_url }}" aria-label="Supprimer ce filtre">
+                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+
         {# Catégories #}
         <div class="shop-filter">
           <h3 class="shop-filter__title">Catégories</h3>
@@ -28,6 +51,49 @@
             </li>
             {% endfor %}
           </ul>
+        </div>
+
+        {# Filtre prix — double-range slider #}
+        <div class="shop-filter shop-filter--price">
+          <h3 class="shop-filter__title">Prix</h3>
+          <div class="shop-price-slider"
+               data-floor="{{ price_floor }}"
+               data-ceil="{{ price_ceil }}"
+               data-val-min="{{ price_min != '' ? price_min : price_floor }}"
+               data-val-max="{{ price_max != '' ? price_max : price_ceil }}">
+
+            <div class="shop-price-slider__values">
+              <span class="shop-price-slider__val" data-role="min-label">{{ price_min != '' ? price_min : price_floor }}&nbsp;€</span>
+              <span class="shop-price-slider__val-sep">—</span>
+              <span class="shop-price-slider__val" data-role="max-label">{{ price_max != '' ? price_max : price_ceil }}&nbsp;€</span>
+            </div>
+
+            <form method="get" action="" class="shop-price-slider__form">
+              <div class="shop-price-slider__track-wrap">
+                <div class="shop-price-slider__track-bg"></div>
+                <div class="shop-price-slider__track-fill"></div>
+                <input type="range"
+                       class="shop-price-slider__range shop-price-slider__range--min"
+                       min="{{ price_floor }}" max="{{ price_ceil }}"
+                       value="{{ price_min != '' ? price_min : price_floor }}"
+                       step="1" aria-label="Prix minimum">
+                <input type="range"
+                       class="shop-price-slider__range shop-price-slider__range--max"
+                       min="{{ price_floor }}" max="{{ price_ceil }}"
+                       value="{{ price_max != '' ? price_max : price_ceil }}"
+                       step="1" aria-label="Prix maximum">
+              </div>
+
+              <input type="hidden" name="min_price" class="shop-price-slider__hidden-min"
+                     value="{{ price_min }}">
+              <input type="hidden" name="max_price" class="shop-price-slider__hidden-max"
+                     value="{{ price_max }}">
+              {% if current_orderby %}
+              <input type="hidden" name="orderby" value="{{ current_orderby }}">
+              {% endif %}
+            </form>
+
+          </div>
         </div>
 
         {# Trier par #}
