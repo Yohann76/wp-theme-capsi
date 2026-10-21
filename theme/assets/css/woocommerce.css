@@ -469,9 +469,484 @@ ul.products {
 
 
 /* ============================================================
+   WOOCOMMERCE — Account — Login page
+   ============================================================ */
+.account-login-page {
+  padding-block: var(--space-16) var(--space-24);
+}
+
+.account-login-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+.account-login-grid--single {
+  grid-template-columns: minmax(0, 480px);
+  justify-content: center;
+}
+
+.account-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.account-card--alt {
+  border-color: rgba(227, 155, 53, 0.2);
+}
+
+.account-card__title {
+  font-family: var(--font-serif);
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.account-card__sub {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin: 0;
+  max-width: none;
+}
+
+/* Shared form helpers (used in login + edit-account) */
+.account-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.account-form__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.account-form__remember {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  user-select: none;
+}
+
+.account-form__remember input[type="checkbox"] {
+  accent-color: var(--safran-brule);
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+.account-form__lost {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  transition: color var(--ease-fast);
+}
+
+.account-form__lost:hover {
+  color: var(--safran-brule);
+}
+
+.account-form__hint {
+  font-size: var(--text-sm);
+  color: var(--color-text-faint);
+  font-style: italic;
+  margin: 0;
+  max-width: none;
+}
+
+.account-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  padding: var(--space-3) var(--space-7);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--papier-botanique);
+  background: linear-gradient(135deg, var(--safran-brule) 0%, var(--rouge-capsi) 100%);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: opacity var(--ease-fast), box-shadow var(--ease-fast);
+  margin-top: var(--space-2);
+}
+
+.account-submit:hover {
+  opacity: 0.88;
+  box-shadow: 0 4px 20px rgba(200, 42, 43, 0.40);
+}
+
+.account-submit--outline {
+  background: transparent;
+  border: 1px solid rgba(227, 155, 53, 0.4);
+  color: var(--safran-brule);
+}
+
+.account-submit--outline:hover {
+  background: rgba(227, 155, 53, 0.08);
+  box-shadow: none;
+  opacity: 1;
+}
+
+/* WooCommerce notices inside account pages */
+.account-login-page .woocommerce-error,
+.account-login-page .woocommerce-message,
+.account-layout .woocommerce-error,
+.account-layout .woocommerce-message,
+.account-layout .woocommerce-info {
+  list-style: none;
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  border: 1px solid;
+  margin-bottom: var(--space-5);
+}
+
+.account-login-page .woocommerce-error,
+.account-layout .woocommerce-error {
+  background-color: rgba(200, 42, 43, 0.10);
+  border-color: rgba(200, 42, 43, 0.35);
+  color: #f08080;
+}
+
+.account-login-page .woocommerce-message,
+.account-layout .woocommerce-message {
+  background-color: rgba(45, 74, 62, 0.20);
+  border-color: rgba(45, 74, 62, 0.5);
+  color: #7ec9a4;
+}
+
+.account-layout .woocommerce-info {
+  background-color: rgba(227, 155, 53, 0.10);
+  border-color: rgba(227, 155, 53, 0.30);
+  color: var(--safran-brule);
+}
+
+
+/* ============================================================
+   WOOCOMMERCE — Account — Layout (logged in)
+   ============================================================ */
+.account-layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: var(--space-12);
+  align-items: start;
+  padding-block: var(--space-12) var(--space-24);
+}
+
+.account-sidebar {
+  position: sticky;
+  top: calc(var(--header-height) + var(--space-8));
+}
+
+.account-main {
+  min-width: 0;
+}
+
+/* Navigation sidebar */
+.account-nav__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.account-nav__item a {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  border-radius: var(--radius-sm);
+  transition: color var(--ease-fast), background-color var(--ease-fast);
+}
+
+.account-nav__item a svg {
+  flex-shrink: 0;
+  opacity: 0.55;
+  transition: opacity var(--ease-fast);
+}
+
+.account-nav__item a:hover,
+.account-nav__item.is-active a,
+.account-nav__item a[aria-current="page"] {
+  color: var(--color-text);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.account-nav__item a:hover svg,
+.account-nav__item.is-active a svg,
+.account-nav__item a[aria-current="page"] svg {
+  opacity: 1;
+}
+
+.account-nav__item.is-active a,
+.account-nav__item a[aria-current="page"] {
+  color: var(--safran-brule);
+  background-color: rgba(227, 155, 53, 0.08);
+}
+
+.account-nav__item--logout {
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+.account-nav__item--logout a:hover {
+  color: #f08080;
+  background-color: rgba(200, 42, 43, 0.08);
+}
+
+
+/* ============================================================
+   WOOCOMMERCE — Account — Dashboard
+   ============================================================ */
+.account-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.account-dashboard__welcome {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--safran-brule);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+}
+
+.account-dashboard__greeting {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 400;
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+  max-width: none;
+}
+
+.account-dashboard__greeting strong {
+  color: var(--safran-brule);
+}
+
+.account-dashboard__hint {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: var(--leading-loose);
+  margin-bottom: var(--space-5);
+  max-width: none;
+}
+
+.account-dashboard__logout {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+  transition: color var(--ease-fast);
+}
+
+.account-dashboard__logout:hover {
+  color: #f08080;
+}
+
+.account-shortcuts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+}
+
+.account-shortcut {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-6) var(--space-4);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  text-align: center;
+  transition: border-color var(--ease-fast), transform var(--ease-fast);
+}
+
+.account-shortcut svg {
+  color: var(--safran-brule);
+}
+
+.account-shortcut span {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  transition: color var(--ease-fast);
+}
+
+.account-shortcut:hover {
+  border-color: rgba(227, 155, 53, 0.4);
+  transform: translateY(-2px);
+}
+
+.account-shortcut:hover span {
+  color: var(--color-text);
+}
+
+
+/* ============================================================
+   WOOCOMMERCE — Account — Edit account form
+   ============================================================ */
+.account-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  max-width: 640px;
+}
+
+.account-section__title {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--color-text);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+  margin-top: var(--space-4);
+  margin-bottom: 0;
+}
+
+.account-section__title:first-child {
+  margin-top: 0;
+}
+
+.account-edit-form small.account-form__hint {
+  display: block;
+  font-size: var(--text-xs);
+  color: var(--color-text-faint);
+  margin-top: var(--space-1);
+  font-style: italic;
+}
+
+/* WooCommerce orders table */
+.woocommerce-orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.woocommerce-orders-table thead th {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--safran-brule);
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.woocommerce-orders-table tbody td {
+  padding: var(--space-4);
+  color: var(--color-text-muted);
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+
+.woocommerce-orders-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.woocommerce-orders-table tbody tr:hover td {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.woocommerce-orders-table .woocommerce-orders-table__cell-order-number a {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  color: var(--safran-brule);
+  transition: opacity var(--ease-fast);
+}
+
+.woocommerce-orders-table .woocommerce-orders-table__cell-order-number a:hover {
+  opacity: 0.75;
+}
+
+.woocommerce-orders-table .button {
+  display: inline-flex;
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-xs);
+  font-family: var(--font-sans);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--safran-brule);
+  border: 1px solid rgba(227, 155, 53, 0.35);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  transition: background-color var(--ease-fast), color var(--ease-fast);
+  text-decoration: none;
+}
+
+.woocommerce-orders-table .button:hover {
+  background-color: rgba(227, 155, 53, 0.1);
+  color: var(--safran-brule);
+}
+
+/* My account notices (no-orders, etc.) */
+.woocommerce-info a.button {
+  margin-left: var(--space-3);
+}
+
+
+/* ============================================================
    WOOCOMMERCE — Responsive
    ============================================================ */
 @media (max-width: 900px) {
+  .account-login-grid {
+    grid-template-columns: 1fr;
+    max-width: 480px;
+    margin-inline: auto;
+  }
+
+  .account-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .account-sidebar {
+    position: static;
+  }
+
+  .account-nav__list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+  }
+
+  .account-nav__item--logout {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+    margin-left: auto;
+  }
+
+  .account-shortcuts {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
   .single-product-layout {
     grid-template-columns: 1fr;
     gap: var(--space-10);
@@ -488,6 +963,14 @@ ul.products {
 }
 
 @media (max-width: 560px) {
+  .account-shortcuts {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .account-nav__list {
+    gap: var(--space-1);
+  }
+
   .single-product__summary .cart {
     flex-direction: column !important;
     align-items: stretch !important;
