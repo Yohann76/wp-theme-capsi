@@ -15,6 +15,15 @@ WP_EMAIL="yohanndurand76@gmail.com"
 WP="docker compose run --rm wpcli"
 
 # ============================================================
+# Variables d'environnement (.env non versionné)
+# ============================================================
+if [ -f "$DIR/../.env" ]; then
+    set -a
+    source "$DIR/../.env"
+    set +a
+fi
+
+# ============================================================
 # Helpers + wait
 # ============================================================
 source "$DIR/lib/helpers.sh"
