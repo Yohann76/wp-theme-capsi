@@ -14,6 +14,25 @@ $legal_slugs = [
 	'livraison',
 ];
 
+if ( $slug === 'accueil' ) {
+	$context['featured_products'] = [];
+	if ( function_exists( 'wc_get_products' ) ) {
+		$prods = wc_get_products( [ 'limit' => 3, 'status' => 'publish', 'orderby' => 'date', 'order' => 'DESC' ] );
+		foreach ( $prods as $p ) {
+			$img = get_the_post_thumbnail_url( $p->get_id(), 'woocommerce_thumbnail' );
+			$context['featured_products'][] = [
+				'title'          => $p->get_name(),
+				'url'            => get_permalink( $p->get_id() ),
+				'image'          => $img ?: '',
+				'price'          => wc_price( $p->get_price() ),
+				'regular_price'  => wc_price( $p->get_regular_price() ),
+				'on_sale'        => $p->is_on_sale(),
+				'cats'           => wp_get_post_terms( $p->get_id(), 'product_cat', [ 'fields' => 'names' ] ),
+			];
+		}
+	}
+}
+
 if ( $slug === 'faq' ) {
 	$raw                    = get_post_meta( $post->ID, '_faq_items', true );
 	$context['faq_items']   = $raw ? json_decode( $raw, true ) : [];

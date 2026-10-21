@@ -43,6 +43,10 @@ function capsi_enqueue_assets(): void {
         $sheets['capsi-woocommerce'] = 'woocommerce.css';
     }
 
+    if ( is_front_page() ) {
+        $sheets['capsi-home'] = 'home.css';
+    }
+
     if ( is_page() ) {
         $sheets['capsi-pages'] = 'pages.css';
     }

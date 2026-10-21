@@ -96,10 +96,25 @@
   } );
 
   /* ============================================================
-     Dropdowns touch — expose la classe is-open au CSS
+     Scroll animations — IntersectionObserver pour .animate-in
      ============================================================ */
-  // Sur mobile, .is-open remplace :hover/:focus-within pour les dropdowns
+  const animateEls = document.querySelectorAll( '.animate-in' );
+  if ( animateEls.length && 'IntersectionObserver' in window ) {
+    const observer = new IntersectionObserver( ( entries ) => {
+      let batchIdx = 0;
+      entries.forEach( ( entry ) => {
+        if ( entry.isIntersecting ) {
+          entry.target.style.transitionDelay = ( batchIdx * 0.1 ) + 's';
+          entry.target.classList.add( 'is-visible' );
+          observer.unobserve( entry.target );
+          batchIdx++;
+        }
+      } );
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' } );
 
-
+    animateEls.forEach( ( el ) => observer.observe( el ) );
+  } else {
+    animateEls.forEach( ( el ) => el.classList.add( 'is-visible' ) );
+  }
 
 } )();
