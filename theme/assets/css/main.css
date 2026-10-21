@@ -299,6 +299,103 @@ a:hover {
   width: 100%;
 }
 
+/* Dropdown */
+.nav-item {
+  position: relative;
+}
+
+.nav-item > a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.nav-chevron {
+  color: var(--color-text-muted);
+  transition: transform var(--ease-base), color var(--ease-fast);
+}
+
+.nav-item--has-dropdown:hover .nav-chevron,
+.nav-item--has-dropdown:focus-within .nav-chevron {
+  transform: rotate(180deg);
+  color: var(--color-text);
+}
+
+.nav-item--has-dropdown::before {
+  content: '';
+  position: absolute;
+  bottom: -14px;
+  left: -20px;
+  right: -20px;
+  height: 14px;
+}
+
+.nav-dropdown {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  min-width: 200px;
+  background-color: var(--color-surface-2, #1c1a17);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  list-style: none;
+  padding: var(--space-2) 0;
+  opacity: 0;
+  pointer-events: none;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  transition: opacity var(--ease-fast), transform var(--ease-fast);
+  z-index: 200;
+}
+
+.nav-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid var(--color-border);
+}
+
+.nav-dropdown::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid var(--color-surface-2, #1c1a17);
+}
+
+.nav-item--has-dropdown:hover .nav-dropdown,
+.nav-item--has-dropdown:focus-within .nav-dropdown {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.nav-dropdown li a {
+  display: block;
+  padding: var(--space-2) var(--space-5);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  text-transform: none;
+  letter-spacing: 0;
+  transition: color var(--ease-fast), background-color var(--ease-fast);
+}
+
+.nav-dropdown li a:hover {
+  color: var(--safran-brule);
+  background-color: rgba(227, 155, 53, 0.06);
+}
+
+.nav-dropdown li a::after {
+  display: none;
+}
+
 
 /* ============================================================
    FOOTER

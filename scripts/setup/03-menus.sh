@@ -3,11 +3,14 @@
 
 step "Creating navigation menu..."
 $WP menu create "Menu principal"
-$WP menu item add-post "Menu principal" "$(page_id "Accueil")"             --title="Accueil"
-$WP menu item add-custom "Menu principal" "Boutique" "$WP_URL/boutique"
-$WP menu item add-post "Menu principal" "$(page_id "Blog")"                --title="Blog"
-$WP menu item add-post "Menu principal" "$(page_id "À propos")"            --title="À propos"
-$WP menu item add-post "Menu principal" "$(page_id "Contact")"             --title="Contact"
+$WP menu item add-post   "Menu principal" "$(page_id "Accueil")"   --title="Accueil"
+
+# Épicerie — item parent dont l'ID sera réutilisé dans 04-woocommerce.sh
+EPICERIE_ITEM=$($WP menu item add-custom "Menu principal" "Épicerie" "$WP_URL/boutique" --porcelain | grep -E '^[0-9]+$')
+
+$WP menu item add-post   "Menu principal" "$(page_id "Blog")"      --title="Blog"
+$WP menu item add-post   "Menu principal" "$(page_id "À propos")"  --title="À propos"
+$WP menu item add-post   "Menu principal" "$(page_id "Contact")"   --title="Contact"
 $WP menu location assign "Menu principal" primary
 
 step "Creating footer menus..."

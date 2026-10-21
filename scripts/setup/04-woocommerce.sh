@@ -86,3 +86,13 @@ $WP wc product create \
   --short_description="<strong>5 variétés rares</strong> · Édition limitée · Idéal cadeau" \
   --categories='[{"id":'"$(wc_cat_id "Coffrets")"'}]' \
   --manage_stock=true --stock_quantity=20 --user="$WP_ADMIN"
+
+step "Adding Épicerie dropdown submenu..."
+for cat_name in "Graines" "Plants" "Sauces et Condiments" "Coffrets"; do
+  term_id=$($WP term list product_cat --name="$cat_name" --field=term_id --format=ids 2>/dev/null)
+  if [ -n "$term_id" ]; then
+    $WP menu item add-term "Menu principal" product_cat "$term_id" \
+      --parent-id="$EPICERIE_ITEM" \
+      --title="$cat_name"
+  fi
+done

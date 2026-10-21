@@ -22,9 +22,23 @@
         {% if menu %}
             <nav id="site-nav" aria-label="Navigation principale">
                 {% for item in menu.items %}
-                    <a href="{{ item.url }}"{% if item.current %} class="active"{% endif %}>
-                        {{ item.title }}
-                    </a>
+                    {% if item.children %}
+                        <div class="nav-item nav-item--has-dropdown">
+                            <a href="{{ item.url }}"{% if item.current %} class="active"{% endif %}>
+                                {{ item.title }}
+                                <svg class="nav-chevron" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                            </a>
+                            <ul class="nav-dropdown" role="list">
+                                {% for child in item.children %}
+                                    <li><a href="{{ child.url }}">{{ child.title }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% else %}
+                        <a href="{{ item.url }}"{% if item.current %} class="active"{% endif %}>
+                            {{ item.title }}
+                        </a>
+                    {% endif %}
                 {% endfor %}
             </nav>
         {% endif %}
