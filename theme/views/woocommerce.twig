@@ -2,8 +2,68 @@
 
 {% block content %}
 <main id="main" class="woocommerce-page">
-    <div class="container">
+  <div class="container">
+
+    {% if is_shop_archive %}
+    {# ——— Layout boutique : sidebar gauche + grille droite ——— #}
+    <div class="shop-layout">
+
+      <aside class="shop-sidebar">
+
+        {# Catégories #}
+        <div class="shop-filter">
+          <h3 class="shop-filter__title">Catégories</h3>
+          <ul class="shop-filter__list" role="list">
+            <li class="shop-filter__item{% if shop_is_root %} is-active{% endif %}">
+              <a href="{{ shop_url }}" class="shop-filter__link">
+                <span class="shop-filter__name">Tous les produits</span>
+              </a>
+            </li>
+            {% for cat in shop_cats %}
+            <li class="shop-filter__item{% if cat.current %} is-active{% endif %}">
+              <a href="{{ cat.url }}" class="shop-filter__link">
+                <span class="shop-filter__name">{{ cat.name }}</span>
+                <span class="shop-filter__count">{{ cat.count }}</span>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        {# Trier par #}
+        {% if shop_ordering %}
+        <div class="shop-filter">
+          <h3 class="shop-filter__title">Trier par</h3>
+          <div class="shop-filter__ordering">
+            {{ shop_ordering|raw }}
+          </div>
+        </div>
+        {% endif %}
+
+        {# Résultats + note #}
+        <div class="shop-filter shop-filter--meta">
+          {% if shop_result_count %}
+          <p class="shop-filter__result-count">{{ shop_result_count|raw }}</p>
+          {% endif %}
+          <p class="shop-filter__note">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Stock limité, mis à jour en temps réel.
+          </p>
+        </div>
+
+      </aside>
+
+      <div class="shop-main">
         {{ woocommerce_content|raw }}
+      </div>
+
     </div>
+
+    {% else %}
+    {# ——— Produit unique — pleine largeur ——— #}
+    {{ woocommerce_content|raw }}
+    {% endif %}
+
+  </div>
 </main>
 {% endblock %}

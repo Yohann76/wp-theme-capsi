@@ -1,19 +1,302 @@
 /* ============================================================
-   WOOCOMMERCE — Grille produits
+   WOOCOMMERCE — Shop layout (sidebar + main)
    ============================================================ */
 .woocommerce-page .container {
   padding-top: var(--space-12);
   padding-bottom: var(--space-24);
 }
 
+.shop-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: var(--space-12);
+  align-items: start;
+}
+
+/* Sidebar */
+.shop-sidebar {
+  position: sticky;
+  top: calc(var(--header-height) + var(--space-6));
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.shop-filter {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.shop-filter__title {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+  padding: var(--space-4) var(--space-5) var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.shop-filter__list {
+  list-style: none;
+  padding: var(--space-2) 0;
+}
+
+.shop-filter__item {
+  display: block;
+}
+
+.shop-filter__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-5);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  font-size: var(--text-sm);
+  transition: color var(--ease-fast), background-color var(--ease-fast);
+  border-left: 2px solid transparent;
+}
+
+.shop-filter__link:hover {
+  color: var(--color-text);
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+.shop-filter__item.is-active .shop-filter__link {
+  color: var(--safran-brule);
+  background-color: rgba(227, 155, 53, 0.07);
+  border-left-color: var(--safran-brule);
+  font-weight: 500;
+}
+
+.shop-filter__name {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.shop-filter__count {
+  font-size: var(--text-xs);
+  color: var(--color-text-faint);
+  background: var(--color-surface-2);
+  padding: 1px 7px;
+  border-radius: 20px;
+  flex-shrink: 0;
+  transition: color var(--ease-fast), background-color var(--ease-fast);
+}
+
+.shop-filter__item.is-active .shop-filter__count {
+  background-color: rgba(227, 155, 53, 0.15);
+  color: var(--safran-brule);
+}
+
+/* Info note */
+.shop-filter--info {
+  background: transparent;
+  border-color: var(--color-border);
+}
+
+.shop-filter__note {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-5);
+  font-size: var(--text-xs);
+  color: var(--color-text-faint);
+  line-height: var(--leading-snug);
+}
+
+.shop-filter__note svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+  opacity: 0.6;
+}
+
+/* Main content area */
+.shop-main {
+  min-width: 0;
+}
+
+/* Masquer le titre de catégorie dans le main (déjà visible dans la sidebar) */
+.shop-main .woocommerce-products-header {
+  margin-bottom: var(--space-6);
+}
+
+.shop-main .woocommerce-products-header__title {
+  font-family: var(--font-serif) !important;
+  font-size: var(--text-2xl) !important;
+  font-weight: 600 !important;
+  letter-spacing: var(--tracking-tight) !important;
+  color: var(--color-text) !important;
+  margin: 0 0 var(--space-2) !important;
+}
+
+.shop-main .woocommerce-products-header .term-description {
+  font-size: var(--text-sm) !important;
+  color: var(--color-text-muted) !important;
+  line-height: var(--leading-base) !important;
+}
+
+/* Supprimer les floats WooCommerce dans le main */
+.shop-main .woocommerce::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+/* Les éléments résultat/tri ne devraient plus apparaître dans le main
+   (ils sont retirés via remove_action en PHP), mais au cas où : */
+.shop-main .woocommerce-result-count,
+.shop-main .woocommerce-ordering {
+  display: none !important;
+}
+
+
+/* ============================================================
+   WOOCOMMERCE — Sidebar : select de tri
+   ============================================================ */
+.shop-filter__ordering {
+  padding: var(--space-4) var(--space-5);
+}
+
+.shop-filter__ordering .woocommerce-ordering {
+  margin: 0 !important;
+}
+
+.shop-filter__ordering select {
+  width: 100%;
+  appearance: none;
+  background-color: var(--color-surface-2) !important;
+  border: 1px solid var(--color-border-strong) !important;
+  border-radius: var(--radius-sm) !important;
+  color: var(--color-text-muted) !important;
+  font-family: var(--font-sans) !important;
+  font-size: var(--text-sm) !important;
+  padding: var(--space-3) var(--space-8) var(--space-3) var(--space-4) !important;
+  cursor: pointer !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239A9288' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right var(--space-3) center !important;
+  transition: border-color var(--ease-fast), color var(--ease-fast) !important;
+}
+
+.shop-filter__ordering select:hover,
+.shop-filter__ordering select:focus {
+  border-color: var(--safran-brule) !important;
+  color: var(--color-text) !important;
+  outline: none !important;
+}
+
+/* Résultat count + note info */
+.shop-filter--meta {
+  padding: var(--space-4) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.shop-filter__result-count {
+  font-size: var(--text-xs) !important;
+  color: var(--color-text-faint) !important;
+  letter-spacing: var(--tracking-wide) !important;
+  text-transform: uppercase !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.shop-filter__result-count p {
+  margin: 0 !important;
+}
+
+
+/* ============================================================
+   WOOCOMMERCE — Grille produits (dans shop-main = 2 cols)
+   ============================================================ */
 ul.products {
   display: grid !important;
   grid-template-columns: repeat(3, 1fr) !important;
-  gap: var(--space-8) !important;
+  gap: var(--space-6) !important;
   list-style: none !important;
   margin: 0 !important;
   padding: 0 !important;
   float: none !important;
+}
+
+.shop-main ul.products {
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: var(--space-4) !important;
+}
+
+/* Cartes plus compactes dans le shop main */
+.shop-main .product-card__body {
+  padding: var(--space-4) var(--space-4) var(--space-5) !important;
+}
+
+.shop-main .product-card__title {
+  font-size: var(--text-base) !important;
+}
+
+.shop-main .product-card__price .price,
+.shop-main .product-card__price .woocommerce-Price-amount {
+  font-size: var(--text-lg) !important;
+}
+
+
+/* ============================================================
+   WOOCOMMERCE — Pagination
+   ============================================================ */
+.woocommerce-pagination {
+  margin-top: var(--space-10) !important;
+}
+
+.woocommerce-pagination ul {
+  display: flex !important;
+  align-items: center !important;
+  gap: var(--space-2) !important;
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  justify-content: center !important;
+}
+
+.woocommerce-pagination ul .page-numbers {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 36px !important;
+  height: 36px !important;
+  padding: 0 var(--space-3) !important;
+  font-size: var(--text-sm) !important;
+  color: var(--color-text-muted) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-sm) !important;
+  transition: color var(--ease-fast), border-color var(--ease-fast), background-color var(--ease-fast) !important;
+  text-decoration: none !important;
+}
+
+.woocommerce-pagination ul .page-numbers:hover {
+  color: var(--color-text) !important;
+  border-color: var(--color-border-strong) !important;
+  background-color: rgba(255, 255, 255, 0.04) !important;
+}
+
+.woocommerce-pagination ul .page-numbers.current {
+  color: var(--safran-brule) !important;
+  border-color: rgba(227, 155, 53, 0.4) !important;
+  background-color: rgba(227, 155, 53, 0.08) !important;
+}
+
+.woocommerce-pagination ul .page-numbers.dots {
+  border-color: transparent !important;
+  background: none !important;
+  cursor: default !important;
 }
 
 
@@ -1182,7 +1465,29 @@ ul.products {
 /* ============================================================
    WOOCOMMERCE — Responsive
    ============================================================ */
+@media (max-width: 1024px) {
+  .shop-layout {
+    grid-template-columns: 200px 1fr;
+    gap: var(--space-8);
+  }
+}
+
 @media (max-width: 900px) {
+  .shop-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .shop-sidebar {
+    position: static;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+  }
+
+  .shop-main ul.products {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
   .account-login-grid {
     grid-template-columns: 1fr;
     max-width: 480px;
@@ -1242,6 +1547,22 @@ ul.products {
 }
 
 @media (max-width: 560px) {
+  .shop-sidebar {
+    grid-template-columns: 1fr;
+  }
+
+  .shop-main ul.products,
+  ul.products {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .shop-main ul.products,
+  ul.products {
+    grid-template-columns: 1fr !important;
+  }
+
   .account-shortcuts {
     grid-template-columns: 1fr 1fr;
   }
