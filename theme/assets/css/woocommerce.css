@@ -477,12 +477,6 @@ ul.products {
 
 .account-login-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-8);
-  align-items: start;
-}
-
-.account-login-grid--single {
   grid-template-columns: minmax(0, 480px);
   justify-content: center;
 }
@@ -497,8 +491,23 @@ ul.products {
   gap: var(--space-5);
 }
 
-.account-card--alt {
-  border-color: rgba(227, 155, 53, 0.2);
+.account-card__switch {
+  margin-top: var(--space-5);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.account-card__switch a {
+  color: var(--safran-brule);
+  font-weight: 500;
+  transition: opacity var(--ease-fast);
+}
+
+.account-card__switch a:hover {
+  opacity: 0.8;
 }
 
 .account-card__title {

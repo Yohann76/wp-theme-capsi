@@ -55,6 +55,14 @@ function capsi_enqueue_assets(): void {
             (string) filemtime( "{$dir}/assets/css/{$file}" )
         );
     }
+
+    wp_enqueue_script(
+        'capsi-main',
+        "{$uri}/assets/js/main.js",
+        [],
+        (string) filemtime( "{$dir}/assets/js/main.js" ),
+        true
+    );
 }
 
 add_filter( 'woocommerce_enqueue_styles', '__return_empty_array' );
@@ -149,7 +157,7 @@ add_filter( 'timber/context', function ( array $context ): array {
     } else {
         $myaccount             = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : wp_login_url();
         $account['login_url']    = $myaccount;
-        $account['register_url'] = $myaccount;
+        $account['register_url'] = add_query_arg( 'register', '1', $myaccount );
     }
     $context['account'] = $account;
 
