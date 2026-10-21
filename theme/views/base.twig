@@ -43,28 +43,26 @@
             </nav>
         {% endif %}
 
-        {# ——— Cart bubble ——— #}
-        {% if cart %}
-        <a href="{{ cart.url }}" class="nav-cart" aria-label="Panier — {{ cart.count }} article{{ cart.count > 1 ? 's' : '' }}">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
-                <line x1="3" y1="6" x2="21" y2="6"/>
-                <path d="M16 10a4 4 0 0 1-8 0"/>
-            </svg>
-            <span class="nav-cart__count{% if cart.count == 0 %} nav-cart__count--empty{% endif %}">{{ cart.count }}</span>
-        </a>
-        {% endif %}
+        {# ——— Actions (panier + profil) ——— #}
+        <div class="nav-actions">
 
-        {# ——— Account bubble ——— #}
-        <div class="nav-account{% if account.logged_in %} nav-account--in{% endif %}">
-            <button class="nav-account__trigger" type="button" aria-label="Mon compte">
-                {% if account.logged_in %}
-                    <span class="nav-account__avatar">{{ account.initials }}</span>
-                {% else %}
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
-                    </svg>
-                {% endif %}
+            {% if cart %}
+            <a href="{{ cart.url }}" class="nav-icon-btn" aria-label="Panier — {{ cart.count }} article{{ cart.count > 1 ? 's' : '' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <path d="M16 10a4 4 0 0 1-8 0"/>
+                </svg>
+                <span class="nav-cart__count{% if cart.count == 0 %} nav-cart__count--empty{% endif %}">{{ cart.count }}</span>
+            </a>
+            {% endif %}
+
+            <div class="nav-account{% if account.logged_in %} nav-account--in{% endif %}">
+            <button class="nav-icon-btn nav-account__trigger" type="button" aria-label="Mon compte">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+                </svg>
+                {% if account.logged_in %}<span class="nav-account__dot"></span>{% endif %}
             </button>
 
             <div class="nav-account__panel">
@@ -105,8 +103,10 @@
                     <a href="{{ account.register_url }}" class="nav-account__register-link">Créer un compte</a>
                 {% endif %}
             </div>
-        </div>
-    </div>
+            </div>{# /nav-account #}
+
+        </div>{# /nav-actions #}
+    </div>{# /container #}
 </header>
 
 {% block content %}{% endblock %}

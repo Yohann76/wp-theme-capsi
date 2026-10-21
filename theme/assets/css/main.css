@@ -398,6 +398,37 @@ a:hover {
 
 
 /* ============================================================
+   NAV — Actions group (panier + profil)
+   ============================================================ */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex-shrink: 0;
+}
+
+/* Shared icon button style (cart + account trigger) */
+.nav-icon-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: color var(--ease-fast);
+}
+
+.nav-icon-btn::after { display: none; }
+
+.nav-icon-btn:hover {
+  color: var(--color-text);
+}
+
+/* ============================================================
    NAV — Account bubble
    ============================================================ */
 .nav-account {
@@ -406,44 +437,24 @@ a:hover {
 }
 
 .nav-account__trigger {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 1px solid var(--color-border);
-  background: transparent;
-  color: var(--color-text-muted);
-  cursor: pointer;
-  transition: border-color var(--ease-fast), color var(--ease-fast), background-color var(--ease-fast);
+  position: relative;
 }
 
 .nav-account__trigger:hover,
 .nav-account:focus-within .nav-account__trigger {
-  border-color: var(--safran-brule);
   color: var(--color-text);
 }
 
-.nav-account--in .nav-account__trigger {
-  border-color: transparent;
-  padding: 0;
-}
-
-.nav-account__avatar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
+/* Dot indicator quand connecté */
+.nav-account__dot {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--safran-brule) 0%, var(--rouge-capsi) 100%);
-  color: #fff;
-  font-family: var(--font-sans);
-  font-size: var(--text-xs);
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  line-height: 1;
+  background-color: var(--safran-brule);
+  border: 1.5px solid var(--color-bg, #0f0f0f);
 }
 
 /* Panel */
@@ -625,25 +636,8 @@ a:hover {
 
 
 /* ============================================================
-   NAV — Cart bubble
+   NAV — Cart count badge
    ============================================================ */
-.nav-cart {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  color: var(--color-text-muted);
-  flex-shrink: 0;
-  transition: color var(--ease-fast);
-}
-
-.nav-cart:hover {
-  color: var(--color-text);
-}
-
-.nav-cart::after { display: none; }
 
 .nav-cart__count {
   position: absolute;
@@ -670,7 +664,7 @@ a:hover {
   transform: translate(3px, -3px) scale(0.4);
 }
 
-.nav-cart:hover .nav-cart__count:not(.nav-cart__count--empty) {
+.nav-icon-btn:hover .nav-cart__count:not(.nav-cart__count--empty) {
   background-color: var(--safran-brule);
 }
 
