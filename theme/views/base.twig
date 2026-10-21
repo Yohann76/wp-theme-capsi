@@ -43,6 +43,18 @@
             </nav>
         {% endif %}
 
+        {# ——— Cart bubble ——— #}
+        {% if cart %}
+        <a href="{{ cart.url }}" class="nav-cart" aria-label="Panier — {{ cart.count }} article{{ cart.count > 1 ? 's' : '' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <path d="M16 10a4 4 0 0 1-8 0"/>
+            </svg>
+            <span class="nav-cart__count{% if cart.count == 0 %} nav-cart__count--empty{% endif %}">{{ cart.count }}</span>
+        </a>
+        {% endif %}
+
         {# ——— Account bubble ——— #}
         <div class="nav-account{% if account.logged_in %} nav-account--in{% endif %}">
             <button class="nav-account__trigger" type="button" aria-label="Mon compte">

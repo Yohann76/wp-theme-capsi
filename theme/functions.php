@@ -122,6 +122,14 @@ add_filter( 'timber/context', function ( array $context ): array {
         }
     }
 
+    $context['cart'] = null;
+    if ( function_exists( 'WC' ) && isset( WC()->cart ) && WC()->cart ) {
+        $context['cart'] = [
+            'count' => WC()->cart->get_cart_contents_count(),
+            'url'   => wc_get_cart_url(),
+        ];
+    }
+
     $account = [ 'logged_in' => is_user_logged_in() ];
     if ( is_user_logged_in() ) {
         $user     = wp_get_current_user();
@@ -146,4 +154,15 @@ add_filter( 'timber/context', function ( array $context ): array {
     $context['account'] = $account;
 
     return $context;
+} );
+
+// Mise à jour du badge panier via les fragments AJAX WooCommerce
+add_filter( 'woocommerce_add_to_cart_fragments', function ( array $fragments ): array {
+    $count = function_exists( 'WC' ) && isset( WC()->cart ) ? WC()->cart->get_cart_contents_count() : 0;
+    $fragments['span.nav-cart__count'] = sprintf(
+        '<span class="nav-cart__count%s">%d</span>',
+        $count > 0 ? '' : ' nav-cart__count--empty',
+        $count
+    );
+    return $fragments;
 } );

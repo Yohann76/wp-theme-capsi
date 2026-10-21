@@ -625,6 +625,57 @@ a:hover {
 
 
 /* ============================================================
+   NAV — Cart bubble
+   ============================================================ */
+.nav-cart {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+  transition: color var(--ease-fast);
+}
+
+.nav-cart:hover {
+  color: var(--color-text);
+}
+
+.nav-cart::after { display: none; }
+
+.nav-cart__count {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  background-color: var(--rouge-capsi);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 17px;
+  text-align: center;
+  border-radius: 999px;
+  transform: translate(3px, -3px);
+  transition: transform var(--ease-base), opacity var(--ease-base), background-color var(--ease-fast);
+  pointer-events: none;
+}
+
+.nav-cart__count--empty {
+  opacity: 0;
+  transform: translate(3px, -3px) scale(0.4);
+}
+
+.nav-cart:hover .nav-cart__count:not(.nav-cart__count--empty) {
+  background-color: var(--safran-brule);
+}
+
+
+/* ============================================================
    FOOTER
    ============================================================ */
 #site-footer {
