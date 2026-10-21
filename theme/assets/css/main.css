@@ -398,6 +398,233 @@ a:hover {
 
 
 /* ============================================================
+   NAV — Account bubble
+   ============================================================ */
+.nav-account {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.nav-account__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: border-color var(--ease-fast), color var(--ease-fast), background-color var(--ease-fast);
+}
+
+.nav-account__trigger:hover,
+.nav-account:focus-within .nav-account__trigger {
+  border-color: var(--safran-brule);
+  color: var(--color-text);
+}
+
+.nav-account--in .nav-account__trigger {
+  border-color: transparent;
+  padding: 0;
+}
+
+.nav-account__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--safran-brule) 0%, var(--rouge-capsi) 100%);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  line-height: 1;
+}
+
+/* Panel */
+.nav-account__panel {
+  position: absolute;
+  top: calc(100% + 14px);
+  right: 0;
+  width: 240px;
+  background-color: var(--color-surface-2, #1c1a17);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  opacity: 0;
+  pointer-events: none;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  transform: translateY(-6px);
+  transition: opacity var(--ease-fast), transform var(--ease-fast);
+  z-index: 200;
+}
+
+.nav-account__panel::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  right: 12px;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid var(--color-border);
+}
+
+.nav-account__panel::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  right: 12px;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid var(--color-surface-2, #1c1a17);
+}
+
+.nav-account:hover .nav-account__panel,
+.nav-account:focus-within .nav-account__panel {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* Bridge gap between trigger and panel */
+.nav-account::before {
+  content: '';
+  position: absolute;
+  bottom: -14px;
+  left: -10px;
+  right: -10px;
+  height: 14px;
+}
+
+/* Greeting (logged in) */
+.nav-account__greeting {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: var(--space-3);
+}
+
+.nav-account__hi {
+  font-size: var(--text-xs);
+  color: var(--color-text-faint);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+.nav-account__name {
+  font-family: var(--font-serif);
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* Links (logged in) */
+.nav-account__links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.nav-account__links a {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  border-radius: var(--radius-sm);
+  transition: color var(--ease-fast), background-color var(--ease-fast);
+}
+
+.nav-account__links a:hover {
+  color: var(--color-text);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.nav-account__links a::after { display: none; }
+
+.nav-account__links svg {
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+
+/* Separator */
+.nav-account__sep {
+  height: 1px;
+  background-color: var(--color-border);
+  margin: var(--space-3) 0;
+}
+
+/* Logout */
+.nav-account__logout {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  border-radius: var(--radius-sm);
+  transition: color var(--ease-fast), background-color var(--ease-fast);
+}
+
+.nav-account__logout:hover {
+  color: #f08080;
+  background-color: rgba(200, 42, 43, 0.08);
+}
+
+.nav-account__logout::after { display: none; }
+
+.nav-account__logout svg { flex-shrink: 0; opacity: 0.6; }
+.nav-account__logout:hover svg { opacity: 1; }
+
+/* Not logged in */
+.nav-account__prompt {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  line-height: var(--leading-base);
+  margin-bottom: var(--space-4);
+  max-width: none;
+}
+
+.nav-account__login-btn {
+  display: block;
+  text-align: center;
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--papier-botanique);
+  background: linear-gradient(135deg, var(--safran-brule) 0%, var(--rouge-capsi) 100%);
+  border-radius: var(--radius-sm);
+  transition: opacity var(--ease-fast);
+}
+
+.nav-account__login-btn:hover { opacity: 0.88; }
+.nav-account__login-btn::after { display: none; }
+
+.nav-account__register-link {
+  display: block;
+  text-align: center;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  transition: color var(--ease-fast);
+}
+
+.nav-account__register-link:hover { color: var(--color-text); }
+.nav-account__register-link::after { display: none; }
+
+
+/* ============================================================
    FOOTER
    ============================================================ */
 #site-footer {

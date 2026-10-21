@@ -122,5 +122,28 @@ add_filter( 'timber/context', function ( array $context ): array {
         }
     }
 
+    $account = [ 'logged_in' => is_user_logged_in() ];
+    if ( is_user_logged_in() ) {
+        $user     = wp_get_current_user();
+        $fname    = $user->first_name ?: $user->display_name;
+        $lname    = $user->last_name;
+        $initials = strtoupper( mb_substr( $fname, 0, 1 ) . ( $lname ? mb_substr( $lname, 0, 1 ) : '' ) );
+
+        $account['display_name'] = $user->display_name;
+        $account['initials']     = $initials ?: '?';
+
+        if ( function_exists( 'wc_get_account_endpoint_url' ) ) {
+            $account['orders_url']  = wc_get_account_endpoint_url( 'orders' );
+            $account['account_url'] = wc_get_account_endpoint_url( 'edit-account' );
+            $account['address_url'] = wc_get_account_endpoint_url( 'edit-address' );
+        }
+        $account['logout_url'] = wp_logout_url( home_url() );
+    } else {
+        $myaccount             = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : wp_login_url();
+        $account['login_url']    = $myaccount;
+        $account['register_url'] = $myaccount;
+    }
+    $context['account'] = $account;
+
     return $context;
 } );
