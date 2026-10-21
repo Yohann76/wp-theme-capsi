@@ -4,7 +4,6 @@
 step "Creating navigation menu..."
 $WP menu create "Menu principal"
 $WP menu item add-post "Menu principal" "$(page_id "Accueil")"             --title="Accueil"
-$WP menu item add-post "Menu principal" "$(page_id "Variétés de piments")" --title="Variétés"
 $WP menu item add-custom "Menu principal" "Boutique" "$WP_URL/boutique"
 $WP menu item add-post "Menu principal" "$(page_id "Blog")"                --title="Blog"
 $WP menu item add-post "Menu principal" "$(page_id "À propos")"            --title="À propos"

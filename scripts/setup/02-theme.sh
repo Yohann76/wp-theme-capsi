@@ -7,7 +7,6 @@ $WP option update blogdescription ""
 
 step "Creating pages..."
 $WP post create --post_type=page --post_status=publish --post_title="Accueil"
-$WP post create --post_type=page --post_status=publish --post_title="Variétés de piments"
 $WP post create --post_type=page --post_status=publish --post_title="Blog"
 $WP post create --post_type=page --post_status=publish --post_title="À propos"
 $WP post create --post_type=page --post_status=publish --post_title="Contact"
