@@ -28,6 +28,8 @@ source "$DIR/setup/02-theme.sh"
 source "$DIR/setup/03-menus.sh"
 source "$DIR/setup/04-woocommerce.sh"
 source "$DIR/setup/05-blog.sh"
+source "$DIR/setup/06-plugins.sh"
+source "$DIR/setup/07-plugins-config.sh"
 
 # ============================================================
 # Content — contenu des pages
@@ -44,5 +46,5 @@ echo ""
 echo "✓ WordPress configured successfully!"
 echo "  Site    : $WP_URL"
 echo "  Shop    : $WP_URL/boutique"
-echo "  Admin   : $WP_URL/wp-admin"
+echo "  Admin   : $WP_URL/wp-admin  (ou $WP_URL/portail-capsi/ si WPS Hide Login est actif)"
 echo "  Login   : $WP_ADMIN / $WP_PASS"

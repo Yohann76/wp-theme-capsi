@@ -21,6 +21,7 @@ make dev-reload
 
 Access : [http://51.178.80.14:8080](http://51.178.80.14:8080)
 Admin : [http://51.178.80.14:8080/wp-admin](http://51.178.80.14:8080/wp-admin) — `admin / capsi2024`
+> Si le plugin **WPS Hide Login** est actif, utiliser [http://51.178.80.14:8080/portail-capsi/](http://51.178.80.14:8080/portail-capsi/) à la place de `/wp-admin`
 
 ## Brand Guidelines
 
