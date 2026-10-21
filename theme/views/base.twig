@@ -67,10 +67,7 @@
 
             <div class="nav-account__panel">
                 {% if account.logged_in %}
-                    <div class="nav-account__greeting">
-                        <span class="nav-account__hi">Bonjour,</span>
-                        <strong class="nav-account__name">{{ account.display_name }}</strong>
-                    </div>
+                    <p class="nav-account__user">{{ account.display_name }}</p>
                     <ul class="nav-account__links">
                         <li>
                             <a href="{{ account.orders_url }}">
