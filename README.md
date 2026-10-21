@@ -15,6 +15,19 @@ make dev-reload     # full reset (kill + volumes + build + run + configure)
 
 ## Getting started
 
+### 1. Environment variables
+
+Before deploying or testing, copy the example file and fill in the real values:
+
+```bash
+cp .env.example .env
+```
+
+Edit `.env` with your actual credentials (SMTP, etc.). This file is never committed.  
+Variables are automatically loaded by `make dev-configure` / `make dev-reload`.
+
+### 2. Start the environment
+
 ```bash
 make dev-reload
 ```
