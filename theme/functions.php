@@ -15,6 +15,12 @@ function capsi_setup(): void {
     add_theme_support( 'wc-product-gallery-zoom' );
     add_theme_support( 'wc-product-gallery-lightbox' );
     add_theme_support( 'wc-product-gallery-slider' );
+    add_theme_support( 'custom-logo', [
+        'height'      => 80,
+        'width'       => 200,
+        'flex-width'  => true,
+        'flex-height' => true,
+    ] );
 
     register_nav_menus( [
         'primary'        => __( 'Menu principal', 'capsi-theme' ),
@@ -134,6 +140,42 @@ add_filter( 'timber/context', function ( array $context ): array {
         }
     }
 
+    $context['capsi'] = [
+        'logo_html'     => has_custom_logo() ? get_custom_logo() : null,
+        'has_site_icon' => has_site_icon(),
+
+        'address'  => get_theme_mod( 'capsi_address',  '' ),
+        'phone'    => get_theme_mod( 'capsi_phone',    '' ),
+        'email'    => get_theme_mod( 'capsi_email',    '' ),
+        'maps_url' => get_theme_mod( 'capsi_maps_url', '' ),
+
+        'instagram' => get_theme_mod( 'capsi_instagram', '' ),
+        'facebook'  => get_theme_mod( 'capsi_facebook',  '' ),
+        'tiktok'    => get_theme_mod( 'capsi_tiktok',    '' ),
+
+        'hero_eyebrow'   => get_theme_mod( 'capsi_hero_eyebrow',  'Atelier artisanal · Paris' ),
+        'hero_title_1'   => get_theme_mod( 'capsi_hero_title_1',  "L'art du" ),
+        'hero_title_em'  => get_theme_mod( 'capsi_hero_title_em', 'piment rare.' ),
+        'hero_desc'      => get_theme_mod( 'capsi_hero_desc',     "De la sélection des semences à la mise en bocal, chaque création naît dans notre atelier. Élevé à la main. En stock limité. Sans compromis." ),
+        'hero_cta1_text' => get_theme_mod( 'capsi_hero_cta1_text', 'Explorer la boutique' ),
+        'hero_cta1_url'  => get_theme_mod( 'capsi_hero_cta1_url',  '' ) ?: ( function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/boutique' ) ),
+        'hero_cta2_text' => get_theme_mod( 'capsi_hero_cta2_text', 'Notre atelier' ),
+        'hero_cta2_url'  => get_theme_mod( 'capsi_hero_cta2_url',  '' ) ?: ( ( $ap = get_page_by_path( 'a-propos' ) ) ? get_permalink( $ap->ID ) : home_url( '/a-propos' ) ),
+
+        'ticker_items' => array_values( array_filter( array_map( 'trim', explode( "\n",
+            get_theme_mod( 'capsi_ticker_items',
+                "Semences sélectionnées à la main\nPlants élevés en serre parisienne\nSauces sans conservateurs\nStock limité · qualité absolue\nVariétés rares du monde entier\nConfection de A à Z dans l'atelier"
+            )
+        ) ) ) ),
+
+        'manifesto_eyebrow' => get_theme_mod( 'capsi_manifesto_eyebrow', 'Pourquoi si peu de stock\u{00A0}?' ),
+        'manifesto_quote'   => get_theme_mod( 'capsi_manifesto_quote',   '« Parce que nous refusons de sacrifier la qualité à la quantité. »' ),
+        'manifesto_text'    => get_theme_mod( 'capsi_manifesto_text',    "Chaque lot est préparé à la main, en petite série, selon les disponibilités de notre serre. Certaines variétés s'épuisent en quelques jours — c'est aussi pour cela qu'elles sont exceptionnelles." ),
+
+        'footer_copyright' => get_theme_mod( 'capsi_footer_copyright', "L'Atelier Capsi — Tous droits réservés" ),
+        'footer_tagline'   => get_theme_mod( 'capsi_footer_tagline',    'Conservatoire des piments rares & de collection' ),
+    ];
+
     $context['cart'] = null;
     if ( function_exists( 'WC' ) && isset( WC()->cart ) && WC()->cart ) {
         $context['cart'] = [
@@ -166,6 +208,77 @@ add_filter( 'timber/context', function ( array $context ): array {
     $context['account'] = $account;
 
     return $context;
+} );
+
+// Filtre Twig nl2br (utilisé pour l'adresse footer)
+add_filter( 'timber/twig', function ( \Twig\Environment $twig ) {
+    $twig->addFilter( new \Twig\TwigFilter( 'nl2br', function ( string $str ): string {
+        return nl2br( esc_html( $str ) );
+    }, [ 'is_safe' => [ 'html' ] ] ) );
+    return $twig;
+} );
+
+// ============================================================
+// Customizer — paramètres éditables depuis WP Admin
+// ============================================================
+add_action( 'customize_register', function ( WP_Customize_Manager $c ): void {
+
+    $c->add_panel( 'capsi_panel', [
+        'title'    => "L'Atelier Capsi",
+        'priority' => 30,
+    ] );
+
+    $add = function ( string $section, string $id, string $label, string $default, string $type = 'text' ) use ( $c ): void {
+        $sanitize = match ( $type ) {
+            'url'      => 'esc_url_raw',
+            'textarea' => 'sanitize_textarea_field',
+            default    => 'sanitize_text_field',
+        };
+        $c->add_setting( $id, [ 'default' => $default, 'sanitize_callback' => $sanitize, 'transport' => 'refresh' ] );
+        $c->add_control( $id, [ 'label' => $label, 'section' => $section, 'type' => $type ] );
+    };
+
+    // ---- Coordonnées ----
+    $c->add_section( 'capsi_contact', [ 'title' => 'Coordonnées', 'panel' => 'capsi_panel', 'priority' => 10 ] );
+    $add( 'capsi_contact', 'capsi_address',  'Adresse (une ligne par retour)',  '', 'textarea' );
+    $add( 'capsi_contact', 'capsi_phone',    'Téléphone',                       '', 'text'     );
+    $add( 'capsi_contact', 'capsi_email',    'E-mail de contact',               '', 'text'     );
+    $add( 'capsi_contact', 'capsi_maps_url', 'Lien Google Maps',                '', 'url'      );
+
+    // ---- Réseaux sociaux ----
+    $c->add_section( 'capsi_social', [ 'title' => 'Réseaux sociaux', 'panel' => 'capsi_panel', 'priority' => 20 ] );
+    $add( 'capsi_social', 'capsi_instagram', 'Instagram', '', 'url' );
+    $add( 'capsi_social', 'capsi_facebook',  'Facebook',  '', 'url' );
+    $add( 'capsi_social', 'capsi_tiktok',    'TikTok',    '', 'url' );
+
+    // ---- Hero ----
+    $c->add_section( 'capsi_hero', [ 'title' => 'Accueil — Hero', 'panel' => 'capsi_panel', 'priority' => 30 ] );
+    $add( 'capsi_hero', 'capsi_hero_eyebrow',   'Eyebrow',                      'Atelier artisanal · Paris' );
+    $add( 'capsi_hero', 'capsi_hero_title_1',   'Titre ligne 1',                "L'art du" );
+    $add( 'capsi_hero', 'capsi_hero_title_em',  'Titre accentué (italique)',     'piment rare.' );
+    $add( 'capsi_hero', 'capsi_hero_desc',      'Description',                  "De la sélection des semences à la mise en bocal, chaque création naît dans notre atelier. Élevé à la main. En stock limité. Sans compromis.", 'textarea' );
+    $add( 'capsi_hero', 'capsi_hero_cta1_text', 'Bouton principal — texte',     'Explorer la boutique' );
+    $add( 'capsi_hero', 'capsi_hero_cta1_url',  'Bouton principal — URL (vide = boutique)', '', 'url' );
+    $add( 'capsi_hero', 'capsi_hero_cta2_text', 'Bouton secondaire — texte',    'Notre atelier' );
+    $add( 'capsi_hero', 'capsi_hero_cta2_url',  'Bouton secondaire — URL (vide = à propos)', '', 'url' );
+
+    // ---- Ticker ----
+    $c->add_section( 'capsi_ticker', [ 'title' => 'Accueil — Ticker', 'panel' => 'capsi_panel', 'priority' => 40 ] );
+    $add( 'capsi_ticker', 'capsi_ticker_items', 'Éléments du bandeau (un par ligne)',
+        "Semences sélectionnées à la main\nPlants élevés en serre parisienne\nSauces sans conservateurs\nStock limité · qualité absolue\nVariétés rares du monde entier\nConfection de A à Z dans l'atelier",
+        'textarea'
+    );
+
+    // ---- Manifeste ----
+    $c->add_section( 'capsi_manifesto', [ 'title' => 'Accueil — Manifeste', 'panel' => 'capsi_panel', 'priority' => 50 ] );
+    $add( 'capsi_manifesto', 'capsi_manifesto_eyebrow', 'Eyebrow',     'Pourquoi si peu de stock ?' );
+    $add( 'capsi_manifesto', 'capsi_manifesto_quote',   'Citation',    '« Parce que nous refusons de sacrifier la qualité à la quantité. »', 'textarea' );
+    $add( 'capsi_manifesto', 'capsi_manifesto_text',    'Paragraphe',  "Chaque lot est préparé à la main, en petite série, selon les disponibilités de notre serre. Certaines variétés s'épuisent en quelques jours — c'est aussi pour cela qu'elles sont exceptionnelles.", 'textarea' );
+
+    // ---- Footer ----
+    $c->add_section( 'capsi_footer_section', [ 'title' => 'Footer', 'panel' => 'capsi_panel', 'priority' => 60 ] );
+    $add( 'capsi_footer_section', 'capsi_footer_copyright', 'Texte copyright', "L'Atelier Capsi — Tous droits réservés" );
+    $add( 'capsi_footer_section', 'capsi_footer_tagline',   'Tagline',         'Conservatoire des piments rares & de collection' );
 } );
 
 // Mise à jour du badge panier via les fragments AJAX WooCommerce

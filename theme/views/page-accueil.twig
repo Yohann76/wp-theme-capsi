@@ -32,24 +32,21 @@
 
     <div class="container">
       <div class="home-hero__inner">
-        <span class="eyebrow home-hero__eyebrow">Atelier artisanal · Paris</span>
+        <span class="eyebrow home-hero__eyebrow">{{ capsi.hero_eyebrow }}</span>
 
         <h1 class="home-hero__title">
-          <span class="home-hero__title-line">L'art du</span>
-          <em class="home-hero__title-em">piment rare.</em>
+          <span class="home-hero__title-line">{{ capsi.hero_title_1 }}</span>
+          <em class="home-hero__title-em">{{ capsi.hero_title_em }}</em>
         </h1>
 
-        <p class="home-hero__desc">
-          De la sélection des semences à la mise en bocal, chaque création naît dans notre atelier.
-          Élevé à la main. En stock limité. Sans compromis.
-        </p>
+        <p class="home-hero__desc">{{ capsi.hero_desc }}</p>
 
         <div class="home-hero__actions">
-          <a href="{{ fn('wc_get_page_permalink', 'shop') }}" class="btn btn--primary btn--lg">
-            Explorer la boutique
+          <a href="{{ capsi.hero_cta1_url }}" class="btn btn--primary btn--lg">
+            {{ capsi.hero_cta1_text }}
           </a>
-          <a href="{{ fn('get_permalink', fn('get_page_by_path', 'a-propos').ID) }}" class="btn btn--ghost btn--lg">
-            Notre atelier
+          <a href="{{ capsi.hero_cta2_url }}" class="btn btn--ghost btn--lg">
+            {{ capsi.hero_cta2_text }}
           </a>
         </div>
 
@@ -84,12 +81,9 @@
   <div class="home-ticker" aria-hidden="true">
     <div class="home-ticker__track">
       {% for i in 1..3 %}
-        <span>Semences sélectionnées à la main</span><span class="home-ticker__sep">✦</span>
-        <span>Plants élevés en serre parisienne</span><span class="home-ticker__sep">✦</span>
-        <span>Sauces sans conservateurs</span><span class="home-ticker__sep">✦</span>
-        <span>Stock limité · qualité absolue</span><span class="home-ticker__sep">✦</span>
-        <span>Variétés rares du monde entier</span><span class="home-ticker__sep">✦</span>
-        <span>Confection de A à Z dans l'atelier</span><span class="home-ticker__sep">✦</span>
+        {% for item in capsi.ticker_items %}
+          <span>{{ item }}</span><span class="home-ticker__sep">✦</span>
+        {% endfor %}
       {% endfor %}
     </div>
   </div>
@@ -234,16 +228,11 @@
   <section class="home-manifesto animate-in">
     <div class="container">
       <div class="home-manifesto__inner">
-        <span class="eyebrow home-manifesto__eyebrow">Pourquoi si peu de stock&nbsp;?</span>
-        <blockquote class="home-manifesto__quote">
-          « Parce que nous refusons de sacrifier la qualité à la quantité. »
-        </blockquote>
-        <p class="home-manifesto__text">
-          Chaque lot est préparé à la main, en petite série, selon les disponibilités de notre serre.
-          Certaines variétés s'épuisent en quelques jours — c'est aussi pour cela qu'elles sont exceptionnelles.
-        </p>
-        <a href="{{ fn('get_permalink', fn('get_page_by_path', 'a-propos').ID) }}" class="btn btn--primary">
-          Découvrir l'atelier
+        <span class="eyebrow home-manifesto__eyebrow">{{ capsi.manifesto_eyebrow }}</span>
+        <blockquote class="home-manifesto__quote">{{ capsi.manifesto_quote }}</blockquote>
+        <p class="home-manifesto__text">{{ capsi.manifesto_text }}</p>
+        <a href="{{ capsi.hero_cta2_url }}" class="btn btn--primary">
+          {{ capsi.hero_cta2_text }}
         </a>
       </div>
     </div>

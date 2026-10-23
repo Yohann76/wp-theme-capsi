@@ -3,7 +3,9 @@
 <head>
     <meta charset="{{ site.charset }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% if not capsi.has_site_icon %}
     <link rel="icon" type="image/svg+xml" href="{{ theme.link }}/assets/images/logo-icon.svg">
+    {% endif %}
     {{ fn('wp_head') }}
 </head>
 <body class="{{ fn('implode', ' ', fn('get_body_class')) }}">
@@ -11,12 +13,16 @@
 <header id="site-header">
     <div class="container">
         <a href="{{ site.url }}" class="site-logo" aria-label="{{ site.name }}">
-            <img src="{{ theme.link }}/assets/images/logo-icon.svg"
-                 alt="" width="40" height="40">
-            <span class="site-logo__name">
-                <span>L'Atelier</span>
-                <span>Capsi</span>
-            </span>
+            {% if capsi.logo_html %}
+                {{ capsi.logo_html|raw }}
+            {% else %}
+                <img src="{{ theme.link }}/assets/images/logo-icon.svg"
+                     alt="" width="40" height="40">
+                <span class="site-logo__name">
+                    <span>L'Atelier</span>
+                    <span>Capsi</span>
+                </span>
+            {% endif %}
         </a>
 
         {% if menu %}
@@ -117,24 +123,47 @@
                 {# — Brand col — #}
                 <div class="footer-brand">
                     <a href="{{ site.url }}" class="footer-brand__identity">
-                        <img src="{{ theme.link }}/assets/images/logo-icon.svg"
-                             alt="{{ site.name }}" width="44" height="44">
-                        <span class="footer-brand__name">
-                            <span>L'Atelier</span>
-                            <span>Capsi</span>
-                        </span>
+                        {% if capsi.logo_html %}
+                            {{ capsi.logo_html|raw }}
+                        {% else %}
+                            <img src="{{ theme.link }}/assets/images/logo-icon.svg"
+                                 alt="{{ site.name }}" width="44" height="44">
+                            <span class="footer-brand__name">
+                                <span>L'Atelier</span>
+                                <span>Capsi</span>
+                            </span>
+                        {% endif %}
                     </a>
                     <div class="footer-social">
-                        <a href="https://facebook.com" class="footer-social__link" aria-label="Facebook" target="_blank" rel="noopener">
+                        {% if capsi.facebook %}
+                        <a href="{{ capsi.facebook }}" class="footer-social__link" aria-label="Facebook" target="_blank" rel="noopener">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
                         </a>
-                        <a href="https://instagram.com" class="footer-social__link" aria-label="Instagram" target="_blank" rel="noopener">
+                        {% endif %}
+                        {% if capsi.instagram %}
+                        <a href="{{ capsi.instagram }}" class="footer-social__link" aria-label="Instagram" target="_blank" rel="noopener">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
                         </a>
-                        <a href="https://tiktok.com" class="footer-social__link" aria-label="TikTok" target="_blank" rel="noopener">
+                        {% endif %}
+                        {% if capsi.tiktok %}
+                        <a href="{{ capsi.tiktok }}" class="footer-social__link" aria-label="TikTok" target="_blank" rel="noopener">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>
                         </a>
+                        {% endif %}
                     </div>
+                    {% if capsi.address or capsi.phone or capsi.email %}
+                    <div class="footer-contact">
+                        {% if capsi.address %}
+                            <p class="footer-contact__address">{{ capsi.address|nl2br }}</p>
+                        {% endif %}
+                        {% if capsi.phone %}
+                            <a href="tel:{{ capsi.phone|replace({' ': ''}) }}" class="footer-contact__link">{{ capsi.phone }}</a>
+                        {% endif %}
+                        {% if capsi.email %}
+                            <a href="mailto:{{ capsi.email }}" class="footer-contact__link">{{ capsi.email }}</a>
+                        {% endif %}
+                    </div>
+                    {% endif %}
                 </div>
 
                 {# — Menus cols — #}
@@ -188,8 +217,8 @@
 
     <div class="footer-bottom">
         <div class="container">
-            <p>&copy; {{ "now"|date("Y") }} L'Atelier Capsi — Tous droits réservés</p>
-            <p class="footer-bottom__made">Conservatoire des piments rares &amp; de collection</p>
+            <p>&copy; {{ "now"|date("Y") }} {{ capsi.footer_copyright }}</p>
+            <p class="footer-bottom__made">{{ capsi.footer_tagline }}</p>
         </div>
     </div>
 
