@@ -34,6 +34,13 @@ $WP plugin install ewww-image-optimizer --activate
 step "Installing WPS Hide Login..."
 $WP plugin install wps-hide-login --activate
 
+# ---- Paiement ----
+step "Installing WooPayments..."
+$WP plugin install woocommerce-payments --activate
+
+step "Installing WooCommerce PayPal Payments..."
+$WP plugin install woocommerce-paypal-payments --activate
+
 # ---- RGPD ----
 step "Installing Complianz..."
 $WP plugin install complianz-gdpr --activate

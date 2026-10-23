@@ -10,6 +10,10 @@ $WP core install \
   --admin_email="$WP_EMAIL" \
   --skip-email
 
+step "Raising PHP memory limits in wp-config.php..."
+$WP config set WP_MEMORY_LIMIT '256M' --type=constant
+$WP config set WP_MAX_MEMORY_LIMIT '512M' --type=constant
+
 step "Setting language to French..."
 $WP language core install fr_FR
 $WP site switch-language fr_FR
