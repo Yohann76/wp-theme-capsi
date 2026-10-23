@@ -35,12 +35,8 @@ if ( $slug === 'accueil' ) {
 
 
 if ( $slug === 'contact' ) {
-	$context['contact_email']   = get_post_meta( $post->ID, '_contact_email',   true );
-	$context['contact_phone']   = get_post_meta( $post->ID, '_contact_phone',   true );
-	$context['contact_address'] = get_post_meta( $post->ID, '_contact_address', true );
-	$context['contact_hours']   = get_post_meta( $post->ID, '_contact_hours',   true );
-	$context['contact_nonce']   = wp_create_nonce( 'capsi_contact' );
-	$context['contact_status']  = sanitize_key( $_GET['contact'] ?? '' );
+	$context['contact_nonce']  = wp_create_nonce( 'capsi_contact' );
+	$context['contact_status'] = sanitize_key( $_GET['contact'] ?? '' );
 }
 
 if ( in_array( $slug, $legal_slugs, true ) ) {

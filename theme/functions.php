@@ -162,6 +162,7 @@ add_filter( 'timber/context', function ( array $context ): array {
         'address'  => get_theme_mod( 'capsi_address',  '' ),
         'phone'    => get_theme_mod( 'capsi_phone',    '' ),
         'email'    => get_theme_mod( 'capsi_email',    '' ),
+        'hours'    => get_theme_mod( 'capsi_hours',   '' ),
         'maps_url' => get_theme_mod( 'capsi_maps_url', '' ),
 
         'instagram' => get_theme_mod( 'capsi_instagram', '' ),
@@ -258,6 +259,7 @@ add_action( 'customize_register', function ( WP_Customize_Manager $c ): void {
     $add( 'capsi_contact', 'capsi_address',  'Adresse (une ligne par retour)',  '', 'textarea' );
     $add( 'capsi_contact', 'capsi_phone',    'Téléphone',                       '', 'text'     );
     $add( 'capsi_contact', 'capsi_email',    'E-mail de contact',               '', 'text'     );
+    $add( 'capsi_contact', 'capsi_hours',    'Horaires',                        '', 'text'     );
     $add( 'capsi_contact', 'capsi_maps_url', 'Lien Google Maps',                '', 'url'      );
 
     // ---- Réseaux sociaux ----

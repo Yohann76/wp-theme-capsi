@@ -1,12 +1,9 @@
 #!/usr/bin/env bash
-# Page Contact — meta pour le template
+# Page Contact — coordonnées stockées dans le Customizer (theme mods)
 
-step "Configuring contact page..."
+step "Configuring contact info (theme mods)..."
 
-CONTACT_ID=$(page_id "Contact")
-
-# Données de contact affichées dans le template
-$WP post meta update "$CONTACT_ID" _contact_email    "contact@lateliercapsi.fr"
-$WP post meta update "$CONTACT_ID" _contact_phone    "+33 1 00 00 00 00"
-$WP post meta update "$CONTACT_ID" _contact_address  "1 rue de l'Atelier, 75000 Paris"
-$WP post meta update "$CONTACT_ID" _contact_hours    "Lun–Ven : 9h–18h"
+$WP theme mod set capsi_email   "contact@lateliercapsi.fr"
+$WP theme mod set capsi_phone   "+33 1 00 00 00 00"
+$WP theme mod set capsi_address "1 rue de l'Atelier\n75000 Paris"
+$WP theme mod set capsi_hours   "Lun–Ven : 9h–18h"
