@@ -34,6 +34,10 @@ $WP plugin install ewww-image-optimizer --activate
 step "Installing WPS Hide Login..."
 $WP plugin install wps-hide-login --activate
 
+# ---- Analytics & tracking ----
+step "Installing Site Kit by Google..."
+$WP plugin install google-site-kit --activate
+
 # ---- Paiement ----
 step "Installing WooPayments..."
 $WP plugin install woocommerce-payments --activate
