@@ -1,0 +1,131 @@
+/* ==========================================================
+   Capsi Block Patterns — classes utilitaires
+   Chargé dans l'éditeur Gutenberg ET en frontend
+   ========================================================== */
+
+/* ---- Layout ---- */
+
+.capsi-section {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.capsi-section-sm {
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+
+.capsi-intro {
+  margin-bottom: 3rem;
+}
+
+/* ---- Eyebrow ---- */
+
+.capsi-eyebrow {
+  display: block;
+  font-size: .75rem;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: #E39B35;
+  margin-top: 0;
+  margin-bottom: .75rem;
+}
+
+/* ---- Headings ---- */
+
+.capsi-heading {
+  font-style: italic;
+  font-weight: 400;
+  color: #EDE8DF;
+  margin-top: 0;
+}
+
+h1.capsi-heading { font-size: clamp(2rem, 5vw, 3.5rem); }
+h2.capsi-heading { font-size: clamp(1.75rem, 4vw, 2.5rem); }
+h3.capsi-heading { font-size: clamp(1.5rem, 3vw, 2rem); }
+
+/* ---- Body text ---- */
+
+.capsi-text {
+  color: #A8A09A;
+  line-height: 1.7;
+  margin-top: 0;
+}
+
+.capsi-text--sm {
+  color: #A8A09A;
+  font-size: .875rem;
+  margin-top: 0;
+}
+
+.capsi-quote-text {
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.45;
+  color: #EDE8DF;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+/* ---- Surfaces ---- */
+
+.capsi-card {
+  background-color: #1E1E1E;
+  border-radius: 4px;
+}
+
+.capsi-quote-card {
+  background-color: #1E1E1E;
+  border-left: 3px solid #C82A2B;
+}
+
+.capsi-banner {
+  background-color: #C82A2B;
+  border-radius: 4px;
+}
+
+/* overrides contextuels pour les éléments dans la bannière rouge */
+.capsi-banner .capsi-eyebrow        { color: rgba(237, 232, 223, .7); }
+.capsi-banner .capsi-heading        { color: #EDE8DF; }
+.capsi-banner .capsi-text           { color: rgba(237, 232, 223, .85); }
+
+/* ---- Buttons ---- */
+
+.capsi-btn-primary .wp-block-button__link {
+  background-color: #C82A2B;
+  color: #EDE8DF;
+  border-color: #C82A2B;
+  border-radius: 4px;
+  font-size: .875rem;
+  letter-spacing: .05em;
+}
+.capsi-btn-primary .wp-block-button__link:hover {
+  background-color: #a82020;
+  border-color: #a82020;
+}
+
+.capsi-btn-outline .wp-block-button__link {
+  background-color: transparent;
+  color: #EDE8DF;
+  border: 1px solid #EDE8DF;
+  border-radius: 4px;
+  font-size: .875rem;
+}
+.capsi-btn-outline .wp-block-button__link:hover {
+  background-color: rgba(237, 232, 223, .08);
+}
+
+.capsi-btn-inverted .wp-block-button__link {
+  background-color: #EDE8DF;
+  color: #C82A2B;
+  border-color: #EDE8DF;
+  border-radius: 4px;
+  font-size: .875rem;
+  font-weight: 600;
+}
+.capsi-btn-inverted .wp-block-button__link:hover {
+  background-color: #F4EFE6;
+  border-color: #F4EFE6;
+}

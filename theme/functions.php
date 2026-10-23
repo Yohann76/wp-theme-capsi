@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/inc/block-patterns.php';
 
 use Timber\Timber;
 use Timber\Site;
@@ -15,6 +16,19 @@ function capsi_setup(): void {
     add_theme_support( 'wc-product-gallery-zoom' );
     add_theme_support( 'wc-product-gallery-lightbox' );
     add_theme_support( 'wc-product-gallery-slider' );
+    add_theme_support( 'editor-color-palette', [
+        [ 'name' => 'Rouge Capsi',        'slug' => 'rouge-capsi',        'color' => '#C82A2B' ],
+        [ 'name' => 'Vert Botaniq',       'slug' => 'vert-botaniq',       'color' => '#2D4A3E' ],
+        [ 'name' => 'Terre de Semis',     'slug' => 'terre-de-semis',     'color' => '#B85C38' ],
+        [ 'name' => 'Safran Brûlé',       'slug' => 'safran-brule',       'color' => '#E39B35' ],
+        [ 'name' => 'Papier Botanique',   'slug' => 'papier-botanique',   'color' => '#F4EFE6' ],
+        [ 'name' => 'Fond sombre',        'slug' => 'fond-sombre',        'color' => '#0F0F0F' ],
+        [ 'name' => 'Surface sombre',     'slug' => 'surface-sombre',     'color' => '#1E1E1E' ],
+        [ 'name' => 'Texte clair',        'slug' => 'texte-clair',        'color' => '#EDE8DF' ],
+        [ 'name' => 'Texte secondaire',   'slug' => 'texte-secondaire',   'color' => '#A8A09A' ],
+    ] );
+    add_theme_support( 'editor-styles' );
+    add_editor_style( 'assets/css/blocks.css' );
     add_theme_support( 'custom-logo', [
         'height'      => 80,
         'width'       => 200,
@@ -36,7 +50,8 @@ function capsi_enqueue_assets(): void {
     $uri = get_stylesheet_directory_uri();
 
     $sheets = [
-        'capsi-main' => 'main.css',
+        'capsi-main'   => 'main.css',
+        'capsi-blocks' => 'blocks.css',
     ];
 
     if ( is_home() || is_archive() || is_singular( 'post' ) ) {
@@ -61,7 +76,7 @@ function capsi_enqueue_assets(): void {
         wp_enqueue_style(
             $handle,
             "{$uri}/assets/css/{$file}",
-            $handle === 'capsi-main' ? [] : [ 'capsi-main' ],
+            in_array( $handle, [ 'capsi-main', 'capsi-blocks' ], true ) ? [] : [ 'capsi-main' ],
             (string) filemtime( "{$dir}/assets/css/{$file}" )
         );
     }
