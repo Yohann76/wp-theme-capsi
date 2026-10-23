@@ -33,10 +33,6 @@ if ( $slug === 'accueil' ) {
 	}
 }
 
-if ( $slug === 'faq' ) {
-	$raw                    = get_post_meta( $post->ID, '_faq_items', true );
-	$context['faq_items']   = $raw ? json_decode( $raw, true ) : [];
-}
 
 if ( $slug === 'contact' ) {
 	$context['contact_email']   = get_post_meta( $post->ID, '_contact_email',   true );

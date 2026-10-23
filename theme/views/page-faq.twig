@@ -13,20 +13,8 @@
 
     <div class="container">
         <div class="faq-list">
-            {% if faq_items %}
-                {% for item in faq_items %}
-                    <details class="faq-item">
-                        <summary class="faq-item__question">
-                            <span>{{ item.question }}</span>
-                            <svg class="faq-item__chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                <polyline points="6 9 12 15 18 9"/>
-                            </svg>
-                        </summary>
-                        <div class="faq-item__answer">
-                            <p>{{ item.answer }}</p>
-                        </div>
-                    </details>
-                {% endfor %}
+            {% if post.content %}
+                {{ post.content }}
             {% else %}
                 <p class="faq-empty">Aucune question pour le moment.</p>
             {% endif %}
