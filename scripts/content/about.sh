@@ -26,7 +26,7 @@ cat > "$TMPFILE" <<'ENDABOUT'
 <h2 class="wp-block-heading">Notre histoire</h2>
 <!-- /wp:heading -->
 <!-- wp:paragraph -->
-<p>Tout a commencé en 2018 avec une dizaine de variétés cultivées en serre. Au fil des saisons, la collection s'est étendue à plus de 200 variétés issues des cinq espèces principales de <em>Capsicum</em>. Aujourd'hui, l'Atelier propose graines, plants et produits artisanaux élaborés à partir de notre propre production.</p>
+<p>Tout a commencé en 2018 avec une dizaine de variétés de piments cultivées en serre. Au fil des saisons, la collection s'est étendue à plus de 200 variétés, et l'Atelier a naturellement intégré des plantes aromatiques rares — thym, origan, basilic d'exception, mélisse… Aujourd'hui, nous proposons graines et plants issus de notre propre production.</p>
 <!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
@@ -48,7 +48,7 @@ cat > "$TMPFILE" <<'ENDABOUT'
 <li><strong>Transmission</strong> — Partager le savoir fait partie de notre ADN : guides de culture, conseils personnalisés, blog botanique.</li>
 <!-- /wp:list-item -->
 <!-- wp:list-item -->
-<li><strong>Artisanat</strong> — Nos sauces et condiments sont élaborés en petites séries, à partir de piments cultivés sur place, sans conservateurs.</li>
+<li><strong>Soin</strong> — Chaque plant est repiqué, tuteuré et suivi individuellement. Nous n'expédions que ce qui est prêt — jamais de stress inutile sur les végétaux.</li>
 <!-- /wp:list-item -->
 </ul>
 <!-- /wp:list -->

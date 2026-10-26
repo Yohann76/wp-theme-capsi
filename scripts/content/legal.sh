@@ -72,7 +72,7 @@ cat > "$DIR/../theme/.legal_tmp.html" <<'ENDCGV'
 <h2 class="wp-block-heading">Article 2 — Produits</h2>
 <!-- /wp:heading -->
 <!-- wp:paragraph -->
-<p>Les produits proposés sont des graines, plants et produits alimentaires artisanaux. Les caractéristiques essentielles des produits sont présentées sur chaque fiche produit. Les photographies sont données à titre indicatif et n'ont pas de valeur contractuelle.</p>
+<p>Les produits proposés sont des graines et plants de piments et plantes aromatiques rares. Les caractéristiques essentielles des produits sont présentées sur chaque fiche produit. Les photographies sont données à titre indicatif et n'ont pas de valeur contractuelle.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":2} -->
@@ -204,10 +204,10 @@ cat > "$DIR/../theme/.legal_tmp.html" <<'ENDLIV'
 <!-- wp:list -->
 <ul class="wp-block-list">
 <!-- wp:list-item -->
-<li><strong>France métropolitaine</strong> — tous produits (graines, plants, sauces, coffrets)</li>
+<li><strong>France métropolitaine</strong> — graines et plants</li>
 <!-- /wp:list-item -->
 <!-- wp:list-item -->
-<li><strong>Union Européenne</strong> — graines et produits alimentaires uniquement</li>
+<li><strong>Union Européenne</strong> — graines uniquement (réglementation phytosanitaire)</li>
 <!-- /wp:list-item -->
 <!-- wp:list-item -->
 <li><strong>Hors UE</strong> — non disponible pour le moment</li>

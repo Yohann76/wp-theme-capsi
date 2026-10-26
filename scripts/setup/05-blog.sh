@@ -5,7 +5,7 @@ step "Creating blog categories..."
 $WP term create category "Actualités"         --description="Les dernières nouvelles de L'Atelier Capsi"
 $WP term create category "Culture & Conseils" --description="Guides de culture, conseils et techniques"
 $WP term create category "Variétés"           --description="Présentation des variétés rares et de collection"
-$WP term create category "Recettes"           --description="Recettes et utilisations culinaires"
+$WP term create category "Plantes aromatiques" --description="Présentation et culture des plantes aromatiques rares"
 $WP term delete category 1
 
 step "Creating demo blog posts..."
@@ -29,6 +29,6 @@ $WP post create \
 
 $WP post create \
   --post_type=post --post_status=publish \
-  --post_title="Sauce piquante artisanale au Ghost Pepper" \
-  --post_content="Le Ghost Pepper, ou Bhut Jolokia, donne une sauce d'une profondeur aromatique incomparable. Voici notre recette maison pour une sauce artisanale intense et fruitée." \
-  --post_category="$(cat_id "Recettes")"
+  --post_title="Thym, origan, mélisse : nos aromatiques rares à découvrir" \
+  --post_content="L'Atelier Capsi élargit sa collection aux plantes aromatiques d'exception. Thym citron, origan de Crète, mélisse dorée… Découvrez ces variétés peu courantes que nous cultivons en serre aux côtés de nos piments." \
+  --post_category="$(cat_id "Plantes aromatiques")"

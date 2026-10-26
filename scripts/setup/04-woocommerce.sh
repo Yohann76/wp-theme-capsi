@@ -36,17 +36,7 @@ $WP wc product_cat create \
 
 $WP wc product_cat create \
   --name="Plants" \
-  --description="Plants de piments prêts à planter" \
-  --user="$WP_ADMIN"
-
-$WP wc product_cat create \
-  --name="Sauces et Condiments" \
-  --description="Sauces artisanales et condiments" \
-  --user="$WP_ADMIN"
-
-$WP wc product_cat create \
-  --name="Coffrets" \
-  --description="Coffrets cadeaux et collections" \
+  --description="Plants de piments et plantes aromatiques rares, prêts à planter" \
   --user="$WP_ADMIN"
 
 step "Creating demo products..."
@@ -61,7 +51,7 @@ $WP wc product create \
 $WP wc product create \
   --name="Graines Habanero Orange — 20 graines" \
   --type=simple --regular_price="4.90" --status=publish \
-  --description="L'Habanero Orange est un classique fruité et intense. Notes tropicales, <strong>350 000 Scoville</strong>. Parfait pour débuter la collection ou préparer sauces et marinades." \
+  --description="L'Habanero Orange est un classique fruité et intense. Notes tropicales, <strong>350 000 Scoville</strong>. Parfait pour débuter la collection ou offrir à un amateur de variétés rares." \
   --short_description="<strong>350K Scoville</strong> · Lot de 20 graines · Fruité & intense" \
   --categories='[{"id":'"$(wc_cat_id "Graines")"'}]' \
   --manage_stock=true --stock_quantity=80 --user="$WP_ADMIN"
@@ -75,23 +65,15 @@ $WP wc product create \
   --manage_stock=true --stock_quantity=15 --user="$WP_ADMIN"
 
 $WP wc product create \
-  --name="Sauce artisanale Habanero & Mangue" \
-  --type=simple --regular_price="9.90" --status=publish \
-  --description="Sauce artisanale élaborée à partir de nos piments Habanero cultivés à l'Atelier, associés à la mangue. <strong>Flacon verre ambré 100ml</strong>. Aucun conservateur ajouté." \
-  --short_description="<strong>Flacon 100ml</strong> · Artisanal · Habanero & Mangue" \
-  --categories='[{"id":'"$(wc_cat_id "Sauces et Condiments")"'}]' \
-  --manage_stock=true --stock_quantity=30 --user="$WP_ADMIN"
-
-$WP wc product create \
-  --name="Coffret Découverte — 5 variétés rares" \
-  --type=simple --regular_price="24.90" --sale_price="19.90" --status=publish \
-  --description="Coffret de <strong>5 sachets de graines rares</strong> : Carolina Reaper, Ghost Pepper, Habanero Chocolate, Moruga Scorpion et Aji Amarillo. Présenté dans une boîte kraft avec fiches descriptives. Idéal en cadeau." \
-  --short_description="<strong>5 variétés rares</strong> · Édition limitée · Idéal cadeau" \
-  --categories='[{"id":'"$(wc_cat_id "Coffrets")"'}]' \
-  --manage_stock=true --stock_quantity=20 --user="$WP_ADMIN"
+  --name="Plant Thym Citron — variété rare" \
+  --type=simple --regular_price="5.90" --status=publish \
+  --description="Thym citron (<em>Thymus citriodorus</em>) au parfum intense et frais. Plant élevé en serre, <strong>prêt à planter</strong>. Excellent en pot sur balcon ou en pleine terre. Livraison avec fiche culturale." \
+  --short_description="<strong>Thymus citriodorus</strong> · Plant prêt à planter · Pot biodégradable" \
+  --categories='[{"id":'"$(wc_cat_id "Plants")"'}]' \
+  --manage_stock=true --stock_quantity=25 --user="$WP_ADMIN"
 
 step "Adding Épicerie dropdown submenu..."
-for cat_name in "Graines" "Plants" "Sauces et Condiments" "Coffrets"; do
+for cat_name in "Graines" "Plants"; do
   term_id=$($WP term list product_cat --name="$cat_name" --field=term_id --format=ids 2>/dev/null)
   if [ -n "$term_id" ]; then
     $WP menu item add-term "Menu principal" product_cat "$term_id" \

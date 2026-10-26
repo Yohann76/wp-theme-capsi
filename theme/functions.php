@@ -172,7 +172,7 @@ add_filter( 'timber/context', function ( array $context ): array {
         'hero_eyebrow'   => get_theme_mod( 'capsi_hero_eyebrow',  'Atelier artisanal · Paris' ),
         'hero_title_1'   => get_theme_mod( 'capsi_hero_title_1',  "L'art du" ),
         'hero_title_em'  => get_theme_mod( 'capsi_hero_title_em', 'piment rare.' ),
-        'hero_desc'      => get_theme_mod( 'capsi_hero_desc',     "De la sélection des semences à la mise en bocal, chaque création naît dans notre atelier. Élevé à la main. En stock limité. Sans compromis." ),
+        'hero_desc'      => get_theme_mod( 'capsi_hero_desc',     "De la sélection des semences à l'expédition du plant, chaque étape se passe ici. Piments rares et plantes aromatiques élevés à la main. En stock limité. Sans compromis." ),
         'hero_cta1_text' => get_theme_mod( 'capsi_hero_cta1_text', 'Explorer la boutique' ),
         'hero_cta1_url'  => get_theme_mod( 'capsi_hero_cta1_url',  '' ) ?: ( function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/boutique' ) ),
         'hero_cta2_text' => get_theme_mod( 'capsi_hero_cta2_text', 'Notre atelier' ),
@@ -180,7 +180,7 @@ add_filter( 'timber/context', function ( array $context ): array {
 
         'ticker_items' => array_values( array_filter( array_map( 'trim', explode( "\n",
             get_theme_mod( 'capsi_ticker_items',
-                "Semences sélectionnées à la main\nPlants élevés en serre parisienne\nSauces sans conservateurs\nStock limité · qualité absolue\nVariétés rares du monde entier\nConfection de A à Z dans l'atelier"
+                "Semences sélectionnées à la main\nPlants élevés en serre parisienne\nPiments & aromatiques rares\nStock limité · qualité absolue\nVariétés rares du monde entier\nCulture de A à Z dans l'atelier"
             )
         ) ) ) ),
 
@@ -273,7 +273,7 @@ add_action( 'customize_register', function ( WP_Customize_Manager $c ): void {
     $add( 'capsi_hero', 'capsi_hero_eyebrow',   'Eyebrow',                      'Atelier artisanal · Paris' );
     $add( 'capsi_hero', 'capsi_hero_title_1',   'Titre ligne 1',                "L'art du" );
     $add( 'capsi_hero', 'capsi_hero_title_em',  'Titre accentué (italique)',     'piment rare.' );
-    $add( 'capsi_hero', 'capsi_hero_desc',      'Description',                  "De la sélection des semences à la mise en bocal, chaque création naît dans notre atelier. Élevé à la main. En stock limité. Sans compromis.", 'textarea' );
+    $add( 'capsi_hero', 'capsi_hero_desc',      'Description',                  "De la sélection des semences à l'expédition du plant, chaque étape se passe ici. Piments rares et plantes aromatiques élevés à la main. En stock limité. Sans compromis.", 'textarea' );
     $add( 'capsi_hero', 'capsi_hero_cta1_text', 'Bouton principal — texte',     'Explorer la boutique' );
     $add( 'capsi_hero', 'capsi_hero_cta1_url',  'Bouton principal — URL (vide = boutique)', '', 'url' );
     $add( 'capsi_hero', 'capsi_hero_cta2_text', 'Bouton secondaire — texte',    'Notre atelier' );
@@ -282,7 +282,7 @@ add_action( 'customize_register', function ( WP_Customize_Manager $c ): void {
     // ---- Ticker ----
     $c->add_section( 'capsi_ticker', [ 'title' => 'Accueil — Ticker', 'panel' => 'capsi_panel', 'priority' => 40 ] );
     $add( 'capsi_ticker', 'capsi_ticker_items', 'Éléments du bandeau (un par ligne)',
-        "Semences sélectionnées à la main\nPlants élevés en serre parisienne\nSauces sans conservateurs\nStock limité · qualité absolue\nVariétés rares du monde entier\nConfection de A à Z dans l'atelier",
+        "Semences sélectionnées à la main\nPlants élevés en serre parisienne\nPiments & aromatiques rares\nStock limité · qualité absolue\nVariétés rares du monde entier\nCulture de A à Z dans l'atelier",
         'textarea'
     );
 
