@@ -5,6 +5,19 @@
 
     <div class="page-hero page-hero--sm">
         <div class="container">
+            <span class="eyebrow">
+                {%- if 'cgv' in post.slug or 'conditions' in post.slug -%}
+                    Conditions générales
+                {%- elseif 'confidentialite' in post.slug or 'confidentialité' in post.slug -%}
+                    Données personnelles
+                {%- elseif 'livraison' in post.slug -%}
+                    Expédition & livraison
+                {%- elseif 'mentions' in post.slug -%}
+                    Informations légales
+                {%- else -%}
+                    L'Atelier Capsi
+                {%- endif -%}
+            </span>
             <h1 class="page-hero__title page-hero__title--sm">{{ post.title }}</h1>
         </div>
     </div>

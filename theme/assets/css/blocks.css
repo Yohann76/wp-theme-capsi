@@ -27,7 +27,7 @@
   letter-spacing: .15em;
   text-transform: uppercase;
   font-weight: 500;
-  color: #E39B35;
+  color: #B8832A;
   margin-top: 0;
   margin-bottom: .75rem;
 }
@@ -37,7 +37,7 @@
 .capsi-heading {
   font-style: italic;
   font-weight: 400;
-  color: #EDE8DF;
+  color: #2D5A3E;
   margin-top: 0;
 }
 
@@ -48,13 +48,13 @@ h3.capsi-heading { font-size: clamp(1.5rem, 3vw, 2rem); }
 /* ---- Body text ---- */
 
 .capsi-text {
-  color: #A8A09A;
+  color: #5A6B5E;
   line-height: 1.7;
   margin-top: 0;
 }
 
 .capsi-text--sm {
-  color: #A8A09A;
+  color: #5A6B5E;
   font-size: .875rem;
   margin-top: 0;
 }
@@ -64,7 +64,7 @@ h3.capsi-heading { font-size: clamp(1.5rem, 3vw, 2rem); }
   font-style: italic;
   font-weight: 400;
   line-height: 1.45;
-  color: #EDE8DF;
+  color: #1C2A22;
   margin-top: 0;
   margin-bottom: 1.5rem;
 }
@@ -72,34 +72,38 @@ h3.capsi-heading { font-size: clamp(1.5rem, 3vw, 2rem); }
 /* ---- Surfaces ---- */
 
 .capsi-card {
-  background-color: #1E1E1E;
-  border-radius: 4px;
+  background-color: #FFFFFF;
+  border: 1px solid rgba(28, 42, 34, 0.10);
+  border-radius: 6px;
 }
 
 .capsi-quote-card {
-  background-color: #1E1E1E;
-  border-left: 3px solid #C82A2B;
-}
-
-.capsi-banner {
-  background-color: #C82A2B;
+  background-color: #FFFFFF;
+  border: 1px solid rgba(28, 42, 34, 0.10);
+  border-left: 3px solid #B8832A;
   border-radius: 4px;
 }
 
-/* overrides contextuels pour les éléments dans la bannière rouge */
-.capsi-banner .capsi-eyebrow        { color: rgba(237, 232, 223, .7); }
-.capsi-banner .capsi-heading        { color: #EDE8DF; }
-.capsi-banner .capsi-text           { color: rgba(237, 232, 223, .85); }
+.capsi-banner {
+  background-color: #2D5A3E;
+  border-radius: 4px;
+}
 
-/* ---- FAQ — wp:details block ---- */
+/* Overrides contextuels pour les éléments dans la bannière verte */
+.capsi-banner .capsi-eyebrow        { color: rgba(244, 240, 232, .75); }
+.capsi-banner .capsi-heading        { color: #F4F0E8; }
+.capsi-banner .capsi-text           { color: rgba(244, 240, 232, .85); }
+
+/* ---- FAQ — wp:details block (hors contexte .faq-list) ---- */
+/* Note: dans .faq-list, pages.css prend le dessus via sélecteur plus spécifique */
 
 .wp-block-details {
-  border-bottom: 1px solid rgba(255, 255, 255, .08);
+  border-bottom: 1px solid rgba(28, 42, 34, 0.10);
   padding: 1.25rem 0;
   cursor: pointer;
 }
 
-.wp-block-details:first-of-type { border-top: 1px solid rgba(255, 255, 255, .08); }
+.wp-block-details:first-of-type { border-top: 1px solid rgba(28, 42, 34, 0.10); }
 
 .wp-block-details summary {
   display: flex;
@@ -107,7 +111,7 @@ h3.capsi-heading { font-size: clamp(1.5rem, 3vw, 2rem); }
   align-items: center;
   font-size: 1rem;
   font-weight: 500;
-  color: #EDE8DF;
+  color: #1C2A22;
   list-style: none;
   gap: 1rem;
   padding-right: 0.25rem;
@@ -123,7 +127,7 @@ h3.capsi-heading { font-size: clamp(1.5rem, 3vw, 2rem); }
   flex-shrink: 0;
   width: 20px;
   height: 20px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23EDE8DF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%235A6B5E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: center;
   transition: transform .25s ease;
@@ -133,11 +137,11 @@ h3.capsi-heading { font-size: clamp(1.5rem, 3vw, 2rem); }
   transform: rotate(180deg);
 }
 
-.wp-block-details[open] summary { color: #E39B35; }
+.wp-block-details[open] summary { color: #2D5A3E; }
 
 .wp-block-details > :not(summary) {
   padding-top: .875rem;
-  color: #A8A09A;
+  color: #5A6B5E;
   line-height: 1.7;
   font-size: .9375rem;
 }
@@ -147,38 +151,38 @@ h3.capsi-heading { font-size: clamp(1.5rem, 3vw, 2rem); }
 /* ---- Buttons ---- */
 
 .capsi-btn-primary .wp-block-button__link {
-  background-color: #C82A2B;
-  color: #EDE8DF;
-  border-color: #C82A2B;
+  background-color: #2D5A3E;
+  color: #F4F0E8;
+  border-color: #2D5A3E;
   border-radius: 4px;
   font-size: .875rem;
   letter-spacing: .05em;
 }
 .capsi-btn-primary .wp-block-button__link:hover {
-  background-color: #a82020;
-  border-color: #a82020;
+  background-color: #3C6A4E;
+  border-color: #3C6A4E;
 }
 
 .capsi-btn-outline .wp-block-button__link {
   background-color: transparent;
-  color: #EDE8DF;
-  border: 1px solid #EDE8DF;
+  color: #2D5A3E;
+  border: 1px solid #2D5A3E;
   border-radius: 4px;
   font-size: .875rem;
 }
 .capsi-btn-outline .wp-block-button__link:hover {
-  background-color: rgba(237, 232, 223, .08);
+  background-color: rgba(45, 90, 62, .06);
 }
 
 .capsi-btn-inverted .wp-block-button__link {
-  background-color: #EDE8DF;
-  color: #C82A2B;
-  border-color: #EDE8DF;
+  background-color: #F4F0E8;
+  color: #2D5A3E;
+  border-color: #F4F0E8;
   border-radius: 4px;
   font-size: .875rem;
   font-weight: 600;
 }
 .capsi-btn-inverted .wp-block-button__link:hover {
-  background-color: #F4EFE6;
-  border-color: #F4EFE6;
+  background-color: #FFFFFF;
+  border-color: #FFFFFF;
 }
