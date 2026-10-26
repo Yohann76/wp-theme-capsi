@@ -67,8 +67,8 @@
 }
 
 .post-card:hover {
-  border-color: rgba(224, 53, 53, 0.35);
-  box-shadow: var(--shadow-md);
+  border-color: rgba(45, 90, 62, 0.35);
+  box-shadow: 0 8px 32px rgba(45, 90, 62, 0.12);
   transform: translateY(-3px);
 }
 
@@ -104,7 +104,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #161616 0%, #1a1008 50%, #1a0808 100%);
+  background: linear-gradient(160deg, #EAF3EC 0%, #D4E8DA 60%, #C8E0D0 100%);
+}
+
+.post-card__placeholder-icon {
+  width: 60px;
+  height: auto;
+  opacity: 0.85;
 }
 
 .post-card__placeholder-icon {

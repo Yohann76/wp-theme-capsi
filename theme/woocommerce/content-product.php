@@ -24,9 +24,23 @@ $cats      = get_the_terms( $product->get_id(), 'product_cat' );
 				     loading="lazy">
 			<?php else : ?>
 				<div class="product-card__placeholder">
-					<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
-						<circle cx="12" cy="8" r="3"/><path d="M6.5 20c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/>
-						<path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/>
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 96" width="56" height="56" aria-hidden="true" class="product-card__placeholder-icon">
+						<defs>
+							<linearGradient id="ph-prod-g" x1="0%" y1="100%" x2="0%" y2="0%">
+								<stop offset="0%" stop-color="#3A6848" stop-opacity="0.65"/>
+								<stop offset="100%" stop-color="#7ABB8A" stop-opacity="0.45"/>
+							</linearGradient>
+						</defs>
+						<path d="M 40,92 C 40,76 40,62 40,50" stroke="url(#ph-prod-g)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+						<path d="M 40,50 C 33,38 23,24 14,11" stroke="url(#ph-prod-g)" stroke-width="3" fill="none" stroke-linecap="round"/>
+						<path d="M 40,50 C 47,38 57,24 66,11" stroke="url(#ph-prod-g)" stroke-width="3" fill="none" stroke-linecap="round"/>
+						<ellipse cx="24" cy="33" rx="8" ry="3.5" fill="#6AAA78" opacity="0.55" transform="rotate(-42 24 33)"/>
+						<ellipse cx="56" cy="33" rx="8" ry="3.5" fill="#6AAA78" opacity="0.55" transform="rotate(42 56 33)"/>
+						<circle cx="40" cy="50" r="3.5" fill="#B8832A" opacity="0.6"/>
+						<ellipse cx="14" cy="11" rx="3.5" ry="5.5" fill="#B8832A" opacity="0.55" transform="rotate(-12 14 11)"/>
+						<circle cx="66" cy="13" r="4" fill="#7ABB8A" opacity="0.55"/>
+						<circle cx="61" cy="8"  r="3" fill="#7ABB8A" opacity="0.45"/>
+						<circle cx="71" cy="8"  r="3" fill="#7ABB8A" opacity="0.45"/>
 					</svg>
 				</div>
 			<?php endif; ?>

@@ -352,7 +352,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(200, 42, 43, 0.06) 0%, transparent 60%);
+  background: linear-gradient(135deg, rgba(45, 90, 62, 0.07) 0%, transparent 60%);
   opacity: 0;
   transition: opacity var(--ease-base);
 }
@@ -373,7 +373,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(200, 42, 43, 0.1);
+  background: rgba(45, 90, 62, 0.10);
   border-radius: var(--radius-md);
   color: var(--rouge-capsi);
   flex-shrink: 0;
