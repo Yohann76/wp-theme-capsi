@@ -1,0 +1,92 @@
+{% extends "base.twig" %}
+
+{% block content %}
+<main id="main">
+
+    <section class="blog-header">
+        <div class="container">
+            <span class="eyebrow">Recherche</span>
+            <h1 class="blog-header__title">
+                {% if search_query %}
+                    Résultats pour « {{ search_query }} »
+                {% else %}
+                    Résultats de recherche
+                {% endif %}
+            </h1>
+
+            <form role="search" method="get" class="search-form" action="{{ site.url }}">
+                <label for="search-main" class="sr-only">Rechercher</label>
+                <input id="search-main" type="search" name="s" value="{{ search_query }}" placeholder="Rechercher…" class="search-form__input" autocomplete="off">
+                <button type="submit" class="search-form__btn" aria-label="Lancer la recherche">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <section class="blog-posts">
+        <div class="container">
+            {% if posts %}
+                <div class="posts-grid">
+                    {% for post in posts %}
+                        {% set cats = post.terms('category') %}
+                        <article class="post-card">
+
+                            <a href="{{ post.link }}" class="post-card__image-link" tabindex="-1" aria-hidden="true">
+                                <div class="post-card__image-wrap">
+                                    {% if post.thumbnail %}
+                                        <img src="{{ post.thumbnail.src('medium_large') }}"
+                                             alt="{{ post.thumbnail.alt }}"
+                                             class="post-card__image"
+                                             loading="lazy">
+                                    {% else %}
+                                        <div class="post-card__placeholder">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 58 68" aria-hidden="true" class="post-card__placeholder-icon">
+                                                <defs>
+                                                    <linearGradient id="pc-g2" x1="0%" y1="0%" x2="0%" y2="100%">
+                                                        <stop offset="0%"   stop-color="#E8701A" stop-opacity="0.4"/>
+                                                        <stop offset="100%" stop-color="#5A0A0A" stop-opacity="0.4"/>
+                                                    </linearGradient>
+                                                </defs>
+                                                <path fill="url(#pc-g2)" d="M46,15 C44,6 30,3 17,10 C4,17 4,27 4,34 C4,41 4,51 17,57 C30,63 44,61 46,53 L42,60 L38,47 C28,53 19,50 15,46 C12,42 12,38 12,34 C12,30 12,26 15,22 C19,16 28,13 38,21 Z"/>
+                                            </svg>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </a>
+
+                            <div class="post-card__body">
+                                {% if cats %}
+                                    <span class="post-card__cat">{{ cats[0].name }}</span>
+                                {% endif %}
+
+                                <h2 class="post-card__title">
+                                    <a href="{{ post.link }}">{{ post.title }}</a>
+                                </h2>
+
+                                <time class="post-card__date" datetime="{{ post.date('Y-m-d') }}">
+                                    {{ post.date('d/m/Y') }}
+                                </time>
+
+                                <p class="post-card__excerpt">{{ post.excerpt }}</p>
+
+                                <a href="{{ post.link }}" class="post-card__cta">
+                                    Lire la suite
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
+                            </div>
+
+                        </article>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="blog-empty">
+                    Aucun résultat pour « {{ search_query }} ».
+                    Essayez avec d'autres mots-clés.
+                </p>
+            {% endif %}
+        </div>
+    </section>
+
+</main>
+{% endblock %}

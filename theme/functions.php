@@ -54,7 +54,7 @@ function capsi_enqueue_assets(): void {
         'capsi-blocks' => 'blocks.css',
     ];
 
-    if ( is_home() || is_archive() || is_singular( 'post' ) ) {
+    if ( is_home() || is_archive() || is_singular( 'post' ) || is_search() ) {
         $sheets['capsi-blog'] = 'blog.css';
     }
 

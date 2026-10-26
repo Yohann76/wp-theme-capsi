@@ -17,10 +17,10 @@
                 {{ capsi.logo_html|raw }}
             {% else %}
                 <img src="{{ theme.link }}/assets/images/logo-icon.svg"
-                     alt="" width="40" height="40">
-                <span class="site-logo__name">
-                    <span>L'Atelier</span>
-                    <span>Capsi</span>
+                     alt="" width="44" height="44" aria-hidden="true">
+                <span class="site-logo__text">
+                    <span class="site-logo__name">L'Atelier Capsi</span>
+                    <span class="site-logo__tagline">Piments rares · Plantes aromatiques</span>
                 </span>
             {% endif %}
         </a>
@@ -127,10 +127,10 @@
                             {{ capsi.logo_html|raw }}
                         {% else %}
                             <img src="{{ theme.link }}/assets/images/logo-icon.svg"
-                                 alt="{{ site.name }}" width="44" height="44">
-                            <span class="footer-brand__name">
-                                <span>L'Atelier</span>
-                                <span>Capsi</span>
+                                 alt="" width="52" height="52" aria-hidden="true">
+                            <span class="footer-brand__text">
+                                <span class="footer-brand__name">L'Atelier Capsi</span>
+                                <span class="footer-brand__tagline">Piments rares · Plantes aromatiques</span>
                             </span>
                         {% endif %}
                     </a>
