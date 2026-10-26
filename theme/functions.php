@@ -169,9 +169,9 @@ add_filter( 'timber/context', function ( array $context ): array {
         'facebook'  => get_theme_mod( 'capsi_facebook',  '' ),
         'tiktok'    => get_theme_mod( 'capsi_tiktok',    '' ),
 
-        'hero_eyebrow'   => get_theme_mod( 'capsi_hero_eyebrow',  'Atelier artisanal · Paris' ),
-        'hero_title_1'   => get_theme_mod( 'capsi_hero_title_1',  "L'art du" ),
-        'hero_title_em'  => get_theme_mod( 'capsi_hero_title_em', 'piment rare.' ),
+        'hero_eyebrow'   => get_theme_mod( 'capsi_hero_eyebrow',  'Pépinière artisanale · Normandie' ),
+        'hero_title_1'   => get_theme_mod( 'capsi_hero_title_1',  'Piments & aromatiques' ),
+        'hero_title_em'  => get_theme_mod( 'capsi_hero_title_em', "d'exception." ),
         'hero_desc'      => get_theme_mod( 'capsi_hero_desc',     "De la sélection des semences à l'expédition du plant, chaque étape se passe ici. Piments rares et plantes aromatiques élevés à la main. En stock limité. Sans compromis." ),
         'hero_cta1_text' => get_theme_mod( 'capsi_hero_cta1_text', 'Explorer la boutique' ),
         'hero_cta1_url'  => get_theme_mod( 'capsi_hero_cta1_url',  '' ) ?: ( function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/boutique' ) ),
@@ -189,7 +189,7 @@ add_filter( 'timber/context', function ( array $context ): array {
         'manifesto_text'    => get_theme_mod( 'capsi_manifesto_text',    "Chaque lot est préparé à la main, en petite série, selon les disponibilités de notre serre. Certaines variétés s'épuisent en quelques jours — c'est aussi pour cela qu'elles sont exceptionnelles." ),
 
         'footer_copyright' => get_theme_mod( 'capsi_footer_copyright', "L'Atelier Capsi — Tous droits réservés" ),
-        'footer_tagline'   => get_theme_mod( 'capsi_footer_tagline',    'Conservatoire des piments rares & de collection' ),
+        'footer_tagline'   => get_theme_mod( 'capsi_footer_tagline',    'Pépinière artisanale · piments & aromatiques rares' ),
     ];
 
     $context['cart'] = null;
@@ -270,9 +270,9 @@ add_action( 'customize_register', function ( WP_Customize_Manager $c ): void {
 
     // ---- Hero ----
     $c->add_section( 'capsi_hero', [ 'title' => 'Accueil — Hero', 'panel' => 'capsi_panel', 'priority' => 30 ] );
-    $add( 'capsi_hero', 'capsi_hero_eyebrow',   'Eyebrow',                      'Atelier artisanal · Paris' );
-    $add( 'capsi_hero', 'capsi_hero_title_1',   'Titre ligne 1',                "L'art du" );
-    $add( 'capsi_hero', 'capsi_hero_title_em',  'Titre accentué (italique)',     'piment rare.' );
+    $add( 'capsi_hero', 'capsi_hero_eyebrow',   'Eyebrow',                      'Pépinière artisanale · Normandie' );
+    $add( 'capsi_hero', 'capsi_hero_title_1',   'Titre ligne 1',                'Piments & aromatiques' );
+    $add( 'capsi_hero', 'capsi_hero_title_em',  'Titre accentué (italique)',     "d'exception." );
     $add( 'capsi_hero', 'capsi_hero_desc',      'Description',                  "De la sélection des semences à l'expédition du plant, chaque étape se passe ici. Piments rares et plantes aromatiques élevés à la main. En stock limité. Sans compromis.", 'textarea' );
     $add( 'capsi_hero', 'capsi_hero_cta1_text', 'Bouton principal — texte',     'Explorer la boutique' );
     $add( 'capsi_hero', 'capsi_hero_cta1_url',  'Bouton principal — URL (vide = boutique)', '', 'url' );
@@ -295,7 +295,7 @@ add_action( 'customize_register', function ( WP_Customize_Manager $c ): void {
     // ---- Footer ----
     $c->add_section( 'capsi_footer_section', [ 'title' => 'Footer', 'panel' => 'capsi_panel', 'priority' => 60 ] );
     $add( 'capsi_footer_section', 'capsi_footer_copyright', 'Texte copyright', "L'Atelier Capsi — Tous droits réservés" );
-    $add( 'capsi_footer_section', 'capsi_footer_tagline',   'Tagline',         'Conservatoire des piments rares & de collection' );
+    $add( 'capsi_footer_section', 'capsi_footer_tagline',   'Tagline',         'Pépinière artisanale · piments & aromatiques rares' );
 } );
 
 // Mise à jour du badge panier via les fragments AJAX WooCommerce

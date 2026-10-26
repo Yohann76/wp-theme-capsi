@@ -27,6 +27,9 @@ $WP option update woocommerce_catalog_rows         "4"
 
 step "Creating WooCommerce pages..."
 $WP wc tool run install_pages --user="$WP_ADMIN"
+# Forcer WooCommerce à utiliser la page Boutique déjà créée (évite les slugs "shop" en anglais)
+$WP option update woocommerce_shop_page_id "$(page_id "Boutique")"
+$WP rewrite flush
 
 step "Creating product categories..."
 $WP wc product_cat create \
