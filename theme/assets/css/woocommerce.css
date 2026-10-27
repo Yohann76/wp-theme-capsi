@@ -931,18 +931,36 @@ ul.products {
 .single-product__tabs .woocommerce-tabs ul.tabs li.active a,
 .single-product__tabs .woocommerce-tabs ul.tabs li a:hover {
   color: var(--color-text) !important;
-  border-bottom-color: var(--rouge-capsi) !important;
+  border-bottom-color: var(--vert-capsi) !important;
 }
 
 .single-product__tabs .woocommerce-Tabs-panel {
-  font-size: var(--text-base) !important;
-  line-height: var(--leading-loose) !important;
-  color: var(--color-text-muted) !important;
-  max-width: 72ch;
+  max-width: none;
 }
 
 .single-product__tabs .woocommerce-Tabs-panel h2 {
   display: none !important;
+}
+
+/* Cartes blanches pour les onglets texte */
+.single-product__tabs .woocommerce-Tabs-panel--description,
+.single-product__tabs .woocommerce-Tabs-panel--utilisation,
+.single-product__tabs .woocommerce-Tabs-panel--conseils {
+  background-color: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8) var(--space-10);
+}
+
+.single-product__tabs .woocommerce-Tabs-panel--description .product-tab-text,
+.single-product__tabs .woocommerce-Tabs-panel--description > p,
+.single-product__tabs .woocommerce-Tabs-panel--description > h3,
+.single-product__tabs .woocommerce-Tabs-panel--utilisation .product-tab-text,
+.single-product__tabs .woocommerce-Tabs-panel--conseils .product-tab-text {
+  font-size: var(--text-base);
+  line-height: var(--leading-loose);
+  color: var(--color-text-muted);
+  max-width: 72ch;
 }
 
 .single-product__tabs .woocommerce-Tabs-panel strong,
@@ -951,6 +969,332 @@ ul.products {
   font-weight: 600 !important;
 }
 
+
+/* ============================================================
+   WOOCOMMERCE — Onglet Caractéristiques — 3 colonnes
+   ============================================================ */
+.product-carac {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+
+.product-carac__col {
+  background-color: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6) var(--space-6) var(--space-8);
+}
+
+.product-carac__col-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.product-carac__col-icon {
+  color: var(--vert-capsi);
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+.product-carac__col-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--vert-capsi);
+  margin: 0;
+}
+
+.product-carac__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.product-carac__item {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-1);
+  padding-block: var(--space-3);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.product-carac__item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.product-carac__label {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+}
+
+.product-carac__value {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 400;
+  color: var(--color-text);
+  line-height: var(--leading-snug);
+}
+
+.product-carac__value--latin {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--vert-capsi);
+}
+
+.product-carac__value--shu {
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Échelle de force dans l'onglet Caractéristiques */
+.product-carac__scale {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.product-carac__pip {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background-color: rgba(45, 90, 62, 0.12);
+  flex-shrink: 0;
+}
+
+.product-carac__scale-label {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  margin-left: var(--space-1);
+}
+
+/* Texte des onglets Description / Utilisation / Conseils */
+.product-tab-text {
+  font-size: var(--text-base);
+  line-height: var(--leading-loose);
+  color: var(--color-text-muted);
+}
+
+.product-tab-text p {
+  margin-bottom: var(--space-4);
+}
+
+.product-tab-text h3 {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--vert-capsi);
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-2);
+}
+
+.product-tab-text h3:first-child {
+  margin-top: 0;
+}
+
+.product-tab-text strong {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.product-tab__empty {
+  color: var(--color-text-faint);
+  font-style: italic;
+}
+
+@media (max-width: 960px) {
+  .product-carac {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .product-carac {
+    grid-template-columns: 1fr;
+  }
+
+  .single-product__tabs .woocommerce-Tabs-panel--description,
+  .single-product__tabs .woocommerce-Tabs-panel--utilisation,
+  .single-product__tabs .woocommerce-Tabs-panel--conseils {
+    padding: var(--space-5) var(--space-5);
+  }
+}
+
+
+/* ============================================================
+   WOOCOMMERCE — Fiche botanique (single product)
+   ============================================================ */
+.product-botanical {
+  margin-block: 0;
+  padding: var(--space-8) var(--space-10);
+  background-color: rgba(45, 90, 62, 0.04);
+  border: 1px solid rgba(45, 90, 62, 0.12);
+  border-radius: var(--radius-lg);
+}
+
+.product-botanical__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--vert-capsi);
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid rgba(45, 90, 62, 0.12);
+}
+
+.product-botanical__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+}
+
+.product-botanical__row {
+  display: contents;
+}
+
+.product-botanical__row--separator {
+  display: block;
+  grid-column: 1 / -1;
+  height: 1px;
+  background-color: rgba(45, 90, 62, 0.08);
+  margin-block: var(--space-4);
+}
+
+.product-botanical__label {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+  padding-block: var(--space-3);
+  padding-right: var(--space-4);
+  border-bottom: 1px solid rgba(45, 90, 62, 0.06);
+}
+
+.product-botanical__value {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 400;
+  color: var(--color-text);
+  padding-block: var(--space-3);
+  border-bottom: 1px solid rgba(45, 90, 62, 0.06);
+}
+
+.product-botanical__value--latin {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--vert-capsi);
+}
+
+.product-botanical__value--shu {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Échelle de force */
+.product-botanical__scale {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.product-botanical__pip {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(45, 90, 62, 0.12);
+  flex-shrink: 0;
+}
+
+.product-botanical__pip.is-filled {
+  /* couleur injectée inline via style= */
+}
+
+.product-botanical__scale-label {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  margin-left: var(--space-1);
+  /* couleur injectée inline via style= */
+}
+
+@media (max-width: 600px) {
+  .product-botanical {
+    padding: var(--space-5) var(--space-5);
+  }
+  .product-botanical__grid {
+    grid-template-columns: 1fr;
+  }
+  .product-botanical__row {
+    display: grid;
+    grid-template-columns: 10ch 1fr;
+    gap: var(--space-2);
+  }
+  .product-botanical__label,
+  .product-botanical__value {
+    border-bottom: none;
+    padding-block: var(--space-1);
+  }
+  .product-botanical__row--separator {
+    display: block;
+    margin-block: var(--space-3);
+  }
+}
+
+/* Onglet Conseils de culture */
+.product-conseils {
+  max-width: 720px;
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text);
+}
+
+.product-conseils p {
+  margin-bottom: var(--space-4);
+}
+
+.product-conseils h3 {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--vert-capsi);
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-2);
+}
+
+.product-conseils strong {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.product-conseils__empty {
+  color: var(--color-text-faint);
+  font-style: italic;
+}
 
 /* ============================================================
    WOOCOMMERCE — Account — Login page
@@ -1779,5 +2123,143 @@ ul.products {
 
   .single-product__summary .qty {
     width: 100% !important;
+  }
+}
+
+
+/* ============================================================
+   WOOCOMMERCE — Section produits liés
+   ============================================================ */
+.related-section {
+  background-color: var(--vert-capsi, #2D5A3E);
+  padding-block: var(--space-16) var(--space-20);
+}
+
+.related-section__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-10);
+}
+
+.related-section__eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: rgba(244, 240, 232, 0.55);
+}
+
+.related-section__title {
+  font-family: var(--font-serif);
+  font-size: var(--text-3xl);
+  font-weight: 600;
+  color: var(--papier-botanique, #F4F0E8);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.related-section__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-6);
+}
+
+/* Carte produit lié */
+.related-card {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  text-decoration: none;
+  transition: transform var(--ease-fast), box-shadow var(--ease-fast), border-color var(--ease-fast);
+}
+
+.related-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.related-card__img {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background-color: rgba(45, 90, 62, 0.04);
+}
+
+.related-card__thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+  display: block;
+}
+
+.related-card:hover .related-card__thumb {
+  transform: scale(1.04);
+}
+
+.related-card__body {
+  padding: var(--space-4) var(--space-5) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  flex: 1;
+}
+
+.related-card__cat {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--vert-capsi);
+  opacity: 0.8;
+  margin: 0;
+}
+
+.related-card__name {
+  font-family: var(--font-serif);
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.related-card__price {
+  margin: auto 0 0;
+  padding-top: var(--space-3);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.related-card__price .woocommerce-Price-amount {
+  color: var(--vert-capsi);
+}
+
+@media (max-width: 960px) {
+  .related-section__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .related-section {
+    padding-block: var(--space-10) var(--space-14);
+  }
+  .related-section__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+  }
+  .related-section__title {
+    font-size: var(--text-2xl);
   }
 }

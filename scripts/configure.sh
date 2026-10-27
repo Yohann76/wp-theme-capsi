@@ -39,6 +39,7 @@ source "$DIR/setup/04-woocommerce.sh"
 source "$DIR/setup/05-blog.sh"
 source "$DIR/setup/06-plugins.sh"
 source "$DIR/setup/07-plugins-config.sh"
+source "$DIR/setup/08-attributes.sh"
 
 # ============================================================
 # Content — contenu des pages

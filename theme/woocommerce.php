@@ -119,4 +119,12 @@ ob_start();
 woocommerce_content();
 $context['woocommerce_content'] = ob_get_clean();
 
+// Produits liés — capturés séparément pour sortir du container
+$context['related_products_html'] = '';
+if ( is_singular( 'product' ) ) {
+    ob_start();
+    do_action( 'capsi_related_products' );
+    $context['related_products_html'] = ob_get_clean();
+}
+
 Timber::render( 'woocommerce.twig', $context );

@@ -95,12 +95,217 @@ add_action( 'wp_enqueue_scripts', 'capsi_enqueue_assets' );
 
 // WooCommerce — Désactivation des avis produits
 add_filter( 'pre_option_woocommerce_enable_reviews', fn() => 'no' );
-add_filter( 'woocommerce_product_tabs', function ( array $tabs ): array {
-    unset( $tabs['reviews'] );
-    return $tabs;
-} );
 add_filter( 'comments_open', function ( bool $open ): bool {
     return is_singular( 'product' ) ? false : $open;
+} );
+
+// ============================================================
+// WooCommerce — Helpers attributs produit
+// ============================================================
+
+function capsi_force_level( string $level ): array {
+    return match ( mb_strtolower( trim( $level ) ) ) {
+        'doux'      => [ 'pips' => 1, 'color' => '#6AAA78', 'label' => 'Doux'      ],
+        'moyen'     => [ 'pips' => 2, 'color' => '#B8C850', 'label' => 'Moyen'     ],
+        'fort'      => [ 'pips' => 3, 'color' => '#E8A030', 'label' => 'Fort'      ],
+        'très fort' => [ 'pips' => 4, 'color' => '#D05828', 'label' => 'Très fort' ],
+        'extrême'   => [ 'pips' => 5, 'color' => '#A82020', 'label' => 'Extrême'   ],
+        default     => [ 'pips' => 0, 'color' => '#999',    'label' => $level      ],
+    };
+}
+
+function capsi_get_product_attrs( WC_Product $product ): array {
+    $out = [];
+    foreach ( $product->get_attributes() as $attr ) {
+        if ( ! $attr->get_visible() ) {
+            continue;
+        }
+        if ( $attr->is_taxonomy() ) {
+            $terms = wc_get_product_terms( $product->get_id(), $attr->get_name(), [ 'fields' => 'names' ] );
+            $value = implode( ', ', $terms );
+            $key   = str_replace( 'pa_', '', $attr->get_name() );
+        } else {
+            $value = implode( ', ', $attr->get_options() );
+            $key   = sanitize_title( $attr->get_name() );
+        }
+        if ( '' === $value ) {
+            continue;
+        }
+        $out[] = [
+            'key'   => $key,
+            'label' => wc_attribute_label( $attr->get_name() ),
+            'value' => $value,
+        ];
+    }
+    return $out;
+}
+
+// Regroupement des attributs en 3 colonnes pour l'onglet Caractéristiques
+function capsi_group_attrs( array $attrs ): array {
+    $identite  = [ 'nom-latin', 'famille', 'espece-capsicum', 'origine' ];
+    $apparence = [ 'couleur-maturite', 'arome-principal', 'force-shu', 'niveau-force' ];
+    $besoins   = [ 'contenu', 'saison-de-semis' ];
+
+    $groups = [ 'identite' => [], 'apparence' => [], 'besoins' => [] ];
+    foreach ( $attrs as $attr ) {
+        if ( in_array( $attr['key'], $identite, true ) ) {
+            $groups['identite'][]  = $attr;
+        } elseif ( in_array( $attr['key'], $apparence, true ) ) {
+            $groups['apparence'][] = $attr;
+        } elseif ( in_array( $attr['key'], $besoins, true ) ) {
+            $groups['besoins'][]   = $attr;
+        }
+    }
+    return $groups;
+}
+
+// ============================================================
+// WooCommerce — Produits liés (section séparée)
+// ============================================================
+
+remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20 );
+remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_upsell_display', 15 );
+
+add_action( 'capsi_related_products', function (): void {
+    $related = wc_get_related_products( get_the_ID(), 4 );
+    if ( empty( $related ) ) {
+        return;
+    }
+    ?>
+    <section class="related-section">
+        <div class="container">
+            <div class="related-section__head">
+                <span class="related-section__eyebrow">À découvrir aussi</span>
+                <h2 class="related-section__title">Dans la même veine</h2>
+            </div>
+            <div class="related-section__grid">
+                <?php
+                foreach ( $related as $related_id ) {
+                    $related_product = wc_get_product( $related_id );
+                    if ( ! $related_product ) {
+                        continue;
+                    }
+                    ?>
+                    <a href="<?php echo esc_url( $related_product->get_permalink() ); ?>"
+                       class="related-card">
+                        <div class="related-card__img">
+                            <?php echo $related_product->get_image( 'woocommerce_thumbnail', [ 'class' => 'related-card__thumb', 'loading' => 'lazy' ] ); // phpcs:ignore ?>
+                        </div>
+                        <div class="related-card__body">
+                            <p class="related-card__cat">
+                                <?php
+                                $terms = get_the_terms( $related_id, 'product_cat' );
+                                if ( $terms && ! is_wp_error( $terms ) ) {
+                                    echo esc_html( $terms[0]->name );
+                                }
+                                ?>
+                            </p>
+                            <h3 class="related-card__name"><?php echo esc_html( $related_product->get_name() ); ?></h3>
+                            <p class="related-card__price"><?php echo wp_kses_post( $related_product->get_price_html() ); ?></p>
+                        </div>
+                    </a>
+                    <?php
+                }
+                ?>
+            </div>
+        </div>
+    </section>
+    <?php
+} );
+
+// ============================================================
+// WooCommerce — 4 onglets produit
+// ============================================================
+
+add_filter( 'woocommerce_product_tabs', function ( array $tabs ): array {
+    unset( $tabs['reviews'], $tabs['additional_information'] );
+
+    if ( isset( $tabs['description'] ) ) {
+        $tabs['description']['title']    = "Description du pépiniériste";
+        $tabs['description']['priority'] = 10;
+    }
+
+    $tabs['caracteristiques'] = [
+        'title'    => 'Caractéristiques',
+        'priority' => 20,
+        'callback' => 'capsi_tab_caracteristiques',
+    ];
+
+    $tabs['utilisation'] = [
+        'title'    => 'Utilisation',
+        'priority' => 30,
+        'callback' => 'capsi_tab_utilisation',
+    ];
+
+    $tabs['conseils'] = [
+        'title'    => 'Conseils',
+        'priority' => 40,
+        'callback' => 'capsi_tab_conseils',
+    ];
+
+    return $tabs;
+} );
+
+function capsi_tab_caracteristiques(): void {
+    global $product;
+    if ( ! $product instanceof WC_Product ) {
+        return;
+    }
+    $template = get_stylesheet_directory() . '/woocommerce/partials/caracteristiques.php';
+    if ( file_exists( $template ) ) {
+        include $template;
+    }
+}
+
+function capsi_tab_utilisation(): void {
+    global $post;
+    $content = get_post_meta( $post->ID, '_capsi_utilisation', true );
+    if ( empty( $content ) ) {
+        echo '<p class="product-tab__empty">Informations d\'utilisation à venir.</p>';
+        return;
+    }
+    echo '<div class="product-tab-text">' . wp_kses_post( wpautop( $content ) ) . '</div>';
+}
+
+function capsi_tab_conseils(): void {
+    global $post;
+    $content = get_post_meta( $post->ID, '_capsi_conseils', true );
+    if ( empty( $content ) ) {
+        echo '<p class="product-tab__empty">Conseils de culture à venir.</p>';
+        return;
+    }
+    echo '<div class="product-tab-text">' . wp_kses_post( wpautop( $content ) ) . '</div>';
+}
+
+// ============================================================
+// WooCommerce — Meta boxes admin (Utilisation + Conseils)
+// ============================================================
+
+add_action( 'add_meta_boxes', function (): void {
+    foreach ( [
+        [ 'id' => 'capsi_utilisation', 'title' => 'Utilisation',         'field' => 'capsi_utilisation', 'nonce' => 'capsi_utilisation_save', 'tab' => 'Utilisation' ],
+        [ 'id' => 'capsi_conseils',    'title' => 'Conseils de culture',  'field' => 'capsi_conseils',    'nonce' => 'capsi_conseils_save',    'tab' => 'Conseils'    ],
+    ] as $box ) {
+        add_meta_box( $box['id'], $box['title'], function ( WP_Post $post ) use ( $box ): void {
+            $value = get_post_meta( $post->ID, '_' . $box['field'], true );
+            wp_nonce_field( $box['nonce'], $box['field'] . '_nonce' );
+            echo '<p style="margin-bottom:6px;color:#666;font-size:12px;">Affiché dans l\'onglet <em>' . esc_html( $box['tab'] ) . '</em>. HTML basique accepté (<code>h3</code>, <code>strong</code>, <code>ul</code>).</p>';
+            echo '<textarea name="' . esc_attr( $box['field'] ) . '" rows="8" style="width:100%;">' . esc_textarea( $value ) . '</textarea>';
+        }, 'product', 'normal', 'default' );
+    }
+} );
+
+add_action( 'save_post_product', function ( int $post_id ): void {
+    foreach ( [
+        [ 'field' => 'capsi_utilisation', 'nonce' => 'capsi_utilisation_save' ],
+        [ 'field' => 'capsi_conseils',    'nonce' => 'capsi_conseils_save'    ],
+    ] as $f ) {
+        if ( isset( $_POST[ $f['field'] . '_nonce' ] )
+            && wp_verify_nonce( $_POST[ $f['field'] . '_nonce' ], $f['nonce'] )
+            && ! ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) ) {
+            update_post_meta( $post_id, '_' . $f['field'], wp_kses_post( $_POST[ $f['field'] ] ?? '' ) );
+        }
+    }
 } );
 
 // WooCommerce — Localisation française

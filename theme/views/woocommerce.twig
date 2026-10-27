@@ -133,5 +133,10 @@
     {% endif %}
 
   </div>
+
+  {% if related_products_html %}
+  {{ related_products_html|raw }}
+  {% endif %}
+
 </main>
 {% endblock %}
