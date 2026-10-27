@@ -119,16 +119,39 @@ function capsi_get_product_attrs( WC_Product $product ): array {
     $id = $product->get_id();
 
     $fields = [
-        [ 'key' => 'nom-latin',        'label' => 'Nom latin',           'meta' => 'capsi_nom_latin'    ],
-        [ 'key' => 'famille',          'label' => 'Famille',             'meta' => 'capsi_famille'      ],
-        [ 'key' => 'espece-capsicum',  'label' => 'Espèce Capsicum',     'meta' => 'capsi_espece'       ],
-        [ 'key' => 'origine',          'label' => 'Origine',             'meta' => 'capsi_origine'      ],
-        [ 'key' => 'contenu',          'label' => 'Contenu',             'meta' => 'capsi_contenu'      ],
-        [ 'key' => 'saison-de-semis',  'label' => 'Saison de semis',     'meta' => 'capsi_saison_semis' ],
-        [ 'key' => 'force-shu',        'label' => 'Force (SHU)',         'meta' => 'capsi_force_shu'    ],
-        [ 'key' => 'niveau-force',     'label' => 'Niveau de force',     'meta' => 'capsi_niveau_force' ],
-        [ 'key' => 'couleur-maturite', 'label' => 'Couleur à maturité',  'meta' => 'capsi_couleur'      ],
-        [ 'key' => 'arome-principal',  'label' => 'Arôme principal',     'meta' => 'capsi_arome'        ],
+        // Identité
+        [ 'key' => 'type',                    'label' => 'Type',                      'meta' => 'capsi_type'                    ],
+        [ 'key' => 'nom',                     'label' => 'Nom',                       'meta' => 'capsi_nom'                     ],
+        [ 'key' => 'nom-secondaire',          'label' => 'Nom secondaire',            'meta' => 'capsi_nom_secondaire'          ],
+        [ 'key' => 'nom-latin',               'label' => 'Nom latin',                 'meta' => 'capsi_nom_latin'               ],
+        [ 'key' => 'famille',                 'label' => 'Famille',                   'meta' => 'capsi_famille'                 ],
+        [ 'key' => 'genre',                   'label' => 'Genre',                     'meta' => 'capsi_genre'                   ],
+        [ 'key' => 'espece',                  'label' => 'Espèce',                    'meta' => 'capsi_espece'                  ],
+        [ 'key' => 'variete',                 'label' => 'Variété',                   'meta' => 'capsi_variete'                 ],
+        [ 'key' => 'origine',                 'label' => 'Origine',                   'meta' => 'capsi_origine'                 ],
+        [ 'key' => 'force-shu',               'label' => 'Force (SHU)',               'meta' => 'capsi_force_shu'               ],
+        [ 'key' => 'niveau-force',            'label' => 'Niveau de force',           'meta' => 'capsi_niveau_force'            ],
+        // Apparence
+        [ 'key' => 'couleur-maturite',        'label' => 'Couleur à maturité',        'meta' => 'capsi_couleur'                 ],
+        [ 'key' => 'couleur-floraison',       'label' => 'Couleur de la floraison',   'meta' => 'capsi_couleur_floraison'       ],
+        [ 'key' => 'periode-floraison',       'label' => 'Période de floraison',      'meta' => 'capsi_periode_floraison'       ],
+        [ 'key' => 'persistance-feuillage',   'label' => 'Persistance du feuillage',  'meta' => 'capsi_persistance_feuillage'   ],
+        [ 'key' => 'couleur-feuillage',       'label' => 'Couleur du feuillage',      'meta' => 'capsi_couleur_feuillage'       ],
+        [ 'key' => 'parfum',                  'label' => 'Parfum',                    'meta' => 'capsi_parfum'                  ],
+        [ 'key' => 'hauteur',                 'label' => 'Hauteur à maturité',        'meta' => 'capsi_hauteur'                 ],
+        [ 'key' => 'forme-fleurs',            'label' => 'Forme des fleurs',          'meta' => 'capsi_forme_fleurs'            ],
+        [ 'key' => 'largeur',                 'label' => 'Largeur / Diamètre',        'meta' => 'capsi_largeur'                 ],
+        [ 'key' => 'arome-principal',         'label' => 'Arôme principal',           'meta' => 'capsi_arome'                   ],
+        // Besoins
+        [ 'key' => 'resistance-froid',        'label' => 'Résistance au froid',       'meta' => 'capsi_resistance_froid'        ],
+        [ 'key' => 'ensoleillement',          'label' => 'Ensoleillement',            'meta' => 'capsi_ensoleillement'          ],
+        [ 'key' => 'niveau-soin',             'label' => 'Niveau de soin',            'meta' => 'capsi_niveau_soin'             ],
+        [ 'key' => 'type-sol',                'label' => 'Type de sol',               'meta' => 'capsi_type_sol'                ],
+        [ 'key' => 'nature-sol',              'label' => 'Nature du sol',             'meta' => 'capsi_nature_sol'              ],
+        [ 'key' => 'parfait-pour',            'label' => 'Parfait pour',              'meta' => 'capsi_parfait_pour'            ],
+        [ 'key' => 'tolerance-secheresse',    'label' => 'Tolérance à la sécheresse', 'meta' => 'capsi_tolerance_secheresse'    ],
+        [ 'key' => 'contenu',                 'label' => 'Contenu',                   'meta' => 'capsi_contenu'                 ],
+        [ 'key' => 'saison-de-semis',         'label' => 'Saison de semis',           'meta' => 'capsi_saison_semis'            ],
     ];
 
     $out = [];
@@ -147,9 +170,9 @@ function capsi_get_product_attrs( WC_Product $product ): array {
 
 // Regroupement des attributs en 3 colonnes pour l'onglet Caractéristiques
 function capsi_group_attrs( array $attrs ): array {
-    $identite  = [ 'nom-latin', 'famille', 'espece-capsicum', 'origine' ];
-    $apparence = [ 'couleur-maturite', 'arome-principal', 'force-shu', 'niveau-force' ];
-    $besoins   = [ 'contenu', 'saison-de-semis' ];
+    $identite  = [ 'type', 'nom', 'nom-secondaire', 'nom-latin', 'famille', 'genre', 'espece', 'variete', 'origine', 'force-shu', 'niveau-force' ];
+    $apparence = [ 'couleur-maturite', 'couleur-floraison', 'periode-floraison', 'persistance-feuillage', 'couleur-feuillage', 'parfum', 'hauteur', 'forme-fleurs', 'largeur', 'arome-principal' ];
+    $besoins   = [ 'resistance-froid', 'ensoleillement', 'niveau-soin', 'type-sol', 'nature-sol', 'parfait-pour', 'tolerance-secheresse', 'contenu', 'saison-de-semis' ];
 
     $groups = [ 'identite' => [], 'apparence' => [], 'besoins' => [] ];
     foreach ( $attrs as $attr ) {
@@ -297,12 +320,15 @@ add_action( 'acf/save_post', function ( int $post_id ): void {
 
     // Champs ACF → taxonomie WC (pour le filtrage en boutique)
     $sync = [
+        'capsi_type'          => 'pa_type',
         'capsi_famille'       => 'pa_famille',
-        'capsi_espece'        => 'pa_espece-capsicum',
+        'capsi_espece'        => 'pa_espece',
         'capsi_origine'       => 'pa_origine',
         'capsi_niveau_force'  => 'pa_niveau-force',
         'capsi_couleur'       => 'pa_couleur-maturite',
         'capsi_arome'         => 'pa_arome-principal',
+        'capsi_ensoleillement'=> 'pa_ensoleillement',
+        'capsi_niveau_soin'   => 'pa_niveau-soin',
     ];
 
     $wc_attrs = $product->get_attributes();
