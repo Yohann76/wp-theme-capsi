@@ -93,6 +93,16 @@ function capsi_enqueue_assets(): void {
 add_filter( 'woocommerce_enqueue_styles', '__return_empty_array' );
 add_action( 'wp_enqueue_scripts', 'capsi_enqueue_assets' );
 
+// WooCommerce — Désactivation des avis produits
+add_filter( 'pre_option_woocommerce_enable_reviews', fn() => 'no' );
+add_filter( 'woocommerce_product_tabs', function ( array $tabs ): array {
+    unset( $tabs['reviews'] );
+    return $tabs;
+} );
+add_filter( 'comments_open', function ( bool $open ): bool {
+    return is_singular( 'product' ) ? false : $open;
+} );
+
 // WooCommerce — Localisation française
 add_filter( 'woocommerce_currency',           fn() => 'EUR' );
 add_filter( 'woocommerce_currency_pos',       fn() => 'right_space' );   // 10,00 €
