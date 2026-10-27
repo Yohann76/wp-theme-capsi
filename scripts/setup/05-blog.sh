@@ -179,3 +179,26 @@ $WP post create \
   --post_name="origine-histoire-piments-especes-capsicum" \
   --post_content="$ARTICLE2" \
   --post_category="$(cat_id "Variétés")"
+
+# ============================================================
+# Featured images — placeholders (remplacer par les vraies images)
+# ============================================================
+step "Importing placeholder featured images..."
+
+CONTENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../content" && pwd)"
+WPDIR="/var/www/html/wp-content/uploads/capsi-placeholders"
+WP_CONTAINER="$(docker compose ps -q wordpress)"
+
+docker exec "$WP_CONTAINER" mkdir -p "$WPDIR"
+docker cp "${CONTENT_DIR}/placeholder-article-1.png" "${WP_CONTAINER}:${WPDIR}/placeholder-article-1.png"
+docker cp "${CONTENT_DIR}/placeholder-article-2.png" "${WP_CONTAINER}:${WPDIR}/placeholder-article-2.png"
+
+ART1_ID=$(post_id "latelier-capsi-pepiniere-artisanale-piments-rares-normandie")
+ART2_ID=$(post_id "origine-histoire-piments-especes-capsicum")
+
+$WP media import "${WPDIR}/placeholder-article-1.png" \
+    --post_id="$ART1_ID" --featured_image \
+    --title="[Placeholder] L'Atelier Capsi en Normandie — 1200×630"
+$WP media import "${WPDIR}/placeholder-article-2.png" \
+    --post_id="$ART2_ID" --featured_image \
+    --title="[Placeholder] Origine des piments — 1200×630"

@@ -16,6 +16,16 @@ page_id() {
     --format=ids
 }
 
+# ID d'un article blog par son slug
+post_id() {
+  $WP post list \
+    --post_type=post \
+    --post_status=publish \
+    --post_name__in="$1" \
+    --field=ID \
+    --format=ids
+}
+
 # ID d'une catégorie blog par son nom
 cat_id() {
   $WP term list category \
