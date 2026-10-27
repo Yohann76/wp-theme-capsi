@@ -1096,15 +1096,26 @@ ul.products {
 
 .product-tab-text h3 {
   font-family: var(--font-serif);
-  font-size: var(--text-lg);
+  font-size: var(--text-xl);
   font-weight: 600;
-  color: var(--vert-capsi);
+  color: var(--color-text);
   margin-top: var(--space-8);
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-4);
+  padding-left: var(--space-4);
+  border-left: 3px solid var(--vert-capsi);
 }
 
-.product-tab-text h3:first-child {
-  margin-top: 0;
+/* Même traitement pour les h2/h3 natifs WooCommerce dans la description */
+.single-product__tabs .woocommerce-Tabs-panel--description h3,
+.single-product__tabs .woocommerce-Tabs-panel--description h2:not(:first-child) {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--color-text);
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-4);
+  padding-left: var(--space-4);
+  border-left: 3px solid var(--vert-capsi);
 }
 
 .product-tab-text strong {
