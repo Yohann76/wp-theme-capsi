@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/inc/block-patterns.php';
+require_once __DIR__ . '/inc/acf-fields.php';
 
 use Timber\Timber;
 use Timber\Site;
@@ -115,27 +116,31 @@ function capsi_force_level( string $level ): array {
 }
 
 function capsi_get_product_attrs( WC_Product $product ): array {
+    $id = $product->get_id();
+
+    $fields = [
+        [ 'key' => 'nom-latin',        'label' => 'Nom latin',           'meta' => 'capsi_nom_latin'    ],
+        [ 'key' => 'famille',          'label' => 'Famille',             'meta' => 'capsi_famille'      ],
+        [ 'key' => 'espece-capsicum',  'label' => 'Espèce Capsicum',     'meta' => 'capsi_espece'       ],
+        [ 'key' => 'origine',          'label' => 'Origine',             'meta' => 'capsi_origine'      ],
+        [ 'key' => 'contenu',          'label' => 'Contenu',             'meta' => 'capsi_contenu'      ],
+        [ 'key' => 'saison-de-semis',  'label' => 'Saison de semis',     'meta' => 'capsi_saison_semis' ],
+        [ 'key' => 'force-shu',        'label' => 'Force (SHU)',         'meta' => 'capsi_force_shu'    ],
+        [ 'key' => 'niveau-force',     'label' => 'Niveau de force',     'meta' => 'capsi_niveau_force' ],
+        [ 'key' => 'couleur-maturite', 'label' => 'Couleur à maturité',  'meta' => 'capsi_couleur'      ],
+        [ 'key' => 'arome-principal',  'label' => 'Arôme principal',     'meta' => 'capsi_arome'        ],
+    ];
+
     $out = [];
-    foreach ( $product->get_attributes() as $attr ) {
-        if ( ! $attr->get_visible() ) {
-            continue;
+    foreach ( $fields as $f ) {
+        $value = get_post_meta( $id, $f['meta'], true );
+        if ( $value !== '' && $value !== false ) {
+            $out[] = [
+                'key'   => $f['key'],
+                'label' => $f['label'],
+                'value' => (string) $value,
+            ];
         }
-        if ( $attr->is_taxonomy() ) {
-            $terms = wc_get_product_terms( $product->get_id(), $attr->get_name(), [ 'fields' => 'names' ] );
-            $value = implode( ', ', $terms );
-            $key   = str_replace( 'pa_', '', $attr->get_name() );
-        } else {
-            $value = implode( ', ', $attr->get_options() );
-            $key   = sanitize_title( $attr->get_name() );
-        }
-        if ( '' === $value ) {
-            continue;
-        }
-        $out[] = [
-            'key'   => $key,
-            'label' => wc_attribute_label( $attr->get_name() ),
-            'value' => $value,
-        ];
     }
     return $out;
 }
@@ -259,54 +264,89 @@ function capsi_tab_caracteristiques(): void {
 
 function capsi_tab_utilisation(): void {
     global $post;
-    $content = get_post_meta( $post->ID, '_capsi_utilisation', true );
+    $content = get_post_meta( $post->ID, 'capsi_utilisation', true );
     if ( empty( $content ) ) {
         echo '<p class="product-tab__empty">Informations d\'utilisation à venir.</p>';
         return;
     }
-    echo '<div class="product-tab-text">' . wp_kses_post( wpautop( $content ) ) . '</div>';
+    echo '<div class="product-tab-text">' . wp_kses_post( $content ) . '</div>';
 }
 
 function capsi_tab_conseils(): void {
     global $post;
-    $content = get_post_meta( $post->ID, '_capsi_conseils', true );
+    $content = get_post_meta( $post->ID, 'capsi_conseils', true );
     if ( empty( $content ) ) {
         echo '<p class="product-tab__empty">Conseils de culture à venir.</p>';
         return;
     }
-    echo '<div class="product-tab-text">' . wp_kses_post( wpautop( $content ) ) . '</div>';
+    echo '<div class="product-tab-text">' . wp_kses_post( $content ) . '</div>';
 }
 
 // ============================================================
-// WooCommerce — Meta boxes admin (Utilisation + Conseils)
+// ACF — Sync champs filtrables → taxonomies WooCommerce
 // ============================================================
 
-add_action( 'add_meta_boxes', function (): void {
-    foreach ( [
-        [ 'id' => 'capsi_utilisation', 'title' => 'Utilisation',         'field' => 'capsi_utilisation', 'nonce' => 'capsi_utilisation_save', 'tab' => 'Utilisation' ],
-        [ 'id' => 'capsi_conseils',    'title' => 'Conseils de culture',  'field' => 'capsi_conseils',    'nonce' => 'capsi_conseils_save',    'tab' => 'Conseils'    ],
-    ] as $box ) {
-        add_meta_box( $box['id'], $box['title'], function ( WP_Post $post ) use ( $box ): void {
-            $value = get_post_meta( $post->ID, '_' . $box['field'], true );
-            wp_nonce_field( $box['nonce'], $box['field'] . '_nonce' );
-            echo '<p style="margin-bottom:6px;color:#666;font-size:12px;">Affiché dans l\'onglet <em>' . esc_html( $box['tab'] ) . '</em>. HTML basique accepté (<code>h3</code>, <code>strong</code>, <code>ul</code>).</p>';
-            echo '<textarea name="' . esc_attr( $box['field'] ) . '" rows="8" style="width:100%;">' . esc_textarea( $value ) . '</textarea>';
-        }, 'product', 'normal', 'default' );
+add_action( 'acf/save_post', function ( int $post_id ): void {
+    if ( get_post_type( $post_id ) !== 'product' ) {
+        return;
     }
-} );
+    $product = wc_get_product( $post_id );
+    if ( ! $product ) {
+        return;
+    }
 
-add_action( 'save_post_product', function ( int $post_id ): void {
-    foreach ( [
-        [ 'field' => 'capsi_utilisation', 'nonce' => 'capsi_utilisation_save' ],
-        [ 'field' => 'capsi_conseils',    'nonce' => 'capsi_conseils_save'    ],
-    ] as $f ) {
-        if ( isset( $_POST[ $f['field'] . '_nonce' ] )
-            && wp_verify_nonce( $_POST[ $f['field'] . '_nonce' ], $f['nonce'] )
-            && ! ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) ) {
-            update_post_meta( $post_id, '_' . $f['field'], wp_kses_post( $_POST[ $f['field'] ] ?? '' ) );
+    // Champs ACF → taxonomie WC (pour le filtrage en boutique)
+    $sync = [
+        'capsi_famille'       => 'pa_famille',
+        'capsi_espece'        => 'pa_espece-capsicum',
+        'capsi_origine'       => 'pa_origine',
+        'capsi_niveau_force'  => 'pa_niveau-force',
+        'capsi_couleur'       => 'pa_couleur-maturite',
+        'capsi_arome'         => 'pa_arome-principal',
+    ];
+
+    $wc_attrs = $product->get_attributes();
+
+    foreach ( $sync as $meta_key => $taxonomy ) {
+        $value = get_post_meta( $post_id, $meta_key, true );
+
+        if ( empty( $value ) ) {
+            wp_set_object_terms( $post_id, [], $taxonomy );
+            unset( $wc_attrs[ sanitize_title( $taxonomy ) ] );
+            continue;
         }
+
+        if ( ! taxonomy_exists( $taxonomy ) ) {
+            register_taxonomy( $taxonomy, 'product' );
+        }
+
+        $term = get_term_by( 'name', $value, $taxonomy );
+        if ( ! $term ) {
+            $result  = wp_insert_term( $value, $taxonomy );
+            $term_id = is_wp_error( $result ) ? 0 : (int) $result['term_id'];
+        } else {
+            $term_id = $term->term_id;
+        }
+
+        if ( ! $term_id ) {
+            continue;
+        }
+
+        wp_set_object_terms( $post_id, [ $term_id ], $taxonomy );
+
+        $attr_id = wc_attribute_taxonomy_id_by_name( str_replace( 'pa_', '', $taxonomy ) );
+        $attr    = new WC_Product_Attribute();
+        $attr->set_id( $attr_id );
+        $attr->set_name( $taxonomy );
+        $attr->set_options( [ $term_id ] );
+        $attr->set_visible( true );
+        $attr->set_variation( false );
+        $wc_attrs[ sanitize_title( $taxonomy ) ] = $attr;
     }
-} );
+
+    $product->set_attributes( $wc_attrs );
+    $product->save();
+}, 20 );
 
 // WooCommerce — Localisation française
 add_filter( 'woocommerce_currency',           fn() => 'EUR' );

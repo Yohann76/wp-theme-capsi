@@ -195,7 +195,7 @@ $conseils = [
 foreach ( $conseils as $slug => $text ) {
     $post = get_page_by_path( $slug, OBJECT, 'product' );
     if ( $post ) {
-        update_post_meta( $post->ID, '_capsi_conseils', $text );
+        update_post_meta( $post->ID, 'capsi_conseils', $text );
         WP_CLI::log( "  conseils mis à jour : {$slug}" );
     }
 }
@@ -216,9 +216,67 @@ $utilisations = [
 foreach ( $utilisations as $slug => $text ) {
     $post = get_page_by_path( $slug, OBJECT, 'product' );
     if ( $post ) {
-        update_post_meta( $post->ID, '_capsi_utilisation', $text );
+        update_post_meta( $post->ID, 'capsi_utilisation', $text );
         WP_CLI::log( "  utilisation mis à jour : {$slug}" );
     }
+}
+
+// ── 5. Méta ACF (champs botaniques) ──────────────────────────
+WP_CLI::log( "\n=== Méta ACF ===" );
+
+$acf_data = [
+    'plant-bhut-jolokia-ghost-pepper' => [
+        'capsi_nom_latin'    => 'Capsicum chinense',
+        'capsi_famille'      => 'Solanaceae',
+        'capsi_espece'       => 'Capsicum chinense',
+        'capsi_origine'      => 'Assam, Inde',
+        'capsi_contenu'      => '20 graines',
+        'capsi_saison_semis' => 'Janvier – Mars',
+        'capsi_force_shu'    => '800 000 – 1 041 427 SHU',
+        'capsi_niveau_force' => 'Extrême',
+        'capsi_couleur'      => 'Rouge orangé',
+    ],
+    'graines-carolina-reaper-20-graines' => [
+        'capsi_nom_latin'    => 'Capsicum chinense',
+        'capsi_famille'      => 'Solanaceae',
+        'capsi_espece'       => 'Capsicum chinense',
+        'capsi_origine'      => 'Caroline du Sud, USA',
+        'capsi_contenu'      => '20 graines',
+        'capsi_saison_semis' => 'Janvier – Février',
+        'capsi_force_shu'    => '1 500 000 – 2 200 000 SHU',
+        'capsi_niveau_force' => 'Extrême',
+        'capsi_couleur'      => 'Rouge',
+    ],
+    'graines-habanero-orange-20-graines' => [
+        'capsi_nom_latin'    => 'Capsicum chinense',
+        'capsi_famille'      => 'Solanaceae',
+        'capsi_espece'       => 'Capsicum chinense',
+        'capsi_origine'      => 'Yucatán, Mexique',
+        'capsi_contenu'      => '20 graines',
+        'capsi_saison_semis' => 'Janvier – Mars',
+        'capsi_force_shu'    => '100 000 – 350 000 SHU',
+        'capsi_niveau_force' => 'Très fort',
+        'capsi_couleur'      => 'Orange',
+    ],
+    'plant-thym-citron-variete-rare' => [
+        'capsi_nom_latin'    => 'Thymus citriodorus',
+        'capsi_famille'      => 'Lamiaceae',
+        'capsi_origine'      => 'Méditerranée',
+        'capsi_contenu'      => 'Plant de 8-12 cm',
+        'capsi_saison_semis' => 'Février – Avril',
+        'capsi_arome'        => 'Citron',
+    ],
+];
+
+foreach ( $acf_data as $slug => $fields ) {
+    $post = get_page_by_path( $slug, OBJECT, 'product' );
+    if ( ! $post ) {
+        continue;
+    }
+    foreach ( $fields as $meta_key => $value ) {
+        update_post_meta( $post->ID, $meta_key, $value );
+    }
+    WP_CLI::log( "  ACF mis à jour : {$slug}" );
 }
 
 WP_CLI::log( "\nFait." );
