@@ -1,0 +1,23 @@
+{# breadcrumbs: [{label, url}, …, {label, url: null}]  #}
+{% if breadcrumbs is defined and breadcrumbs|length > 1 %}
+<nav class="capsi-breadcrumb" aria-label="Fil d'Ariane">
+  <ol class="capsi-breadcrumb__list" itemscope itemtype="https://schema.org/BreadcrumbList">
+    {% for crumb in breadcrumbs %}
+    <li class="capsi-breadcrumb__item"
+        itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      {% if crumb.url %}
+        <a href="{{ crumb.url }}" class="capsi-breadcrumb__link" itemprop="item">
+          <span itemprop="name">{{ crumb.label }}</span>
+        </a>
+        <span class="capsi-breadcrumb__sep" aria-hidden="true">
+          <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </span>
+      {% else %}
+        <span class="capsi-breadcrumb__current" itemprop="name" aria-current="page">{{ crumb.label }}</span>
+      {% endif %}
+      <meta itemprop="position" content="{{ loop.index }}">
+    </li>
+    {% endfor %}
+  </ol>
+</nav>
+{% endif %}

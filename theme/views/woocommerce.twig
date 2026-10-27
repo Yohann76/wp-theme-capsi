@@ -4,6 +4,8 @@
 <main id="main" class="woocommerce-page">
   <div class="container">
 
+    {{ include('partials/breadcrumb.twig') }}
+
     {% if is_shop_archive %}
     {# ——— Layout boutique : sidebar gauche + grille droite ——— #}
     <div class="shop-layout">

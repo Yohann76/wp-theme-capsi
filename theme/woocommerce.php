@@ -7,6 +7,29 @@ $context = Timber::context();
 // Sidebar shop — uniquement sur les pages archive/boutique
 $context['is_shop_archive'] = ! is_singular( 'product' );
 
+// ── Fil d'Ariane ──────────────────────────────────────────────
+$shop_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/boutique' );
+$crumbs   = [
+    [ 'label' => 'Accueil', 'url' => home_url( '/' ) ],
+];
+
+if ( is_shop() ) {
+    $crumbs[] = [ 'label' => 'Épicerie', 'url' => null ];
+} elseif ( is_product_category() ) {
+    $crumbs[] = [ 'label' => 'Épicerie', 'url' => $shop_url ];
+    $current  = get_queried_object();
+    $crumbs[] = [ 'label' => $current->name, 'url' => null ];
+} elseif ( is_singular( 'product' ) ) {
+    $crumbs[] = [ 'label' => 'Épicerie', 'url' => $shop_url ];
+    $cats = get_the_terms( get_the_ID(), 'product_cat' );
+    if ( $cats && ! is_wp_error( $cats ) ) {
+        $crumbs[] = [ 'label' => $cats[0]->name, 'url' => get_term_link( $cats[0] ) ];
+    }
+    $crumbs[] = [ 'label' => get_the_title(), 'url' => null ];
+}
+
+$context['breadcrumbs'] = $crumbs;
+
 if ( $context['is_shop_archive'] ) {
     // Retirer le résultat count et le tri de leur position par défaut
     remove_action( 'woocommerce_before_shop_loop', 'woocommerce_result_count', 20 );

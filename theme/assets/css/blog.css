@@ -220,28 +220,11 @@
   text-align: center;
 }
 
-.post-breadcrumb {
+/* le fil d'ariane du blog utilise le composant .capsi-breadcrumb (main.css) */
+.post-hero .capsi-breadcrumb {
   align-self: flex-start;
+  margin-top: var(--space-6);
   margin-bottom: var(--space-10);
-}
-
-.post-breadcrumb__link {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-family: var(--font-sans);
-  font-size: var(--text-xs);
-  font-weight: 400;
-  letter-spacing: var(--tracking-widest);
-  text-transform: uppercase;
-  color: var(--color-text-faint);
-  text-decoration: none;
-  transition: color var(--ease-fast), gap var(--ease-fast);
-}
-
-.post-breadcrumb__link:hover {
-  color: var(--vert-capsi);
-  gap: calc(var(--space-2) + 3px);
 }
 
 .post-hero__meta {

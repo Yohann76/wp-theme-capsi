@@ -226,6 +226,66 @@ add_filter( 'timber/context', function ( array $context ): array {
     return $context;
 } );
 
+// JSON-LD BreadcrumbList — injecté dans <head> sur articles et produits
+add_action( 'wp_head', function (): void {
+    $crumbs = [];
+
+    if ( is_singular( 'post' ) ) {
+        $blog_url = get_permalink( get_option( 'page_for_posts' ) );
+        $crumbs[] = [ home_url( '/' ), 'Accueil' ];
+        $crumbs[] = [ $blog_url, 'Journal de l\'Atelier' ];
+        $cats = get_the_category();
+        if ( $cats ) {
+            $crumbs[] = [ get_category_link( $cats[0]->term_id ), $cats[0]->name ];
+        }
+        $crumbs[] = [ get_permalink(), get_the_title() ];
+
+    } elseif ( function_exists( 'is_woocommerce' ) && is_woocommerce() ) {
+        $shop_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/boutique' );
+        $crumbs[] = [ home_url( '/' ), 'Accueil' ];
+
+        if ( is_shop() ) {
+            $crumbs[] = [ $shop_url, 'Épicerie' ];
+        } elseif ( is_product_category() ) {
+            $crumbs[] = [ $shop_url, 'Épicerie' ];
+            $current  = get_queried_object();
+            $crumbs[] = [ get_term_link( $current ), $current->name ];
+        } elseif ( is_singular( 'product' ) ) {
+            $crumbs[] = [ $shop_url, 'Épicerie' ];
+            $cats = get_the_terms( get_the_ID(), 'product_cat' );
+            if ( $cats && ! is_wp_error( $cats ) ) {
+                $crumbs[] = [ get_term_link( $cats[0] ), $cats[0]->name ];
+            }
+            $crumbs[] = [ get_permalink(), get_the_title() ];
+        }
+    }
+
+    if ( empty( $crumbs ) ) {
+        return;
+    }
+
+    $items = [];
+    foreach ( $crumbs as $i => [ $url, $name ] ) {
+        $items[] = [
+            '@type'    => 'ListItem',
+            'position' => $i + 1,
+            'name'     => $name,
+            'item'     => $url,
+        ];
+    }
+
+    echo '<script type="application/ld+json">'
+        . wp_json_encode(
+            [
+                '@context'        => 'https://schema.org',
+                '@type'           => 'BreadcrumbList',
+                'itemListElement' => $items,
+            ],
+            JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
+        )
+        . '</script>' . "\n";
+} );
+
 // Filtre Twig nl2br (utilisé pour l'adresse footer)
 add_filter( 'timber/twig', function ( \Twig\Environment $twig ) {
     $twig->addFilter( new \Twig\TwigFilter( 'nl2br', function ( string $str ): string {

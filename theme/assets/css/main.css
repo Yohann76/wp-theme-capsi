@@ -1216,6 +1216,66 @@ body.nav-open .nav-burger span:nth-child(3) { transform: translateY(-6.5px) rota
 
 .search-form__btn:hover { color: var(--rouge-capsi); }
 
+/* ============================================================
+   Fil d'Ariane — composant global (blog + boutique)
+   ============================================================ */
+.capsi-breadcrumb {
+  margin-bottom: var(--space-8);
+}
+
+.capsi-breadcrumb__list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.capsi-breadcrumb__item {
+  display: inline-flex;
+  align-items: center;
+}
+
+.capsi-breadcrumb__link {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-faint);
+  text-decoration: none;
+  transition: color var(--ease-fast);
+  white-space: nowrap;
+}
+
+.capsi-breadcrumb__link:hover {
+  color: var(--vert-capsi);
+}
+
+.capsi-breadcrumb__sep {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-text-faint);
+  opacity: 0.5;
+  padding-inline: 0.3em;
+}
+
+.capsi-breadcrumb__current {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-muted);
+}
+
+/* Sur la boutique WooCommerce, fond blanc = fil légèrement plus contrasté */
+.woocommerce-page .capsi-breadcrumb {
+  margin-bottom: var(--space-6);
+  padding-block: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
 /* Screen-reader only utility (used in 404 & search labels) */
 .sr-only {
   position: absolute;
