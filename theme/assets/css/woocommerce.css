@@ -997,14 +997,19 @@ ul.products {
 
 .product-carac__col-icon {
   color: var(--vert-capsi);
-  opacity: 0.7;
   flex-shrink: 0;
+}
+
+.product-carac__col-icon svg {
+  width: 26px;
+  height: 26px;
+  stroke-width: 2;
 }
 
 .product-carac__col-title {
   font-family: var(--font-serif);
-  font-size: var(--text-base);
-  font-weight: 600;
+  font-size: var(--text-xl);
+  font-weight: 700;
   color: var(--vert-capsi);
   margin: 0;
 }
