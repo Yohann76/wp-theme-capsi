@@ -65,6 +65,7 @@
   display: flex;
   align-items: center;
   overflow: hidden;
+  padding-bottom: var(--space-16);
 }
 
 /* Background layer */
@@ -125,8 +126,10 @@
   position: relative;
   z-index: 1;
   width: 100%;
+  height: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  align-content: center;
   align-items: center;
   gap: var(--space-8);
 }
