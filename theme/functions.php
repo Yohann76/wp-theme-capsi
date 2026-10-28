@@ -89,7 +89,25 @@ function capsi_enqueue_assets(): void {
         (string) filemtime( "{$dir}/assets/js/main.js" ),
         true
     );
+
+    if ( is_front_page() ) {
+        wp_enqueue_script(
+            'capsi-pepper-plant',
+            "{$uri}/assets/js/pepper-plant.js",
+            [],
+            (string) filemtime( "{$dir}/assets/js/pepper-plant.js" ),
+            true
+        );
+    }
 }
+
+// Injecter type="module" sur le script pepper-plant
+add_filter( 'script_loader_tag', function ( string $tag, string $handle ): string {
+    if ( $handle === 'capsi-pepper-plant' ) {
+        return str_replace( '<script ', '<script type="module" ', $tag );
+    }
+    return $tag;
+}, 10, 2 );
 
 add_filter( 'woocommerce_enqueue_styles', '__return_empty_array' );
 add_action( 'wp_enqueue_scripts', 'capsi_enqueue_assets' );
