@@ -374,6 +374,47 @@ add_action( 'acf/save_post', function ( int $post_id ): void {
     $product->save();
 }, 20 );
 
+// ============================================================
+// SEO — Canonical : exclure les paramètres de filtre custom
+// ============================================================
+
+// RankMath : déclarer min_price, max_price, orderby comme paramètres à ignorer
+add_filter( 'rank_math/frontend/canonical', function ( string $canonical ): string {
+    $params = [ 'min_price', 'max_price', 'orderby' ];
+    $url    = $canonical ?: ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    $parts  = wp_parse_url( $url );
+
+    if ( ! empty( $parts['query'] ) ) {
+        parse_str( $parts['query'], $query );
+        foreach ( $params as $p ) {
+            unset( $query[ $p ] );
+        }
+        $parts['query'] = http_build_query( $query );
+    }
+
+    return empty( $parts['query'] )
+        ? ( $parts['scheme'] . '://' . $parts['host'] . ( $parts['path'] ?? '/' ) )
+        : ( $parts['scheme'] . '://' . $parts['host'] . ( $parts['path'] ?? '/' ) . '?' . $parts['query'] );
+} );
+
+// Fallback natif WordPress si RankMath ne gère pas la canonical sur une page donnée
+add_filter( 'get_canonical_url', function ( string $canonical ): string {
+    $params = [ 'min_price', 'max_price', 'orderby' ];
+    foreach ( $params as $p ) {
+        $canonical = remove_query_arg( $p, $canonical );
+    }
+    return $canonical;
+} );
+
+// SEO — Alt automatique sur les images produit WooCommerce sans alt
+add_filter( 'woocommerce_product_get_image', function ( string $image, $product ): string {
+    if ( strpos( $image, 'alt=""' ) === false ) {
+        return $image;
+    }
+    $alt = esc_attr( $product->get_name() );
+    return str_replace( 'alt=""', 'alt="' . $alt . '"', $image );
+}, 10, 2 );
+
 // WooCommerce — Localisation française
 add_filter( 'woocommerce_currency',           fn() => 'EUR' );
 add_filter( 'woocommerce_currency_pos',       fn() => 'right_space' );   // 10,00 €

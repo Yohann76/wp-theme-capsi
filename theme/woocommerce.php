@@ -7,6 +7,17 @@ $context = Timber::context();
 // Sidebar shop — uniquement sur les pages archive/boutique
 $context['is_shop_archive'] = ! is_singular( 'product' );
 
+// Titre h1 de la page boutique/catégorie (masqué visuellement mais présent pour SEO)
+if ( ! is_singular( 'product' ) ) {
+    if ( is_shop() ) {
+        $context['shop_page_title'] = get_the_title( wc_get_page_id( 'shop' ) );
+    } elseif ( is_product_category() ) {
+        $context['shop_page_title'] = single_cat_title( '', false );
+    } else {
+        $context['shop_page_title'] = '';
+    }
+}
+
 // ── Fil d'Ariane ──────────────────────────────────────────────
 $shop_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/boutique' );
 $crumbs   = [

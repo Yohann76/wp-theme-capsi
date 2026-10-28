@@ -7,6 +7,11 @@
     {{ include('partials/breadcrumb.twig') }}
 
     {% if is_shop_archive %}
+    {# H1 sémantique pour SEO — visuellement masqué, WooCommerce ne l'insère pas dans notre layout custom #}
+    {% if shop_page_title %}
+    <h1 class="sr-only">{{ shop_page_title }}</h1>
+    {% endif %}
+
     {# ——— Layout boutique : sidebar gauche + grille droite ——— #}
     <div class="shop-layout">
 
@@ -37,7 +42,7 @@
 
         {# Catégories #}
         <div class="shop-filter">
-          <h3 class="shop-filter__title">Catégories</h3>
+          <h2 class="shop-filter__title">Catégories</h2>
           <ul class="shop-filter__list" role="list">
             <li class="shop-filter__item{% if shop_is_root %} is-active{% endif %}">
               <a href="{{ shop_url }}" class="shop-filter__link">
@@ -57,7 +62,7 @@
 
         {# Filtre prix — double-range slider #}
         <div class="shop-filter shop-filter--price">
-          <h3 class="shop-filter__title">Prix</h3>
+          <h2 class="shop-filter__title">Prix</h2>
           <div class="shop-price-slider"
                data-floor="{{ price_floor }}"
                data-ceil="{{ price_ceil }}"
@@ -101,7 +106,7 @@
         {# Trier par #}
         {% if shop_ordering %}
         <div class="shop-filter">
-          <h3 class="shop-filter__title">Trier par</h3>
+          <h2 class="shop-filter__title">Trier par</h2>
           <div class="shop-filter__ordering">
             {{ shop_ordering|raw }}
           </div>
