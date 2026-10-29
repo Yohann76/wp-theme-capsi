@@ -520,7 +520,7 @@ add_filter( 'timber/context', function ( array $context ): array {
 
         'ticker_items' => array_values( array_filter( array_map( 'trim', explode( "\n",
             get_theme_mod( 'capsi_ticker_items',
-                "Semences sélectionnées à la main\nPlants élevés en serre parisienne\nPiments & aromatiques rares\nStock limité · qualité absolue\nVariétés rares du monde entier\nCulture de A à Z dans l'atelier"
+                "Semences sélectionnées à la main\nPlants élevés en serre normande\nPiments & aromatiques rares\nStock limité · qualité absolue\nVariétés rares du monde entier\nCulture de A à Z dans l'atelier"
             )
         ) ) ) ),
 
@@ -682,7 +682,7 @@ add_action( 'customize_register', function ( WP_Customize_Manager $c ): void {
     // ---- Ticker ----
     $c->add_section( 'capsi_ticker', [ 'title' => 'Accueil — Ticker', 'panel' => 'capsi_panel', 'priority' => 40 ] );
     $add( 'capsi_ticker', 'capsi_ticker_items', 'Éléments du bandeau (un par ligne)',
-        "Semences sélectionnées à la main\nPlants élevés en serre parisienne\nPiments & aromatiques rares\nStock limité · qualité absolue\nVariétés rares du monde entier\nCulture de A à Z dans l'atelier",
+        "Semences sélectionnées à la main\nPlants élevés en serre normande\nPiments & aromatiques rares\nStock limité · qualité absolue\nVariétés rares du monde entier\nCulture de A à Z dans l'atelier",
         'textarea'
     );
 
