@@ -322,24 +322,38 @@
   min-width: 0;
 }
 
-/* Masquer le titre de catégorie dans le main (déjà visible dans la sidebar) */
-.shop-main .woocommerce-products-header {
-  margin-bottom: var(--space-6);
-}
-
-.shop-main .woocommerce-products-header__title {
+/* En-tête boutique — titre + description optionnelle */
+.shop-main > h1.page-title {
   font-family: var(--font-serif) !important;
-  font-size: var(--text-2xl) !important;
+  font-size: var(--text-3xl) !important;
   font-weight: 600 !important;
   letter-spacing: var(--tracking-tight) !important;
+  line-height: var(--leading-tight) !important;
   color: var(--color-text) !important;
-  margin: 0 0 var(--space-2) !important;
+  margin: 0 0 var(--space-3) !important;
 }
 
-.shop-main .woocommerce-products-header .term-description {
-  font-size: var(--text-sm) !important;
+/* Boutique principale (sans description) : le titre porte la séparation */
+.shop-main:not(:has(.term-description)) > h1.page-title {
+  padding-bottom: var(--space-8) !important;
+  border-bottom: 1px solid var(--color-border) !important;
+  margin-bottom: var(--space-8) !important;
+}
+
+/* Page catégorie : la description porte la séparation */
+.shop-main > .term-description {
+  font-size: var(--text-base) !important;
   color: var(--color-text-muted) !important;
-  line-height: var(--leading-base) !important;
+  line-height: var(--leading-loose) !important;
+  max-width: 560px !important;
+  margin: 0 !important;
+  padding-bottom: var(--space-8) !important;
+  border-bottom: 1px solid var(--color-border) !important;
+  margin-bottom: var(--space-8) !important;
+}
+
+.shop-main > .term-description p {
+  margin: 0 !important;
 }
 
 /* Supprimer les floats WooCommerce dans le main */
