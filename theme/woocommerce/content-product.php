@@ -17,6 +17,9 @@ $cats      = get_the_terms( $product->get_id(), 'product_cat' );
 
 	<a href="<?php echo esc_url( $permalink ); ?>" class="product-card__image-link" tabindex="-1" aria-hidden="true">
 		<div class="product-card__image-wrap">
+			<?php if ( ! $product->is_in_stock() ) : ?>
+				<div class="product-card__oos-badge">Rupture de stock</div>
+			<?php endif; ?>
 			<?php if ( $image_url ) : ?>
 				<img src="<?php echo esc_url( $image_url ); ?>"
 				     alt="<?php echo esc_attr( $name ); ?>"
@@ -64,7 +67,11 @@ $cats      = get_the_terms( $product->get_id(), 'product_cat' );
 		</div>
 
 		<div class="product-card__footer">
-			<?php woocommerce_template_loop_add_to_cart(); ?>
+			<?php if ( $product->is_in_stock() ) : ?>
+				<?php woocommerce_template_loop_add_to_cart(); ?>
+			<?php else : ?>
+				<span class="product-card__oos-label">Indisponible</span>
+			<?php endif; ?>
 		</div>
 
 	</div>

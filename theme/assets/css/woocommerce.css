@@ -534,6 +534,53 @@ ul.products {
   transform: translateY(-4px) !important;
 }
 
+/* Rupture de stock */
+.product-card.outofstock {
+  opacity: 0.7 !important;
+}
+
+.product-card.outofstock:hover {
+  border-color: var(--color-border) !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.product-card.outofstock .product-card__image {
+  filter: grayscale(50%) !important;
+}
+
+.product-card__oos-badge {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  z-index: 1;
+  padding: var(--space-1) var(--space-3);
+  background: rgba(15, 15, 15, 0.78);
+  color: #fff;
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  border-radius: var(--radius-sm);
+  backdrop-filter: blur(4px);
+}
+
+.product-card__oos-label {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+  border: 1px dashed var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  cursor: default;
+}
+
 .product-card__image-link {
   display: block;
   flex-shrink: 0;
